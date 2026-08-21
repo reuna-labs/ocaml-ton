@@ -1,0 +1,491 @@
+{
+ "single_zero": {
+  "keyBits": 8,
+  "valueBits": 8,
+  "entries": [
+   [
+    "0",
+    "1"
+   ]
+  ],
+  "direct": {
+   "hash": "c5fe29cba71194d854330e10c5c1d5752b26c493b2b4a22dc36a220ee8810375",
+   "bits": 15,
+   "refs": 0
+  },
+  "wrapped": {
+   "hash": "b8bbca83a235d59d7de46e7195ebb3ae33527fcce1f7718789ba4bb00f5e51db",
+   "boc_sha256": "f6611612618dad33824b2b00cb677fd8967a89678eceb8b7e5dcbe344a24652c"
+  },
+  "boc": "te6ccgEBAQEABAAAA9AD"
+ },
+ "single_max": {
+  "keyBits": 8,
+  "valueBits": 8,
+  "entries": [
+   [
+    "255",
+    "1"
+   ]
+  ],
+  "direct": {
+   "hash": "4cb25fb0f6af2b45a18109bb33ef174d255f718f2705eaebe66e1b30503d0e63",
+   "bits": 15,
+   "refs": 0
+  },
+  "wrapped": {
+   "hash": "d1878cc9ef75f2101afd0b233cf565f76ac17aa77792a8196c2cbede3a2c632d",
+   "boc_sha256": "9171909178d1093773959d144e33529eb50ef5e7613371efecf4fa466bb75f0d"
+  },
+  "boc": "te6ccgEBAQEABAAAA/AD"
+ },
+ "extremes": {
+  "keyBits": 8,
+  "valueBits": 8,
+  "entries": [
+   [
+    "0",
+    "1"
+   ],
+   [
+    "255",
+    "8"
+   ]
+  ],
+  "direct": {
+   "hash": "9dc71608ad16cc5525cd4992f528ecf2d60f8efcf3423949162789137fbd2ef0",
+   "bits": 2,
+   "refs": 2
+  },
+  "wrapped": {
+   "hash": "99c19f4b5a47fc6f2d82c46b89c49baea8e854d8d3e8f099ec6eea9f792eec43",
+   "boc_sha256": "ece6b7f5a1523858d42b7eb2ff7d09bb40f56612087d0536776958b147833bbc"
+  },
+  "boc": "te6ccgEBAwEADQACASABAgAD3AYAA/wi"
+ },
+ "low_three": {
+  "keyBits": 8,
+  "valueBits": 16,
+  "entries": [
+   [
+    "1",
+    "1"
+   ],
+   [
+    "2",
+    "8"
+   ],
+   [
+    "3",
+    "15"
+   ]
+  ],
+  "direct": {
+   "hash": "ade17204bb4a082560a373d5caad0ee5e81ed9cc183e56383270aba300f1f776",
+   "bits": 7,
+   "refs": 2
+  },
+  "wrapped": {
+   "hash": "9c68365ba06f4b5b7add8a2cb9a771cb4d26598c451b52b1e93fb4548bba9b04",
+   "boc_sha256": "89a8edecfbaeb6afab9f65d889786bb5cf66d73fd51e0f78152f8ea8c1b6e532"
+  },
+  "boc": "te6ccgEBBQEAGQACAc0BAgAFUAAYAgEgAwQABQACIAAFAAPg"
+ },
+ "one_bit_key": {
+  "keyBits": 1,
+  "valueBits": 8,
+  "entries": [
+   [
+    "0",
+    "1"
+   ],
+   [
+    "1",
+    "8"
+   ]
+  ],
+  "direct": {
+   "hash": "145f40023c5f701de4ee087c8569556c2be6e773592e9c0ad3a6ffa15f09e89a",
+   "bits": 2,
+   "refs": 2
+  },
+  "wrapped": {
+   "hash": "72e3489082cb27db8240bf8e8b93e283a5fb78aaf0463c86cdd32205674aa52e",
+   "boc_sha256": "b6695085f40a080f6161ce8dafdcdae8478995483a85802058c1d33ee590019a"
+  },
+  "boc": "te6ccgEBAwEADQACASABAgADAGAAAwIg"
+ },
+ "complete_4bit": {
+  "keyBits": 4,
+  "valueBits": 8,
+  "entries": [
+   [
+    "0",
+    "1"
+   ],
+   [
+    "1",
+    "8"
+   ],
+   [
+    "2",
+    "15"
+   ],
+   [
+    "3",
+    "22"
+   ],
+   [
+    "4",
+    "29"
+   ],
+   [
+    "5",
+    "36"
+   ],
+   [
+    "6",
+    "43"
+   ],
+   [
+    "7",
+    "50"
+   ],
+   [
+    "8",
+    "57"
+   ],
+   [
+    "9",
+    "64"
+   ],
+   [
+    "10",
+    "71"
+   ],
+   [
+    "11",
+    "78"
+   ],
+   [
+    "12",
+    "85"
+   ],
+   [
+    "13",
+    "92"
+   ],
+   [
+    "14",
+    "99"
+   ],
+   [
+    "15",
+    "106"
+   ]
+  ],
+  "direct": {
+   "hash": "5019f776693897e5e1ffb4bae250758f5e11555ad12b52e75e650b8bfe4eb809",
+   "bits": 2,
+   "refs": 2
+  },
+  "wrapped": {
+   "hash": "10bc89bdc4830289bd895de36af963e42299c9fd62b2813580ced7a07bf6feeb",
+   "boc_sha256": "f0fde625a8ea73710bdc00adcd9e7466624b700104038aa470d5e718d42ad4cc"
+  },
+  "boc": "te6ccgEBHwEAiwACASABEAIBIAIJAgEgAwYCASAEBQADAGAAAwIgAgEgBwgAAwPgAAMFoAIBIAoNAgEgCwwAAwdgAAMJIAIBIA4PAAMK4AADDKACASARGAIBIBIVAgEgExQAAw5gAAMQIAIBIBYXAAMR4AADE6ACASAZHAIBIBobAAMVYAADFyACASAdHgADGOAAAxqg"
+ },
+ "dense_32": {
+  "keyBits": 32,
+  "valueBits": 32,
+  "entries": [
+   [
+    "0",
+    "1"
+   ],
+   [
+    "1",
+    "8"
+   ],
+   [
+    "2",
+    "15"
+   ],
+   [
+    "3",
+    "22"
+   ],
+   [
+    "4",
+    "29"
+   ],
+   [
+    "5",
+    "36"
+   ],
+   [
+    "6",
+    "43"
+   ],
+   [
+    "7",
+    "50"
+   ],
+   [
+    "8",
+    "57"
+   ],
+   [
+    "9",
+    "64"
+   ],
+   [
+    "10",
+    "71"
+   ],
+   [
+    "11",
+    "78"
+   ],
+   [
+    "12",
+    "85"
+   ],
+   [
+    "13",
+    "92"
+   ],
+   [
+    "14",
+    "99"
+   ],
+   [
+    "15",
+    "106"
+   ]
+  ],
+  "direct": {
+   "hash": "09be6005ac84c6beb4217189417a9cbb20059f063d2bd2bf8aa6ddc544ab09d6",
+   "bits": 9,
+   "refs": 2
+  },
+  "wrapped": {
+   "hash": "79d6d70078de7d671e1041353be89b6b6f83c2b5be6d48171d7553d7feff86e0",
+   "boc_sha256": "ecae59bf00e4c66e0fe7ffc09c7c7d6c16dbf479f991478786fd2b8e08ad6735"
+  },
+  "boc": "te6ccgEBHwEAvAACA85AARACASACCQIBIAMGAgEgBAUACQAAAABgAAkAAAACIAIBIAcIAAkAAAAD4AAJAAAABaACASAKDQIBIAsMAAkAAAAHYAAJAAAACSACASAODwAJAAAACuAACQAAAAygAgEgERgCASASFQIBIBMUAAkAAAAOYAAJAAAAECACASAWFwAJAAAAEeAACQAAABOgAgEgGRwCASAaGwAJAAAAFWAACQAAABcgAgEgHR4ACQAAABjgAAkAAAAaoA=="
+ },
+ "long_prefix": {
+  "keyBits": 12,
+  "valueBits": 8,
+  "entries": [
+   [
+    "2748",
+    "1"
+   ],
+   [
+    "2749",
+    "8"
+   ],
+   [
+    "2750",
+    "15"
+   ]
+  ],
+  "direct": {
+   "hash": "635626023e39708390c1178b3f99391ab10c375a49ac8619ea86c327a7388b96",
+   "bits": 16,
+   "refs": 2
+  },
+  "wrapped": {
+   "hash": "14ff8644932eb780ca30ba2d9e279bb982afbad3cb2bebf9fc5f6b53bac6064a",
+   "boc_sha256": "834e1edbfa68472acca0711727e48b776945c0c9e1fca1d7efde1089137910a5"
+  },
+  "boc": "te6ccgEBBQEAFwACBKqvAQQCASACAwADAGAAAwIgAANA+A=="
+ },
+ "sparse_64": {
+  "keyBits": 64,
+  "valueBits": 64,
+  "entries": [
+   [
+    "1",
+    "1"
+   ],
+   [
+    "1000000007",
+    "8"
+   ],
+   [
+    "18446744073709551615",
+    "15"
+   ],
+   [
+    "9223372036854775808",
+    "22"
+   ]
+  ],
+  "direct": {
+   "hash": "5a944bb7d54a71f3524a0decffa430c97d991bdbad87f5e7060dcc2eedeea766",
+   "bits": 2,
+   "refs": 2
+  },
+  "wrapped": {
+   "hash": "80bbe66f18271bba4afa2d42a5929717633a40a8d6ce678f1d4566610c946c3f",
+   "boc_sha256": "f6adec6d43d24111ce44fb0f6c6bc183dddd5816444596fddfeb1d60a5e58622"
+  },
+  "boc": "te6ccgEBBwEARgACASABBAID0MACAwAZugAAABAAAAAAAAAAGAAZu7msoHAAAAAAAAAAiAIBIAUGABPfAAAAAAAAAAtAABP/AAAAAAAAAAfA"
+ },
+ "short_label": {
+  "keyBits": 3,
+  "valueBits": 8,
+  "entries": [
+   [
+    "5",
+    "1"
+   ]
+  ],
+  "direct": {
+   "hash": "b9855ab85f62c76587de80f2e7ba308334f30dfa9c22e61d043b1b9ac8bc0abf",
+   "bits": 15,
+   "refs": 0
+  },
+  "wrapped": {
+   "hash": "f0eb7c0b765df18813efd7490ff5738094726ffe7d89bed3604e946193ad7996",
+   "boc_sha256": "0d7db162dbed85d127d8b50d423165e5a6649d35538e53a44e85c3a1a615b0f4"
+  },
+  "boc": "te6ccgEBAQEABAAAA7oD"
+ },
+ "two_close": {
+  "keyBits": 16,
+  "valueBits": 8,
+  "entries": [
+   [
+    "4660",
+    "1"
+   ],
+   [
+    "4661",
+    "8"
+   ]
+  ],
+  "direct": {
+   "hash": "19c9caf29582ff8370e325d577162dd5b0636c004cc384bb4e5b81339e82ea83",
+   "bits": 22,
+   "refs": 2
+  },
+  "wrapped": {
+   "hash": "c96eb7631ae593aab96402d09224f250f781f7668d196523d16d1f0e0d2b8db3",
+   "boc_sha256": "1b23b63c1f65164f861fd06572fa65ae46f60c89fc10153c333079b19b8c337b"
+  },
+  "boc": "te6ccgEBAwEADwACBZ4kagECAAMAYAADAiA="
+ },
+ "big_keys_256": {
+  "keyBits": 256,
+  "valueBits": 8,
+  "entries": [
+   [
+    "0",
+    "1"
+   ],
+   [
+    "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+    "8"
+   ],
+   [
+    "57896044618658097711785492504343953926634992332820282019728792003956564819968",
+    "15"
+   ]
+  ],
+  "direct": {
+   "hash": "d87ed14e0e3513d312abc6a905820e5157bf1b5d324de9dffc7ab191cbba8902",
+   "bits": 2,
+   "refs": 2
+  },
+  "wrapped": {
+   "hash": "d3b4a7573b324ac22f55af6f9c814cbfc8f4d8609da759ec9cd5d4cbadc2bf42",
+   "boc_sha256": "4a6a81d3d48e041d4194caf67e595730371bbf92dace48ae7b547619c63764f9"
+  },
+  "boc": "te6ccgEBBQEAGQACASABAgAF3+AwAgEgAwQABd/B8AAF/8EQ"
+ },
+ "wallet_plugins_267": {
+  "keyBits": 267,
+  "valueBits": 1,
+  "entries": [
+   [
+    "0",
+    "1"
+   ],
+   [
+    "1",
+    "0"
+   ],
+   [
+    "236943127493075866426519336207415123168358761932822939884085279051776",
+    "1"
+   ]
+  ],
+  "direct": {
+   "hash": "4a796bf8f046158c6fda914ace952f0e4f7ef60f27dcd9780d9158ec06f0c4fa",
+   "bits": 12,
+   "refs": 2
+  },
+  "wrapped": {
+   "hash": "211d9455f1983e265b5ffc9559da79f41a962a801fbde0fc57561a7900d0c2fb",
+   "boc_sha256": "7f1816403440217b31be19054eddeef92aa0db7f8a8362e23fcd544b87b6ee4b"
+  },
+  "boc": "te6ccgEBBQEAMgACA8J4AQQCA9xQAgMAATAAARAAO7jGT0ax5h2ZbwCHcHhe6umXRiGhvYlZueLUXY6ABg=="
+ },
+ "scattered": {
+  "keyBits": 10,
+  "valueBits": 8,
+  "entries": [
+   [
+    "0",
+    "1"
+   ],
+   [
+    "1",
+    "8"
+   ],
+   [
+    "512",
+    "15"
+   ],
+   [
+    "513",
+    "22"
+   ],
+   [
+    "1023",
+    "29"
+   ],
+   [
+    "341",
+    "36"
+   ],
+   [
+    "682",
+    "43"
+   ]
+  ],
+  "direct": {
+   "hash": "18de84f4cf62a2be4fed835e44d8dc2ee4f827ec98376fe80ae7b796d6902066",
+   "bits": 2,
+   "refs": 2
+  },
+  "wrapped": {
+   "hash": "edc4d24fe8215ffef55c9db2d1a1e45b9378691641f5dc9de11b9bc77ba1d7ae",
+   "boc_sha256": "f7c1607aaa789a4f0d28300a7f2d950c0340238c3318b553bd05e04ff7e19aa3"
+  },
+  "boc": "te6ccgEBDQEAPAACASABBgIBIAIFAgHPAwQAAwBgAAMCIAAFoVSSAgEgBwwCASAICwIB2gkKAAMD4AADBaAABbqiuAAD8Ds="
+ },
+ "empty": {
+  "keyBits": 8,
+  "valueBits": 8,
+  "entries": [],
+  "wrapped": {
+   "hash": "90aec8965afabb16ebc3cb9b408ebae71b618d78788bc80d09843593cac98da4",
+   "boc_sha256": "f05d9c08ce96c9e71ac56a0cbe8704132acc5a65a8c62073aeecbcb8b582480e"
+  }
+ }
+}

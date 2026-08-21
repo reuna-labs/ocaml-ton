@@ -1,0 +1,124 @@
+{
+ "coins": {
+  "0": {
+   "hash": "5331fed036518120c7f345726537745c5929b8ea1fa37b99b2bb58f702671541",
+   "bits": 4
+  },
+  "1": {
+   "hash": "d46edee086ccbace01f45c13d26d49b68f74cd1b7616f4662e699c82c6ec728b",
+   "bits": 12
+  },
+  "9": {
+   "hash": "257d0387edb55d6f387145e7dfb9cce01920310a9d7bf9b3dea7fce3eca1bf6f",
+   "bits": 12
+  },
+  "255": {
+   "hash": "bd16b2d60c93163fbed832e91a5faec484715c48176857c57dcedf9f6e0f32f6",
+   "bits": 12
+  },
+  "256": {
+   "hash": "16559011ce6f0f7aaa765179e73ef293f39610f5baa3838a1dc8c52da95793b3",
+   "bits": 20
+  },
+  "1000000000": {
+   "hash": "e139b2d96d0bd76da98c3c23b0dc0481dcfe19562798fefbb7bf2e56d8ef37b5",
+   "bits": 36
+  },
+  "1500000000": {
+   "hash": "61e31fdb1814882f54bdcbebab4d8d1943753269033ddfd44db15d4041e0d5f0",
+   "bits": 36
+  },
+  "18446744073709551615": {
+   "hash": "adf537331727a5c8f7ea20fab079788a63fa72272bef567d88967d8035d66c45",
+   "bits": 68
+  },
+  "1208925819614629174706175": {
+   "hash": "bb5b610edd4d9346f27d002d18b58420be8df31b06a904811806341ac323a6ba",
+   "bits": 84
+  },
+  "1329227995784915872903807060280344575": {
+   "hash": "07d470f83cea8b41383aab0113b84f4be3842bc6ec0c46d84664a647d5550dc9",
+   "bits": 124
+  }
+ },
+ "varuint": {
+  "0": {
+   "hash": "3f078d3b7e22c8944e5561909a236ae48b48a7ea42f28dd861c22b6f64d7e97b",
+   "bits": 5
+  },
+  "1": {
+   "hash": "77bf9b6868400ea1c0e4765a163a742e6e44de84da7917ace2e06b51bbb3ef19",
+   "bits": 13
+  },
+  "65535": {
+   "hash": "06b55e09563c1e5d4550dcd778a4695703b7607b2a68bb2c8ebfbb7714dfe744",
+   "bits": 21
+  },
+  "4294967295": {
+   "hash": "ca94c59c86502b345d7fa634f3e90e845fdcae93d81be65dee858b89c3bc4cda",
+   "bits": 37
+  }
+ },
+ "address": {
+  "none": {
+   "raw": null,
+   "hash": "a1bb2a842d54edb8942f95bedaf53923d2d788d698232cfb256571e9e8b10a86",
+   "bits": 2
+  },
+  "base": {
+   "raw": "0:e4d954ef9f4e1250a26b5bbad76a1cdd17cfd08babad6f4c23e372270aef6f76",
+   "hash": "ff0dbc755c26a16e3b0a4e4c6505d34b9194439b1b8f627460fcc852b7cf638f",
+   "bits": 267
+  },
+  "master": {
+   "raw": "-1:34517c7bdf5187c55af4f8b61fdc321588c7ab768dee24b006df29106458d7cf",
+   "hash": "33f0ea18b388d2b5438de0cf6cb8c822111b721fb3d23255d6f8dba3a432b00a",
+   "bits": 267
+  },
+  "zero": {
+   "raw": "0:0000000000000000000000000000000000000000000000000000000000000000",
+   "hash": "61ab4641fa30d9310391025086eec65d200d79268e1b7cd402565e01ba64be3c",
+   "bits": 267
+  }
+ },
+ "stateInit": {
+  "code_and_data": {
+   "codeHash": "270906fd171b9c43f37a353059a73fbc02e0568188ec30186af846caefd09b8c",
+   "dataHash": "4d88bacc28c274452b7899298dc893fb066b1bf4e3f03e45ab10a8f5015325a2",
+   "hash": "10d47948ad88bac7da114db7e7645b3f301f3c22aabb39d409b81e3fe9634dfb",
+   "bits": 5,
+   "refs": 2,
+   "address0": "0:10d47948ad88bac7da114db7e7645b3f301f3c22aabb39d409b81e3fe9634dfb",
+   "addressMinus1": "-1:10d47948ad88bac7da114db7e7645b3f301f3c22aabb39d409b81e3fe9634dfb"
+  },
+  "empty": {
+   "hash": "3f078d3b7e22c8944e5561909a236ae48b48a7ea42f28dd861c22b6f64d7e97b",
+   "bits": 5,
+   "refs": 0
+  }
+ },
+ "message": {
+  "internal": {
+   "hash": "34516df6a28dd9e995ff2d4684b6f43bca261fecebe95f836fc76e1bbc1d2123",
+   "bits": 753,
+   "refs": 0,
+   "bodyHash": "551f6c3e8d7ae7d9b3ac53bca9b6f82cff322fb16113820776d14a3f93b93951"
+  },
+  "external_in": {
+   "hash": "51898beb8300ff417e59054e7883d27cc811ce35e1f7d311ed1713d7ffbf2734",
+   "bits": 349,
+   "refs": 0
+  },
+  "external_in_with_init": {
+   "hash": "21470f3b86e843fa3174cea8c4357b1f687b9c7fe3b82ca8966c92c5ed506f65",
+   "bits": 355,
+   "refs": 2
+  },
+  "internal_big_body": {
+   "hash": "cca2241324df84c1c4a5aff35a3d71d0a8f9a23d07adde4c26ea790c59e72340",
+   "bits": 657,
+   "refs": 1,
+   "bodyHash": "b0c6321d8fd5c3a6c77ca7acf8f9e01c197d8b4a234e83a47dc8bffc5872c00c"
+  }
+ }
+}

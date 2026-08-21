@@ -30,3 +30,17 @@
   web3-codec
   (base64 (>= 3.5.0))
   (alcotest :with-test)))
+
+(package
+ (name ton-tlb)
+ (synopsis "TON TL-B types: dictionaries, coins, messages, accounts")
+ (description
+  "Decoders and encoders for the TL-B schemas that describe on-chain data:\nhashmaps, currency amounts, addresses in cells, messages, state init and\naccount state.")
+ (depends
+  (ocaml (>= 4.14))
+  ton-cell
+  ton-address
+  (zarith (>= 1.12))
+  (alcotest :with-test)
+  (qcheck-core :with-test)
+  (qcheck-alcotest :with-test)))

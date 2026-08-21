@@ -1,0 +1,4 @@
+(library
+ (name ton_tlb)
+ (public_name ton-tlb)
+ (libraries ton-cell ton-address zarith))

@@ -1,0 +1,40 @@
+{
+ "accountState.txt": {
+  "rootHash": "38ca07263352adebf3b8de4a36b6b3898e1de5953991f7356b0160bb0fb15ef7",
+  "tag": true,
+  "addr": "-1:3333333333333333333333333333333333333333333333333333333333333333",
+  "used": {
+   "cells": "2903",
+   "bits": "416795"
+  },
+  "storageExtra": null,
+  "lastPaid": 0,
+  "duePayment": null,
+  "lastTransLt": "28932539000003",
+  "balance": "284265647882706653",
+  "stateType": "active",
+  "codeHash": "6217f872c99fafcb870f2c11a362f59339be95095f70d00b9cff2f6dcd69d3dd",
+  "dataHash": "28905e5456679101e005343d6d378dfb02ca8d0d452fd279c00b5b9e6a0b5686",
+  "reserializedHash": "38ca07263352adebf3b8de4a36b6b3898e1de5953991f7356b0160bb0fb15ef7",
+  "reserializedMatchesRoot": true
+ },
+ "accountStateTest.txt": {
+  "rootHash": "c8af6e3c2dc6d04920ac0c3e516f6ed62e14466224c4186fae0a1800017a0d1c",
+  "tag": true,
+  "addr": "0:b6b1ffc7cb7e1a30cee7f5ff7f57e4e11c37a18c7ef52d60444f2fc9ad38ab3c",
+  "used": {
+   "cells": "22",
+   "bits": "5697"
+  },
+  "storageExtra": null,
+  "lastPaid": 1672233260,
+  "duePayment": null,
+  "lastTransLt": "7203596000006",
+  "balance": "792461252367",
+  "stateType": "active",
+  "codeHash": "feb5ff6820e2ff0d9483e7e0d62c817d846789fb4ae580c878866d959dabd5c0",
+  "dataHash": "20d33e788604d7fe884c1271eceaa96e0b275a816831428c52c8bc0af2a7c039",
+  "reserializedHash": "c8af6e3c2dc6d04920ac0c3e516f6ed62e14466224c4186fae0a1800017a0d1c",
+  "reserializedMatchesRoot": true
+ }
+}
