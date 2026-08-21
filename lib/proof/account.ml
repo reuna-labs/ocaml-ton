@@ -2,8 +2,11 @@ open Ton_cell
 
 type outcome = Exists of Cell.t | Does_not_exist
 
+type block_ref = { workchain : int32; shard : int64; seqno : int32; root_hash : string }
+
 type error =
   | Boc of Boc.error
+  | Shard of Shard.error
   | Merkle of Merkle.error
   | State of State.error
   | Dict of Slice.error
@@ -18,6 +21,7 @@ let hex s = String.concat "" (List.init (String.length s) (fun i -> Printf.sprin
 
 let pp_error ppf = function
   | Boc e -> Boc.pp_error ppf e
+  | Shard e -> Shard.pp_error ppf e
   | Merkle e -> Merkle.pp_error ppf e
   | State e -> State.pp_error ppf e
   | Dict e -> Slice.pp_error ppf e
@@ -113,3 +117,18 @@ let verify ~block_root_hash ~proof ~state ~address =
           let want = Cell.hash account_ref and got = Cell.hash cell in
           if String.equal want got then Ok (Exists cell)
           else Error (Hash_mismatch { want = hex want; got = hex got })
+
+let masterchain = -1l
+
+let verify_via_shard ~mc_root_hash ~shard_proof ~shardblk ~proof ~state ~address =
+  (* A masterchain account is proved directly against the block that was
+     asked about; there is no separate shard block to tie back. *)
+  let* () =
+    if shardblk.workchain = masterchain && String.equal shardblk.root_hash mc_root_hash then Ok ()
+    else
+      Result.map_error
+        (fun e -> Shard e)
+        (Shard.verify ~mc_root_hash ~shard_proof ~workchain:shardblk.workchain ~shard:shardblk.shard
+           ~shard_root_hash:shardblk.root_hash ~seqno:shardblk.seqno ())
+  in
+  verify ~block_root_hash:shardblk.root_hash ~proof ~state ~address

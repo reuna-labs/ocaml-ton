@@ -11,25 +11,36 @@ let hex s =
 
 let ( let** ) x f = x >>= function Error e -> Lwt.return (Error e) | Ok v -> f v
 
-(* The elector: a masterchain account every node has. Because it is on the
-   masterchain, the block the query names is also the block its proof is
-   rooted at, so no shard link has to be trusted. *)
-let elector = "-1:3333333333333333333333333333333333333333333333333333333333333333"
+(* The elector is a masterchain account every node has; the second is an
+   ordinary basechain address, which exercises the shard link. *)
+let addresses =
+  [ "-1:3333333333333333333333333333333333333333333333333333333333333333";
+    "0:26d3866fcbb668acd911561f24f5d9ce4b59d22802c0be5cbebbfab5632e94aa" ]
 
-let show_account ~block_root ~addr (st : C.Lite.lite_server_account_state) =
+let show_account ~mc_root ~addr (st : C.Lite.lite_server_account_state) =
+  let sb = st.C.Lite.shardblk in
   Printf.printf "account %s\n" (Ton_address.to_raw addr);
+  Printf.printf "  shard block        %ld:%016Lx seqno %ld\n" sb.C.Lite.workchain sb.C.Lite.shard
+    sb.C.Lite.seqno;
   Printf.printf "  state              %d bytes\n" (String.length st.C.Lite.state);
   Printf.printf "  proof              %d bytes (shard proof %d)\n%!" (String.length st.C.Lite.proof)
     (String.length st.C.Lite.shard_proof);
+  let shardblk =
+    { Ton_proof.Account.workchain = sb.C.Lite.workchain; shard = sb.C.Lite.shard;
+      seqno = sb.C.Lite.seqno; root_hash = sb.C.Lite.root_hash }
+  in
+  (* The whole chain from the masterchain block: the shard link first, then
+     the account. Verifying only the account would leave the server free to
+     choose which shard block it was proved against. *)
   match
-    Ton_proof.Account.verify ~block_root_hash:block_root ~proof:st.C.Lite.proof ~state:st.C.Lite.state
-      ~address:addr
+    Ton_proof.Account.verify_via_shard ~mc_root_hash:mc_root ~shard_proof:st.C.Lite.shard_proof
+      ~shardblk ~proof:st.C.Lite.proof ~state:st.C.Lite.state ~address:addr
   with
   | Error e -> Format.printf "  PROOF FAILED       %a@." Ton_proof.Account.pp_error e
   | Ok Ton_proof.Account.Does_not_exist ->
       Printf.printf "  verified           the account does not exist\n%!"
   | Ok (Ton_proof.Account.Exists cell) -> (
-      Printf.printf "  verified           against block %s…\n" (String.sub (hex block_root) 0 16);
+      Printf.printf "  verified           against masterchain block %s…\n" (String.sub (hex mc_root) 0 16);
       match Ton_tlb.Account.of_cell cell with
       | Error e -> Format.printf "  ACCOUNT ERROR      %a@." Ton_cell.Slice.pp_error e
       | Ok None -> print_endline "  account_none"
@@ -68,10 +79,16 @@ let () =
            L.ping t >>= fun p ->
            Printf.printf "ping               %s\n%!"
              (match p with Ok id -> Printf.sprintf "pong %Ld" id | Error _ -> "failed");
-           let addr = Result.get_ok (Ton_address.of_raw elector) in
-           let** st = L.call t (C.Query.get_account_state ~block:last addr) in
-           show_account ~block_root:st.C.Lite.shardblk.C.Lite.root_hash ~addr st;
-           Lwt.return (Ok ())))
+           Lwt_list.fold_left_s
+             (fun acc raw ->
+               match acc with
+               | Error _ -> Lwt.return acc
+               | Ok () ->
+                   let addr = Result.get_ok (Ton_address.of_raw raw) in
+                   let** st = L.call t (C.Query.get_account_state ~block:last addr) in
+                   show_account ~mc_root:last.C.Lite.root_hash ~addr st;
+                   Lwt.return (Ok ()))
+             (Ok ()) addresses))
   in
   match result with
   | Ok () -> print_endline "OK"

@@ -20,3 +20,8 @@ val shard_state_info : Cell.t -> (shard_info, error) result
 val shard_state_accounts : Cell.t -> (Cell.t, error) result
 (** The [accounts:^ShardAccounts] reference — a cell holding a
     [HashmapAugE 256 ShardAccount DepthBalanceInfo]. *)
+
+val shard_state_custom : Cell.t -> (Cell.t option, error) result
+(** The [custom:(Maybe ^McStateExtra)] reference, present only on the
+    masterchain. It is where the shard hashes live, and hence the only place
+    a shard block can be tied back to a masterchain block. *)

@@ -191,6 +191,130 @@ let test_merkle_accessors () =
       Alcotest.(check string) "error" "expected a merkle proof cell, got ordinary"
         (Format.asprintf "%a" Merkle.pp_error e)
 
+(* --- the shard link ---------------------------------------------------------- *)
+
+let mc_block = lazy (to_obj (field "block" (Lazy.force vectors)))
+let mc_root () = unhex (to_str (field "rootHash" (Lazy.force mc_block)))
+
+let shardblk name =
+  let spec = to_obj (field name (Lazy.force accounts)) in
+  to_obj (field "shardblk" spec)
+
+let int_of_json = function
+  | `Int n -> Int32.of_int n
+  | `Intlit s -> Int32.of_string s
+  | _ -> Alcotest.fail "expected an int"
+
+(* An account outside the masterchain is proved against a shard block that the
+   server also chose. Without this step the chain of trust has a hole exactly
+   the size of "which shard block did you mean". *)
+let test_shard_link () =
+  let c = case "basechain_absent" in
+  let sb = shardblk "basechain_absent" in
+  let workchain = int_of_json (field "workchain" sb) in
+  let shard = Int64.of_string ("0x" ^ to_str (field "shard" sb)) in
+  let root_hash = unhex (to_str (field "rootHash" sb)) in
+  let seqno = int_of_json (field "seqno" sb) in
+  match Shard.find ~mc_root_hash:(mc_root ()) ~shard_proof:c.shard_proof ~workchain ~shard with
+  | Error e -> Alcotest.failf "%a" Shard.pp_error e
+  | Ok d ->
+      Alcotest.(check string) "the masterchain records this shard block" (hex root_hash) (hex d.Shard.root_hash);
+      Alcotest.(check int32) "and this seqno" seqno d.Shard.seqno;
+      Alcotest.(check int) "file hash is 32 bytes" 32 (String.length d.Shard.file_hash);
+      (* And the same through the checking entry point. *)
+      Alcotest.(check bool) "verify agrees" true
+        (Result.is_ok
+           (Shard.verify ~mc_root_hash:(mc_root ()) ~shard_proof:c.shard_proof ~workchain ~shard
+              ~shard_root_hash:root_hash ~seqno ()))
+
+let shard_err name r =
+  match r with Ok _ -> Alcotest.failf "%s: accepted" name | Error e -> Format.asprintf "%a" Shard.pp_error e
+
+let test_shard_rejections () =
+  let c = case "basechain_absent" in
+  let sb = shardblk "basechain_absent" in
+  let workchain = int_of_json (field "workchain" sb) in
+  let shard = Int64.of_string ("0x" ^ to_str (field "shard" sb)) in
+  let root_hash = unhex (to_str (field "rootHash" sb)) in
+  let seqno = int_of_json (field "seqno" sb) in
+  let v ?(wc = workchain) ?(sh = shard) ?(rh = root_hash) ?sq () =
+    Shard.verify ~mc_root_hash:(mc_root ()) ~shard_proof:c.shard_proof ~workchain:wc ~shard:sh
+      ~shard_root_hash:rh ?seqno:sq ()
+  in
+  (* A different shard block than the masterchain records. *)
+  Alcotest.(check bool) "substituted block hash" true
+    (let m = shard_err "hash" (v ~rh:(String.make 32 '\xcd') ()) in
+     String.length m > 24 && String.sub m 0 24 = "shard block hash mismatc");
+  Alcotest.(check bool) "substituted seqno" true
+    (let m = shard_err "seqno" (v ~sq:(Int32.add seqno 1l) ()) in
+     String.length m > 19 && String.sub m 0 19 = "shard seqno mismatc");
+  (* A workchain the masterchain block says nothing about. *)
+  Alcotest.(check bool) "unknown workchain" true
+    (let m = shard_err "workchain" (v ~wc:7l ()) in
+     String.length m > 30 && String.sub m 0 30 = "the masterchain block records ");
+  (* Aimed at a block the proof is not about. *)
+  Alcotest.(check bool) "wrong masterchain block" true
+    (let m =
+       shard_err "block"
+         (Shard.verify ~mc_root_hash:(String.make 32 '\xab') ~shard_proof:c.shard_proof ~workchain ~shard
+            ~shard_root_hash:root_hash ())
+     in
+     String.length m > 8 && String.sub m 0 8 = "no proof")
+
+(* Shard identifiers pack a prefix and its length into one word; the lowest
+   set bit marks where the prefix ends. *)
+let test_prefix_length () =
+  List.iter
+    (fun (shard, expected) ->
+      Alcotest.(check int)
+        (Printf.sprintf "%016Lx" shard)
+        expected (Shard.prefix_length shard))
+    [ (0x8000000000000000L, 0); (0x4000000000000000L, 1); (0xc000000000000000L, 1);
+      (0x2000000000000000L, 2); (0xa000000000000000L, 2); (0x0000000000000001L, 63) ]
+
+(* A masterchain account has no shard link to prove: the block the account is
+   proved against is the masterchain block itself. *)
+let test_masterchain_has_no_shard_proof () =
+  let c = case "elector" in
+  Alcotest.(check string) "no shard proof is sent" "" c.shard_proof;
+  Alcotest.(check string) "and the shard block is the masterchain block"
+    (hex (mc_root ())) (hex c.shard_root)
+
+(* --- the whole chain from a masterchain block -------------------------------- *)
+
+let block_ref name =
+  let sb = shardblk name in
+  { Account.workchain = int_of_json (field "workchain" sb);
+    shard = Int64.of_string ("0x" ^ to_str (field "shard" sb));
+    seqno = int_of_json (field "seqno" sb);
+    root_hash = unhex (to_str (field "rootHash" sb)) }
+
+(* The composed entry point: from a masterchain block alone, through the shard
+   link, to the account. This is what a caller should reach for, because doing
+   the two steps by hand invites skipping the first. *)
+let test_whole_chain name expected () =
+  let c = case name in
+  match
+    Account.verify_via_shard ~mc_root_hash:(mc_root ()) ~shard_proof:c.shard_proof
+      ~shardblk:(block_ref name) ~proof:c.proof ~state:c.state ~address:c.address
+  with
+  | Error e -> Alcotest.failf "%s: %a" name Account.pp_error e
+  | Ok Account.Does_not_exist -> Alcotest.(check string) (name ^ ": absent") "absent" expected
+  | Ok (Account.Exists _) -> Alcotest.(check string) (name ^ ": exists") "exists" expected
+
+(* Substituting a shard block the masterchain does not name must fail before
+   the account proof is even considered. *)
+let test_whole_chain_rejects_shard () =
+  let c = case "basechain_absent" in
+  let bad = { (block_ref "basechain_absent") with Account.root_hash = String.make 32 '\x9e' } in
+  match
+    Account.verify_via_shard ~mc_root_hash:(mc_root ()) ~shard_proof:c.shard_proof ~shardblk:bad
+      ~proof:c.proof ~state:c.state ~address:c.address
+  with
+  | Ok _ -> Alcotest.fail "accepted a shard block the masterchain does not name"
+  | Error (Account.Shard _) -> ()
+  | Error e -> Alcotest.failf "wrong error: %a" Account.pp_error e
+
 let () =
   Alcotest.run "proof"
     [ ( "mainnet answers",
@@ -203,5 +327,15 @@ let () =
           Alcotest.test_case "state for an absent account" `Quick test_state_for_absent_account;
           Alcotest.test_case "address the proof does not cover" `Quick test_uncovered_address;
           Alcotest.test_case "wrong workchain" `Quick test_wrong_workchain ] );
-      ("merkle", [ Alcotest.test_case "accessors" `Quick test_merkle_accessors ])
+      ("merkle", [ Alcotest.test_case "accessors" `Quick test_merkle_accessors ]);
+      ( "shard link",
+        [ Alcotest.test_case "the masterchain names the shard block" `Quick test_shard_link;
+          Alcotest.test_case "rejections" `Quick test_shard_rejections;
+          Alcotest.test_case "shard prefix lengths" `Quick test_prefix_length;
+          Alcotest.test_case "masterchain needs no shard link" `Quick test_masterchain_has_no_shard_proof ] );
+      ( "whole chain",
+        [ Alcotest.test_case "elector" `Quick (test_whole_chain "elector" "exists");
+          Alcotest.test_case "config" `Quick (test_whole_chain "config" "exists");
+          Alcotest.test_case "basechain absent" `Quick (test_whole_chain "basechain_absent" "absent");
+          Alcotest.test_case "rejects an unnamed shard block" `Quick test_whole_chain_rejects_shard ] )
     ]

@@ -60,3 +60,12 @@ let shard_state_accounts c =
       ignore (Slice.load_ref s) (* out_msg_queue_info *);
       ignore (Slice.load_bit s) (* before_split *);
       Ok (Slice.load_ref s))
+
+let shard_state_custom c =
+  read c (fun s ->
+      let* _ = parse_shard_state s in
+      ignore (Slice.load_ref s) (* out_msg_queue_info *);
+      ignore (Slice.load_bit s) (* before_split *);
+      ignore (Slice.load_ref s) (* accounts *);
+      ignore (Slice.load_ref s) (* the overload/balance/libraries group *);
+      Ok (Slice.load_maybe_ref s))

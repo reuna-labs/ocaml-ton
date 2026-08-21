@@ -44,10 +44,17 @@ would otherwise be indistinguishable from one showing an account genuinely
 missing, so a lookup reports "not covered by this proof" separately from
 "not there".
 
-What is *not* yet verified: for a shard account, that the shard block the
-proof is rooted at really belongs to the masterchain block. That link needs
-its own proof and is the next piece of work. Masterchain accounts are
-unaffected, since there the two blocks are the same.
+The shard link is verified too. An account outside the masterchain is proved
+against a shard block that the server also chose, so `Account.verify_via_shard`
+first proves that block appears in the masterchain block's shard hashes, and
+only then checks the account. Doing the two steps separately is possible but
+invites skipping the first, which would leave a hole exactly the size of
+"which shard block did you mean".
+
+What is *not* yet verified: the masterchain block root itself. It has to come
+from somewhere the caller trusts. Deriving it — walking `getBlockProof` from
+a hard-coded init block and checking validator signatures — is the remaining
+piece.
 
 **Two different cell hashes, deliberately.** `Cell.hash` (level 0) is the
 *representation hash* that addresses, signatures and Merkle proofs are built
