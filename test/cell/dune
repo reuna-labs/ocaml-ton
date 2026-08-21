@@ -1,0 +1,6 @@
+(tests
+ (names test_bits test_cell test_boc)
+ (deps
+  (source_tree ../vectors))
+ (libraries ton_cell digestif.ocaml base64 yojson alcotest qcheck-core
+   qcheck-alcotest))

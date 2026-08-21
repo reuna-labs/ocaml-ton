@@ -1,0 +1,4 @@
+(library
+ (name ton_cell)
+ (public_name ton-cell)
+ (libraries digestif.ocaml web3-codec))

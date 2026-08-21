@@ -1,0 +1,7 @@
+{
+  "name": "ton-gen-vectors",
+  "private": true,
+  "type": "module",
+  "description": "Generates cross-implementation test vectors from @ton/core. Dev-only; not part of the OCaml build.",
+  "dependencies": { "@ton/core": "^0.62.0" }
+}
