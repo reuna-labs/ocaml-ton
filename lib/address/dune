@@ -1,0 +1,4 @@
+(library
+ (name ton_address)
+ (public_name ton-address)
+ (libraries base64 web3-codec))

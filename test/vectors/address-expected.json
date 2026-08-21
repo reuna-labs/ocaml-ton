@@ -1,0 +1,92 @@
+{
+ "0:0000000000000000000000000000000000000000000000000000000000000000": {
+  "workchain": 0,
+  "hash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "rawString": "0:0000000000000000000000000000000000000000000000000000000000000000",
+  "forms": {
+   "bounceable=true,testnet=true,urlSafe=true": "kQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHTW",
+   "bounceable=true,testnet=true,urlSafe=false": "kQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHTW",
+   "bounceable=true,testnet=false,urlSafe=true": "EQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAM9c",
+   "bounceable=true,testnet=false,urlSafe=false": "EQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAM9c",
+   "bounceable=false,testnet=true,urlSafe=true": "0QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACkT",
+   "bounceable=false,testnet=true,urlSafe=false": "0QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACkT",
+   "bounceable=false,testnet=false,urlSafe=true": "UQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJKZ",
+   "bounceable=false,testnet=false,urlSafe=false": "UQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJKZ"
+  }
+ },
+ "0:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff": {
+  "workchain": 0,
+  "hash": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+  "rawString": "0:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+  "forms": {
+   "bounceable=true,testnet=true,urlSafe=true": "kQD___________________________________________Bi",
+   "bounceable=true,testnet=true,urlSafe=false": "kQD///////////////////////////////////////////Bi",
+   "bounceable=true,testnet=false,urlSafe=true": "EQD__________________________________________0vo",
+   "bounceable=true,testnet=false,urlSafe=false": "EQD//////////////////////////////////////////0vo",
+   "bounceable=false,testnet=true,urlSafe=true": "0QD__________________________________________62n",
+   "bounceable=false,testnet=true,urlSafe=false": "0QD//////////////////////////////////////////62n",
+   "bounceable=false,testnet=false,urlSafe=true": "UQD__________________________________________xYt",
+   "bounceable=false,testnet=false,urlSafe=false": "UQD//////////////////////////////////////////xYt"
+  }
+ },
+ "0:e4d954ef9f4e1250a26b5bbad76a1cdd17cfd08babad6f4c23e372270aef6f76": {
+  "workchain": 0,
+  "hash": "e4d954ef9f4e1250a26b5bbad76a1cdd17cfd08babad6f4c23e372270aef6f76",
+  "rawString": "0:e4d954ef9f4e1250a26b5bbad76a1cdd17cfd08babad6f4c23e372270aef6f76",
+  "forms": {
+   "bounceable=true,testnet=true,urlSafe=true": "kQDk2VTvn04SUKJrW7rXahzdF8_Qi6utb0wj43InCu9vdoFb",
+   "bounceable=true,testnet=true,urlSafe=false": "kQDk2VTvn04SUKJrW7rXahzdF8/Qi6utb0wj43InCu9vdoFb",
+   "bounceable=true,testnet=false,urlSafe=true": "EQDk2VTvn04SUKJrW7rXahzdF8_Qi6utb0wj43InCu9vdjrR",
+   "bounceable=true,testnet=false,urlSafe=false": "EQDk2VTvn04SUKJrW7rXahzdF8/Qi6utb0wj43InCu9vdjrR",
+   "bounceable=false,testnet=true,urlSafe=true": "0QDk2VTvn04SUKJrW7rXahzdF8_Qi6utb0wj43InCu9vdtye",
+   "bounceable=false,testnet=true,urlSafe=false": "0QDk2VTvn04SUKJrW7rXahzdF8/Qi6utb0wj43InCu9vdtye",
+   "bounceable=false,testnet=false,urlSafe=true": "UQDk2VTvn04SUKJrW7rXahzdF8_Qi6utb0wj43InCu9vdmcU",
+   "bounceable=false,testnet=false,urlSafe=false": "UQDk2VTvn04SUKJrW7rXahzdF8/Qi6utb0wj43InCu9vdmcU"
+  }
+ },
+ "-1:3333333333333333333333333333333333333333333333333333333333333333": {
+  "workchain": -1,
+  "hash": "3333333333333333333333333333333333333333333333333333333333333333",
+  "rawString": "-1:3333333333333333333333333333333333333333333333333333333333333333",
+  "forms": {
+   "bounceable=true,testnet=true,urlSafe=true": "kf8zMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzM_BP",
+   "bounceable=true,testnet=true,urlSafe=false": "kf8zMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzM/BP",
+   "bounceable=true,testnet=false,urlSafe=true": "Ef8zMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzM0vF",
+   "bounceable=true,testnet=false,urlSafe=false": "Ef8zMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzM0vF",
+   "bounceable=false,testnet=true,urlSafe=true": "0f8zMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzM62K",
+   "bounceable=false,testnet=true,urlSafe=false": "0f8zMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzM62K",
+   "bounceable=false,testnet=false,urlSafe=true": "Uf8zMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMxYA",
+   "bounceable=false,testnet=false,urlSafe=false": "Uf8zMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMxYA"
+  }
+ },
+ "-1:34517c7bdf5187c55af4f8b61fdc321588c7ab768dee24b006df29106458d7cf": {
+  "workchain": -1,
+  "hash": "34517c7bdf5187c55af4f8b61fdc321588c7ab768dee24b006df29106458d7cf",
+  "rawString": "-1:34517c7bdf5187c55af4f8b61fdc321588c7ab768dee24b006df29106458d7cf",
+  "forms": {
+   "bounceable=true,testnet=true,urlSafe=true": "kf80UXx731GHxVr0-LYf3DIViMerdo3uJLAG3ykQZFjXz9Kc",
+   "bounceable=true,testnet=true,urlSafe=false": "kf80UXx731GHxVr0+LYf3DIViMerdo3uJLAG3ykQZFjXz9Kc",
+   "bounceable=true,testnet=false,urlSafe=true": "Ef80UXx731GHxVr0-LYf3DIViMerdo3uJLAG3ykQZFjXz2kW",
+   "bounceable=true,testnet=false,urlSafe=false": "Ef80UXx731GHxVr0+LYf3DIViMerdo3uJLAG3ykQZFjXz2kW",
+   "bounceable=false,testnet=true,urlSafe=true": "0f80UXx731GHxVr0-LYf3DIViMerdo3uJLAG3ykQZFjXz49Z",
+   "bounceable=false,testnet=true,urlSafe=false": "0f80UXx731GHxVr0+LYf3DIViMerdo3uJLAG3ykQZFjXz49Z",
+   "bounceable=false,testnet=false,urlSafe=true": "Uf80UXx731GHxVr0-LYf3DIViMerdo3uJLAG3ykQZFjXzzTT",
+   "bounceable=false,testnet=false,urlSafe=false": "Uf80UXx731GHxVr0+LYf3DIViMerdo3uJLAG3ykQZFjXzzTT"
+  }
+ },
+ "0:8d8dc2fbf5a1eaea6bb8b3c0b0e58dfaa42bfbaf7a97e83a3ee3b1e15d3e9e35": {
+  "workchain": 0,
+  "hash": "8d8dc2fbf5a1eaea6bb8b3c0b0e58dfaa42bfbaf7a97e83a3ee3b1e15d3e9e35",
+  "rawString": "0:8d8dc2fbf5a1eaea6bb8b3c0b0e58dfaa42bfbaf7a97e83a3ee3b1e15d3e9e35",
+  "forms": {
+   "bounceable=true,testnet=true,urlSafe=true": "kQCNjcL79aHq6mu4s8Cw5Y36pCv7r3qX6Do-47HhXT6eNdlO",
+   "bounceable=true,testnet=true,urlSafe=false": "kQCNjcL79aHq6mu4s8Cw5Y36pCv7r3qX6Do+47HhXT6eNdlO",
+   "bounceable=true,testnet=false,urlSafe=true": "EQCNjcL79aHq6mu4s8Cw5Y36pCv7r3qX6Do-47HhXT6eNWLE",
+   "bounceable=true,testnet=false,urlSafe=false": "EQCNjcL79aHq6mu4s8Cw5Y36pCv7r3qX6Do+47HhXT6eNWLE",
+   "bounceable=false,testnet=true,urlSafe=true": "0QCNjcL79aHq6mu4s8Cw5Y36pCv7r3qX6Do-47HhXT6eNYSL",
+   "bounceable=false,testnet=true,urlSafe=false": "0QCNjcL79aHq6mu4s8Cw5Y36pCv7r3qX6Do+47HhXT6eNYSL",
+   "bounceable=false,testnet=false,urlSafe=true": "UQCNjcL79aHq6mu4s8Cw5Y36pCv7r3qX6Do-47HhXT6eNT8B",
+   "bounceable=false,testnet=false,urlSafe=false": "UQCNjcL79aHq6mu4s8Cw5Y36pCv7r3qX6Do+47HhXT6eNT8B"
+  }
+ }
+}

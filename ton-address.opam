@@ -12,7 +12,7 @@ bug-reports: "https://github.com/reuna-labs/ocaml-ton/issues"
 depends: [
   "dune" {>= "3.0"}
   "ocaml" {>= "4.14"}
-  "ton-cell"
+  "web3-codec"
   "base64" {>= "3.5.0"}
   "alcotest" {with-test}
   "odoc" {with-doc}

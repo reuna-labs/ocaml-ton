@@ -22,12 +22,11 @@
 
 (package
  (name ton-address)
- (allow_empty)
  (synopsis "TON address parsing and formatting")
  (description
   "Raw and user-friendly TON addresses, including bounceable, non-bounceable\nand testnet tags, CRC-16/XMODEM validation and both base64 alphabets.")
  (depends
   (ocaml (>= 4.14))
-  ton-cell
+  web3-codec
   (base64 (>= 3.5.0))
   (alcotest :with-test)))

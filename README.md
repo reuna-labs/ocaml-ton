@@ -14,8 +14,8 @@ real mainnet data; everything above it is in progress.
 
 | Package | What | Status |
 | --- | --- | --- |
-| `ton-cell` | Bits, cells, representation hash, exotic cells, BoC codec | working |
-| `ton-address` | raw and user-friendly addresses | next |
+| `ton-cell` | Bits, cells, builder/slice, representation hash, exotic cells, BoC | working |
+| `ton-address` | raw and user-friendly addresses | working |
 | `ton-tlb` | dictionaries, coins, messages, accounts, VM stack | planned |
 | `ton-crypto` | Ed25519, mnemonics, Ed25519→X25519 | planned |
 | `ton-tl` / `ton-tl-schema` | TL wire runtime and generated liteserver schema | planned |
@@ -74,13 +74,19 @@ does not re-serialize them byte-for-byte either — both implementations differ
 from the input at the same offsets. So "correct" here means "agrees with the
 reference", not "reproduces the input".
 
+Builder and address vectors work the same way. Builder cases are stored as
+small *programs* of store operations that both implementations interpret, so
+the two are running one spec rather than two hand transcriptions of it.
+
 `tools/gen-vectors/` regenerates the expectations (needs Node); the output is
 committed so the suite never depends on it.
 
 ## Layout
 
 ```
-lib/cell/       bits, level masks, cell types, exotic cells, hashing, BoC
+lib/cell/       bits, level masks, cell types, exotic cells, hashing, BoC,
+                builder and slice cursors
+lib/address/    raw and user-friendly addresses
 tools/bocinfo/  dev tool: describe a Bag of Cells and check it round-trips
 tools/gen-vectors/  dev tool: regenerate cross-implementation expectations
 test/           unit and property tests, plus the committed vectors

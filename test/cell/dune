@@ -1,6 +1,6 @@
 (tests
- (names test_bits test_cell test_boc)
+ (names test_bits test_cell test_boc test_builder)
  (deps
   (source_tree ../vectors))
- (libraries ton_cell digestif.ocaml base64 yojson alcotest qcheck-core
+ (libraries ton_cell zarith digestif.ocaml base64 yojson alcotest qcheck-core
    qcheck-alcotest))
