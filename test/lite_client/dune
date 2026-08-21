@@ -1,0 +1,6 @@
+(test
+ (name test_session)
+ (deps
+  (source_tree ../vectors))
+ (libraries ton_lite_client ton_adnl ton_tl ton_tl_schema ton_address web3-codec
+   yojson alcotest))

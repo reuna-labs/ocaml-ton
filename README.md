@@ -19,8 +19,9 @@ real mainnet data; everything above it is in progress.
 | `ton-tlb` | dictionaries, coins, messages, accounts, VM stack | working |
 | `ton-crypto` | Ed25519, mnemonics, Ed25519→X25519 | working |
 | `ton-tl` / `ton-tl-schema` | TL wire runtime and generated liteserver schema | working |
-| `ton-adnl` | ADNL over TCP, as a pure state machine | planned |
-| `ton-lite-client` | liteserver client, IO-free | planned |
+| `ton-adnl` | ADNL over TCP, as a pure state machine | working |
+| `ton-lite-client` | liteserver client, IO-free | working |
+| `ton-lite-client-lwt` | Unix transport | working |
 | `ton-wallet` | wallet v3R2 / v4R2 / v5R1 | working |
 
 ## Design
@@ -81,6 +82,16 @@ Builder and address vectors work the same way. Builder cases are stored as
 small *programs* of store operations that both implementations interpret, so
 the two are running one spec rather than two hand transcriptions of it.
 
+ADNL is tested by replaying a recorded mainnet session. Every client-side
+random value — the ephemeral key, the session parameters, the query id, each
+frame nonce — was fixed when the transcript was taken, so the client's half of
+the conversation is a pure function of its inputs and must reproduce byte for
+byte. That is what the sans-IO design buys: an encrypted protocol tested with
+no socket. `tools/record_transcript/` takes a new one.
+
+`test/live/live.exe` runs a real query against mainnet. It is an executable,
+not a test, so `dune runtest` never touches the network.
+
 `tools/gen-vectors/` regenerates the expectations (needs Node); the output is
 committed so the suite never depends on it.
 
@@ -102,8 +113,13 @@ lib/crypto/     hashing, Ed25519, X25519 agreement, TON mnemonics
 lib/wallet/     wallet contracts and signed transfers
 lib/tl/         the TL wire format (unrelated to TL-B)
 lib/tl_schema/  generated liteserver and ADNL bindings, committed
+lib/adnl/       ADNL handshake and framing, no IO
+lib/lite_client/  typed liteserver queries and sessions, no IO
+lib/io/lwt/     the only package that opens a socket
 schema/         vendored .tl schemas, commit-pinned in PROVENANCE
 tools/tlgen/    dev tool: the TL schema compiler
+tools/record_transcript/  dev tool: record a live session for offline replay
+test/live/      a real query against mainnet; not part of `dune runtest`
 tools/bocinfo/  dev tool: describe a Bag of Cells and check it round-trips
 tools/gen-vectors/  dev tool: regenerate cross-implementation expectations
 test/           unit and property tests, plus the committed vectors

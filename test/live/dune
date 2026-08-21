@@ -1,0 +1,4 @@
+(executable
+ (name live)
+ (libraries ton_lite_client ton_lite_client_lwt ton_adnl ton_cell ton_tlb
+   ton_address mirage-crypto-rng.unix base64 lwt.unix))

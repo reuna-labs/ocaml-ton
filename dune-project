@@ -94,3 +94,48 @@
   (ocaml (>= 4.14))
   ton-tl
   (alcotest :with-test)))
+
+(package
+ (name ton-adnl)
+ (synopsis "ADNL over TCP, as a state machine with no IO")
+ (description
+  "The ADNL handshake and framing expressed as bytes in, bytes out. Nothing\nhere opens a socket or reads a clock, so a whole encrypted session is\nreproducible from its inputs and can be replayed offline in tests.")
+ (depends
+  (ocaml (>= 4.14))
+  ton-tl
+  ton-tl-schema
+  ton-crypto
+  (mirage-crypto (>= 2.1.0))
+  (digestif (>= 1.1.4))
+  (alcotest :with-test)
+  (qcheck-core :with-test)
+  (qcheck-alcotest :with-test)))
+
+(package
+ (name ton-lite-client)
+ (synopsis "TON liteserver client, with no IO")
+ (description
+  "Typed liteserver queries and session bookkeeping over the ADNL state\nmachine. Transport is somebody else's problem, which is what lets the whole\nprotocol be tested from a recorded transcript.")
+ (depends
+  (ocaml (>= 4.14))
+  ton-tl
+  ton-tl-schema
+  ton-adnl
+  ton-address
+  ton-cell
+  ton-tlb
+  web3-codec
+  (alcotest :with-test)))
+
+(package
+ (name ton-lite-client-lwt)
+ (synopsis "Unix transport for the TON liteserver client")
+ (description
+  "A TCP socket, a read loop and a table of outstanding queries. All the\nprotocol lives in ton-adnl and ton-lite-client, which is why this is small.")
+ (depends
+  (ocaml (>= 4.14))
+  ton-lite-client
+  ton-adnl
+  (mirage-crypto-rng (>= 2.1.0))
+  (lwt (>= 5.6.0))
+  logs))

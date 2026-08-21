@@ -1,0 +1,3 @@
+(executable
+ (name record)
+ (libraries ton_lite_client ton_adnl base64 lwt.unix))

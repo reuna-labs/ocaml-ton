@@ -1,0 +1,4 @@
+(library
+ (name ton_adnl)
+ (public_name ton-adnl)
+ (libraries ton-tl ton-tl-schema ton-crypto mirage-crypto digestif))

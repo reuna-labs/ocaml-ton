@@ -1,0 +1,4 @@
+(library
+ (name ton_lite_client)
+ (public_name ton-lite-client)
+ (libraries ton-tl ton-tl-schema ton-adnl ton-address ton-cell ton-tlb web3-codec))

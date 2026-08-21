@@ -1,0 +1,4 @@
+(library
+ (name ton_lite_client_lwt)
+ (public_name ton-lite-client-lwt)
+ (libraries ton-lite-client ton-adnl mirage-crypto-rng lwt lwt.unix logs))
