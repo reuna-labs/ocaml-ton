@@ -139,3 +139,16 @@
   (mirage-crypto-rng (>= 2.1.0))
   (lwt (>= 5.6.0))
   logs))
+
+(package
+ (name ton-proof)
+ (synopsis "Verifying TON Merkle proofs")
+ (description
+  "Checks that a liteserver's answer about an account really follows from a\nblock root hash, rather than taking its word for it. Includes proving that\nan account does not exist, which needs the proof to cover where it would be.")
+ (depends
+  (ocaml (>= 4.14))
+  ton-cell
+  ton-tlb
+  ton-address
+  (zarith (>= 1.12))
+  (alcotest :with-test)))

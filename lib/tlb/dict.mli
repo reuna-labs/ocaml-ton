@@ -61,6 +61,27 @@ val load_maybe : Slice.t -> key_bits:int -> value:(Slice.t -> 'v) -> 'v t
 val of_cell : Cell.t -> key_bits:int -> value:(Slice.t -> 'v) -> ('v t, Slice.error) result
 (** Parse a whole cell as a [Hashmap n X] root. *)
 
+(** {2 Single-key lookup} *)
+
+type 'v lookup = Found of 'v | Absent | Elided
+
+val lookup :
+  Cell.t -> key_bits:int -> key:Z.t -> value:(Slice.t -> 'v) -> ('v lookup, Slice.error) result
+(** Follow one key's path through a [Hashmap n X] root without decoding the
+    rest of the map.
+
+    [Elided] means the path ran into a pruned branch. That is a different
+    answer from [Absent], and keeping them apart is what makes it possible to
+    prove a key really is missing: a Merkle proof that simply omits the
+    relevant subtree would otherwise be indistinguishable from one showing
+    genuine absence. *)
+
+val lookup_aug :
+  Cell.t -> key_bits:int -> key:Z.t -> extra:(Slice.t -> 'e) -> value:(Slice.t -> 'v) ->
+  ('v lookup, Slice.error) result
+(** As {!lookup}, for a [HashmapAug n X Y] root — the shape used by shard
+    accounts and shard hashes, where every node carries an aggregate. *)
+
 (** {2 Writing} *)
 
 type error = Empty_hashmap | Key_out_of_range of Z.t | Builder of Builder.error

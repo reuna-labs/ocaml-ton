@@ -23,6 +23,7 @@ real mainnet data; everything above it is in progress.
 | `ton-lite-client` | liteserver client, IO-free | working |
 | `ton-lite-client-lwt` | Unix transport | working |
 | `ton-wallet` | wallet v3R2 / v4R2 / v5R1 | working |
+| `ton-proof` | Merkle proof verification for account state | working |
 
 ## Design
 
@@ -34,6 +35,19 @@ also makes an encrypted session replayable offline in tests.
 **Untrusted input is treated as such.** A Bag of Cells arriving from a
 liteserver is parsed with every index, width and checksum validated; decoding
 returns a typed error and never raises.
+
+**Answers are verified, not believed.** `ton-proof` checks that an account
+state really follows from a block root hash, along the chain block → state
+update → shard state → accounts dictionary → the account's committed hash.
+Absence is proved the same way: a server that omitted the relevant subtree
+would otherwise be indistinguishable from one showing an account genuinely
+missing, so a lookup reports "not covered by this proof" separately from
+"not there".
+
+What is *not* yet verified: for a shard account, that the shard block the
+proof is rooted at really belongs to the masterchain block. That link needs
+its own proof and is the next piece of work. Masterchain accounts are
+unaffected, since there the two blocks are the same.
 
 **Two different cell hashes, deliberately.** `Cell.hash` (level 0) is the
 *representation hash* that addresses, signatures and Merkle proofs are built
@@ -115,6 +129,7 @@ lib/tl/         the TL wire format (unrelated to TL-B)
 lib/tl_schema/  generated liteserver and ADNL bindings, committed
 lib/adnl/       ADNL handshake and framing, no IO
 lib/lite_client/  typed liteserver queries and sessions, no IO
+lib/proof/      Merkle proof verification
 lib/io/lwt/     the only package that opens a socket
 schema/         vendored .tl schemas, commit-pinned in PROVENANCE
 tools/tlgen/    dev tool: the TL schema compiler

@@ -39,12 +39,27 @@ let read_unary_length s =
   done;
   !n
 
-let rec do_parse s ~n ~key ~value ~acc ~partial =
-  let append_bit key b = Z.add (Z.shift_left key 1) (if b then Z.one else Z.zero) in
-  let prefix_len, key =
+let append_bit key b = Z.add (Z.shift_left key 1) (if b then Z.one else Z.zero)
+
+(* Reads one edge label and returns its length and the bits it contributed.
+   Shared by the full traversal and the single-key walk, so the three label
+   forms are decoded in exactly one place. *)
+let read_label s ~n ~key =
+  if not (Slice.load_bit s) then begin
+    (* hml_short *)
+    let l = read_unary_length s in
+    if l > n then Slice.fail (Slice.Message "hashmap label longer than the remaining key");
+    let k = ref key in
+    for _ = 1 to l do
+      k := append_bit !k (Slice.load_bit s)
+    done;
+    (l, !k)
+  end
+  else
+    let w = label_len_width n in
     if not (Slice.load_bit s) then begin
-      (* hml_short *)
-      let l = read_unary_length s in
+      (* hml_long *)
+      let l = Int64.to_int (Slice.load_uint s ~bits:w) in
       if l > n then Slice.fail (Slice.Message "hashmap label longer than the remaining key");
       let k = ref key in
       for _ = 1 to l do
@@ -52,30 +67,20 @@ let rec do_parse s ~n ~key ~value ~acc ~partial =
       done;
       (l, !k)
     end
-    else
-      let w = label_len_width n in
-      if not (Slice.load_bit s) then begin
-        (* hml_long *)
-        let l = Int64.to_int (Slice.load_uint s ~bits:w) in
-        if l > n then Slice.fail (Slice.Message "hashmap label longer than the remaining key");
-        let k = ref key in
-        for _ = 1 to l do
-          k := append_bit !k (Slice.load_bit s)
-        done;
-        (l, !k)
-      end
-      else begin
-        (* hml_same *)
-        let b = Slice.load_bit s in
-        let l = Int64.to_int (Slice.load_uint s ~bits:w) in
-        if l > n then Slice.fail (Slice.Message "hashmap label longer than the remaining key");
-        let k = ref key in
-        for _ = 1 to l do
-          k := append_bit !k b
-        done;
-        (l, !k)
-      end
-  in
+    else begin
+      (* hml_same *)
+      let b = Slice.load_bit s in
+      let l = Int64.to_int (Slice.load_uint s ~bits:w) in
+      if l > n then Slice.fail (Slice.Message "hashmap label longer than the remaining key");
+      let k = ref key in
+      for _ = 1 to l do
+        k := append_bit !k b
+      done;
+      (l, !k)
+    end
+
+let rec do_parse s ~n ~key ~value ~acc ~partial =
+  let prefix_len, key = read_label s ~n ~key in
   let rest = n - prefix_len in
   if rest = 0 then acc := ZMap.add key (value s) !acc
   else begin
@@ -86,8 +91,7 @@ let rec do_parse s ~n ~key ~value ~acc ~partial =
       (* Inside a Merkle proof an entire subtree may be replaced by a pruned
          branch. Skip it, but remember that the result is incomplete. *)
       if Cell.is_exotic cell then partial := true
-      else
-        do_parse (Slice.of_cell cell) ~n:(rest - 1) ~key:(append_bit key bit) ~value ~acc ~partial
+      else do_parse (Slice.of_cell cell) ~n:(rest - 1) ~key:(append_bit key bit) ~value ~acc ~partial
     in
     descend left false;
     descend right true
@@ -104,6 +108,61 @@ let load_maybe s ~key_bits ~value =
     let root = Slice.load_ref s in
     if Cell.is_exotic root then { (empty ~key_bits) with partial = true }
     else load (Slice.of_cell root) ~key_bits ~value
+
+(* --- single-key lookup ------------------------------------------------------ *)
+
+type 'v lookup = Found of 'v | Absent | Elided
+
+exception Pruned
+
+(* Follows one key's path instead of decoding the whole map.
+
+   The third outcome is the point. Inside a Merkle proof a subtree may have
+   been replaced by a pruned branch, and then "this key is not in the map" and
+   "I was not shown the part of the map where it would be" are different
+   claims. Conflating them would let a server deny the existence of anything
+   it chose not to include. *)
+let lookup_generic cell ~key_bits ~key ~leaf =
+  if Z.sign key < 0 || Z.numbits key > key_bits then invalid_arg "Dict.lookup: key does not fit";
+  (* The [len] bits of the key starting at [from], as an integer, so it can be
+     compared with the label the edge just yielded. *)
+  let sub_bits from len =
+    let acc = ref Z.zero in
+    for i = 0 to len - 1 do
+      acc := append_bit !acc (Z.testbit key (key_bits - 1 - (from + i)))
+    done;
+    !acc
+  in
+  let rec go cell ~consumed =
+    if Cell.is_exotic cell then raise Pruned;
+    let s = Slice.of_cell cell in
+    let len, label = read_label s ~n:(key_bits - consumed) ~key:Z.zero in
+    if not (Z.equal label (sub_bits consumed len)) then Absent
+    else
+      let consumed = consumed + len in
+      if consumed = key_bits then Found (leaf s)
+      else begin
+        (* The two references stand for the next bit being 0 and 1. *)
+        let left = Slice.load_ref s in
+        let right = Slice.load_ref s in
+        let next = if Z.testbit key (key_bits - 1 - consumed) then right else left in
+        go next ~consumed:(consumed + 1)
+      end
+  in
+  try Ok (go cell ~consumed:0) with
+  | Pruned -> Ok Elided
+  | Slice.Parse_error e -> Error e
+
+let lookup cell ~key_bits ~key ~value = lookup_generic cell ~key_bits ~key ~leaf:value
+
+(* An augmented hashmap carries an [extra] alongside every node. At a leaf it
+   precedes the value and must be skipped to reach it; at a fork it follows
+   the two references and never has to be read at all, because descending only
+   needs the references. *)
+let lookup_aug cell ~key_bits ~key ~extra ~value =
+  lookup_generic cell ~key_bits ~key ~leaf:(fun s ->
+      ignore (extra s);
+      value s)
 
 let of_cell c ~key_bits ~value =
   Slice.parse c (fun s ->

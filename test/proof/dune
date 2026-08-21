@@ -1,0 +1,5 @@
+(test
+ (name test_proof)
+ (deps
+  (source_tree ../vectors))
+ (libraries ton_cell ton_tlb ton_address ton_proof zarith base64 yojson alcotest))

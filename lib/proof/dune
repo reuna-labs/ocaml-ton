@@ -1,0 +1,4 @@
+(library
+ (name ton_proof)
+ (public_name ton-proof)
+ (libraries ton-cell ton-tlb ton-address zarith))

@@ -1,0 +1,3 @@
+(executable
+ (name fetch)
+ (libraries ton_lite_client ton_lite_client_lwt ton_address mirage-crypto-rng.unix base64 lwt.unix))
