@@ -25,7 +25,7 @@
   %{workspace_root}/tools/tlgen/tlgen.exe)
  (action
   (run %{workspace_root}/tools/tlgen/tlgen.exe --schema
-    %{workspace_root}/schema/ton_api.tl --only pub.,tcp. -o %{targets})))
+    %{workspace_root}/schema/ton_api.tl --only pub.,tcp.,ton.blockId -o %{targets})))
 
 (rule
  (alias runtest)

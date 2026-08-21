@@ -190,6 +190,15 @@ let ident s = let s = snake s in if List.mem s keywords then s ^ "_" else s
 
 (* --- code generation -------------------------------------------------------- *)
 
+(* Result types carrying more than one constructor become a variant. A
+   result type and a constructor can share an OCaml name -- the schema writes
+   them as liteServer.Foo and liteServer.foo -- and for a single-constructor
+   type that coincidence is useful, because the constructor's record simply
+   is the type. With several constructors it is a clash, so unions get their
+   own suffix and their own function names. *)
+let unions : (string, unit) Hashtbl.t = Hashtbl.create 16
+let is_union n = Hashtbl.mem unions n
+
 let buf = Buffer.create (1 lsl 16)
 let p fmt = Printf.ksprintf (Buffer.add_string buf) fmt
 
@@ -201,7 +210,8 @@ let rec ocaml_ty = function
   | Bool -> "bool"
   | True -> "bool"
   | Vector t -> ocaml_ty t ^ " list"
-  | Bare n | Boxed n -> ident n
+  | Bare n -> ident n
+  | Boxed n -> if is_union n then ident n ^ "_union" else ident n
   | Cond (_, _, True) -> "bool"
   | Cond (_, _, t) -> ocaml_ty t ^ " option"
 
@@ -218,7 +228,9 @@ let rec reader = function
   | True -> "true"
   | Vector t -> Printf.sprintf "R.vector r (fun r -> %s)" (reader t)
   | Bare n -> Printf.sprintf "read_%s r" (ident n)
-  | Boxed n -> Printf.sprintf "read_boxed_%s r" (ident n)
+  | Boxed n ->
+      if is_union n then Printf.sprintf "read_union_%s r" (ident n)
+      else Printf.sprintf "read_boxed_%s r" (ident n)
   | Cond (f, bit, True) -> Printf.sprintf "bit %s %d" (ident f) bit
   | Cond (f, bit, t) -> Printf.sprintf "if bit %s %d then Some (%s) else None" (ident f) bit (reader t)
 
@@ -235,7 +247,9 @@ let rec writer v = function
   | True -> "()"
   | Vector t -> Printf.sprintf "W.vector w (fun w v -> %s) %s" (writer "v" t) v
   | Bare n -> Printf.sprintf "write_%s w %s" (ident n) v
-  | Boxed n -> Printf.sprintf "write_boxed_%s w %s" (ident n) v
+  | Boxed n ->
+      if is_union n then Printf.sprintf "write_union_%s w %s" (ident n) v
+      else Printf.sprintf "write_boxed_%s w %s" (ident n) v
   | Cond (f, bit, True) ->
       Printf.sprintf "check_flag %S %d (bit %s %d) %s" f bit (ident f) bit v
   | Cond (f, bit, t) ->
@@ -311,6 +325,7 @@ let () =
       by_result []
   in
   let variants = List.sort (fun (a, _) (b, _) -> compare a b) variants in
+  List.iter (fun (rt, _) -> Hashtbl.replace unions rt ()) variants;
   let variant_case rt c =
     let rtn = ident rt ^ "_" and cn = ident c.name in
     let short =
@@ -336,7 +351,7 @@ let () =
     List.map type_body ctors
     @ List.map
         (fun (rt, cs) ->
-          Printf.sprintf "%s =\n%s" (ident rt)
+          Printf.sprintf "%s_union =\n%s" (ident rt)
             (String.concat "\n" (List.map (fun c -> Printf.sprintf "  | %s of %s" (variant_case rt c) (ident c.name)) cs)))
         variants
   in
@@ -350,7 +365,7 @@ let () =
     @ List.concat_map
         (fun (rt, cs) ->
           let n = ident rt in
-          [ Printf.sprintf "read_boxed_%s r : %s =\n  let id = R.constructor r in\n%s\n  else R.fail (R.Message (Printf.sprintf \"unexpected constructor %%08lx for %s\" id))"
+          [ Printf.sprintf "read_union_%s r : %s_union =\n  let id = R.constructor r in\n%s\n  else R.fail (R.Message (Printf.sprintf \"unexpected constructor %%08lx for %s\" id))"
               n n
               (String.concat "\n"
                  (List.mapi
@@ -359,7 +374,7 @@ let () =
                         (ident c.name) (variant_case rt c) (ident c.name))
                     cs))
               rt;
-            Printf.sprintf "write_boxed_%s w = function\n%s" n
+            Printf.sprintf "write_union_%s w = function\n%s" n
               (String.concat "\n"
                  (List.map
                     (fun c ->
@@ -368,6 +383,15 @@ let () =
                     cs)) ])
         variants
   in
+  (* A generator that emits two things with one name produces a compile
+     error a long way from its cause, so check here instead. *)
+  let names = List.map (fun c -> ident c.name) ctors @ List.map (fun (rt, _) -> ident rt ^ "_union") variants in
+  let seen = Hashtbl.create 64 in
+  List.iter
+    (fun n ->
+      if Hashtbl.mem seen n then die "two definitions both generate the OCaml name %s" n;
+      Hashtbl.replace seen n ())
+    names;
   List.iteri (fun i b -> p "%s %s\n\n" (if i = 0 then "let rec" else "and") b) bodies;
   let oc = if !out = "" then stdout else open_out !out in
   output_string oc (Buffer.contents buf);

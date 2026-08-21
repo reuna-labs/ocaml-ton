@@ -11,7 +11,7 @@ let pp_error ppf = function
 let nonce_size = 32
 let checksum_size = 32
 let overhead = nonce_size + checksum_size
-let default_max_size = 256 * 1024
+let default_max_size = 4 * 1024 * 1024
 let sha256 s = Digestif.SHA256.(to_raw_string (digest_string s))
 let le32 v = String.init 4 (fun i -> Char.unsafe_chr ((v lsr (8 * i)) land 0xff))
 

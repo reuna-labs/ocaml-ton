@@ -30,7 +30,7 @@ and tcp_authentification_nonce = {
 }
 
 and tcp_authentification_complete = {
-  key : public_key;
+  key : public_key_union;
   signature : string;
 }
 
@@ -54,16 +54,30 @@ and pub_overlay = {
   name : string;
 }
 
-and public_key =
+and ton_block_id = {
+  root_cell_hash : string;
+  file_hash : string;
+}
+
+and ton_block_id_approve = {
+  root_cell_hash : string;
+  file_hash : string;
+}
+
+and public_key_union =
   | Pub_unenc of pub_unenc
   | Pub_ed25519 of pub_ed25519
   | Pub_aes of pub_aes
   | Pub_overlay of pub_overlay
 
-and tcp_message =
+and tcp_message_union =
   | Tcp_authentificate of tcp_authentificate
   | Tcp_authentification_nonce of tcp_authentification_nonce
   | Tcp_authentification_complete of tcp_authentification_complete
+
+and ton_block_id_union =
+  | Ton_block_id of ton_block_id
+  | Approve of ton_block_id_approve
 
 (* tcp.pong random_id:long = tcp.Pong; *)
 let tcp_pong_id = 0xdc69fb03l
@@ -91,6 +105,12 @@ let pub_aes_id = 0x2dbcadd4l
 
 (* pub.overlay name:bytes = PublicKey; *)
 let pub_overlay_id = 0x34ba45cbl
+
+(* ton.blockId root_cell_hash:int256 file_hash:int256 = ton.BlockId; *)
+let ton_block_id_id = 0xc50b6e70l
+
+(* ton.blockIdApprove root_cell_hash:int256 file_hash:int256 = ton.BlockId; *)
+let ton_block_id_approve_id = 0x2dd44a49l
 
 let rec read_tcp_pong r : tcp_pong =
   let random_id = R.long r in
@@ -132,14 +152,14 @@ and read_boxed_tcp_authentification_nonce r : tcp_authentification_nonce = R.exp
 and write_boxed_tcp_authentification_nonce w v = W.constructor w tcp_authentification_nonce_id; write_tcp_authentification_nonce w v
 
 and read_tcp_authentification_complete r : tcp_authentification_complete =
-  let key = read_boxed_public_key r in
+  let key = read_union_public_key r in
   let signature = R.bytes r in
   { key; signature }
 
 and write_tcp_authentification_complete w (v : tcp_authentification_complete) =
   let key = v.key in
   let signature = v.signature in
-  write_boxed_public_key w key;
+  write_union_public_key w key;
   W.bytes w signature;
   ()
 
@@ -212,7 +232,39 @@ and read_boxed_pub_overlay r : pub_overlay = R.expect r pub_overlay_id; read_pub
 
 and write_boxed_pub_overlay w v = W.constructor w pub_overlay_id; write_pub_overlay w v
 
-and read_boxed_public_key r : public_key =
+and read_ton_block_id r : ton_block_id =
+  let root_cell_hash = R.int256 r in
+  let file_hash = R.int256 r in
+  { root_cell_hash; file_hash }
+
+and write_ton_block_id w (v : ton_block_id) =
+  let root_cell_hash = v.root_cell_hash in
+  let file_hash = v.file_hash in
+  W.int256 w root_cell_hash;
+  W.int256 w file_hash;
+  ()
+
+and read_boxed_ton_block_id r : ton_block_id = R.expect r ton_block_id_id; read_ton_block_id r
+
+and write_boxed_ton_block_id w v = W.constructor w ton_block_id_id; write_ton_block_id w v
+
+and read_ton_block_id_approve r : ton_block_id_approve =
+  let root_cell_hash = R.int256 r in
+  let file_hash = R.int256 r in
+  { root_cell_hash; file_hash }
+
+and write_ton_block_id_approve w (v : ton_block_id_approve) =
+  let root_cell_hash = v.root_cell_hash in
+  let file_hash = v.file_hash in
+  W.int256 w root_cell_hash;
+  W.int256 w file_hash;
+  ()
+
+and read_boxed_ton_block_id_approve r : ton_block_id_approve = R.expect r ton_block_id_approve_id; read_ton_block_id_approve r
+
+and write_boxed_ton_block_id_approve w v = W.constructor w ton_block_id_approve_id; write_ton_block_id_approve w v
+
+and read_union_public_key r : public_key_union =
   let id = R.constructor r in
   if id = pub_unenc_id then Pub_unenc (read_pub_unenc r)
   else if id = pub_ed25519_id then Pub_ed25519 (read_pub_ed25519 r)
@@ -220,21 +272,31 @@ and read_boxed_public_key r : public_key =
   else if id = pub_overlay_id then Pub_overlay (read_pub_overlay r)
   else R.fail (R.Message (Printf.sprintf "unexpected constructor %08lx for PublicKey" id))
 
-and write_boxed_public_key w = function
+and write_union_public_key w = function
   | Pub_unenc v -> W.constructor w pub_unenc_id; write_pub_unenc w v
   | Pub_ed25519 v -> W.constructor w pub_ed25519_id; write_pub_ed25519 w v
   | Pub_aes v -> W.constructor w pub_aes_id; write_pub_aes w v
   | Pub_overlay v -> W.constructor w pub_overlay_id; write_pub_overlay w v
 
-and read_boxed_tcp_message r : tcp_message =
+and read_union_tcp_message r : tcp_message_union =
   let id = R.constructor r in
   if id = tcp_authentificate_id then Tcp_authentificate (read_tcp_authentificate r)
   else if id = tcp_authentification_nonce_id then Tcp_authentification_nonce (read_tcp_authentification_nonce r)
   else if id = tcp_authentification_complete_id then Tcp_authentification_complete (read_tcp_authentification_complete r)
   else R.fail (R.Message (Printf.sprintf "unexpected constructor %08lx for tcp.Message" id))
 
-and write_boxed_tcp_message w = function
+and write_union_tcp_message w = function
   | Tcp_authentificate v -> W.constructor w tcp_authentificate_id; write_tcp_authentificate w v
   | Tcp_authentification_nonce v -> W.constructor w tcp_authentification_nonce_id; write_tcp_authentification_nonce w v
   | Tcp_authentification_complete v -> W.constructor w tcp_authentification_complete_id; write_tcp_authentification_complete w v
+
+and read_union_ton_block_id r : ton_block_id_union =
+  let id = R.constructor r in
+  if id = ton_block_id_id then Ton_block_id (read_ton_block_id r)
+  else if id = ton_block_id_approve_id then Approve (read_ton_block_id_approve r)
+  else R.fail (R.Message (Printf.sprintf "unexpected constructor %08lx for ton.BlockId" id))
+
+and write_union_ton_block_id w = function
+  | Ton_block_id v -> W.constructor w ton_block_id_id; write_ton_block_id w v
+  | Approve v -> W.constructor w ton_block_id_approve_id; write_ton_block_id_approve w v
 

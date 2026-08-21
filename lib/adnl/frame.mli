@@ -24,8 +24,13 @@ val overhead : int
 (** [64] — the nonce and checksum a payload is wrapped in. *)
 
 val default_max_size : int
-(** [262144]. The protocol allows up to 2^24, but a unikernel should not let
-    a peer choose how much it allocates. *)
+(** [4194304]. The protocol allows up to 2^24; the point of a lower bound is
+    that a peer should not choose how much memory a unikernel commits.
+
+    Four megabytes rather than something tighter because real answers get
+    large: a block proof from an old key block runs to hundreds of kilobytes,
+    and a full configuration is bigger still. A deployment that knows it will
+    only make small queries should lower it. *)
 
 val encode : nonce:string -> string -> string
 (** The plaintext frame. The caller encrypts it.

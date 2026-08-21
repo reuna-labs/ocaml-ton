@@ -115,8 +115,8 @@ let test_variant_dispatch () =
   let ordinary =
     Lite.Ordinary { Lite.validator_set_hash = 1l; catchain_seqno = 2l; signatures = [ sig_ ] }
   in
-  let back = dec (enc (fun w -> Lite.write_boxed_lite_server_signature_set w ordinary))
-               (fun r -> Lite.read_boxed_lite_server_signature_set r)
+  let back = dec (enc (fun w -> Lite.write_union_lite_server_signature_set w ordinary))
+               (fun r -> Lite.read_union_lite_server_signature_set r)
   in
   (match back with
   | Lite.Ordinary o ->
@@ -128,14 +128,14 @@ let test_variant_dispatch () =
       { Lite.cc_seqno = 9l; validator_set_hash = 8l; signatures = []; session_id = String.make 32 '\x04';
         slot = 3l; candidate = "cand" }
   in
-  match dec (enc (fun w -> Lite.write_boxed_lite_server_signature_set w simplex))
-          (fun r -> Lite.read_boxed_lite_server_signature_set r)
+  match dec (enc (fun w -> Lite.write_union_lite_server_signature_set w simplex))
+          (fun r -> Lite.read_union_lite_server_signature_set r)
   with
   | Lite.Simplex s -> Alcotest.(check int32) "cc seqno" 9l s.Lite.cc_seqno
   | Lite.Ordinary _ -> Alcotest.fail "decoded the wrong constructor"
 
 let test_unknown_constructor () =
-  match R.parse (enc (fun w -> W.constructor w 0xdeadbeefl)) (fun r -> Lite.read_boxed_lite_server_signature_set r) with
+  match R.parse (enc (fun w -> W.constructor w 0xdeadbeefl)) (fun r -> Lite.read_union_lite_server_signature_set r) with
   | Ok _ -> Alcotest.fail "accepted an unknown constructor"
   | Error e ->
       Alcotest.(check string) "error" "unexpected constructor deadbeef for liteServer.SignatureSet"

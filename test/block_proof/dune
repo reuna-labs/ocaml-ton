@@ -1,0 +1,5 @@
+(test
+ (name test_block_proof)
+ (deps
+  (source_tree ../vectors))
+ (libraries ton_proof ton_cell ton_tl base64 yojson alcotest))

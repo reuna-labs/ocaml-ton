@@ -62,6 +62,16 @@ module Query : sig
     block:Lite.ton_node_block_id_ext -> mode:int32 -> int32 list -> Lite.lite_server_config_info t
 
   val get_all_shards_info : Lite.ton_node_block_id_ext -> Lite.lite_server_all_shards_info t
+
+  val get_block_proof :
+    known:Lite.ton_node_block_id_ext -> ?target:Lite.ton_node_block_id_ext -> unit ->
+    Lite.lite_server_partial_block_proof t
+  (** A chain of links from a block already trusted towards a later one. The
+      answer is partial: [complete] says whether the target was reached, and
+      otherwise the walk continues from where it stopped. *)
+
+  val get_config_all :
+    block:Lite.ton_node_block_id_ext -> mode:int32 -> Lite.lite_server_config_info t
   val get_one_transaction :
     block:Lite.ton_node_block_id_ext -> account:Ton_address.t -> lt:int64 ->
     Lite.lite_server_transaction_info t

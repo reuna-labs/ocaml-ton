@@ -74,7 +74,7 @@ let write_all fd s =
   in
   go 0
 
-let connect ?(timeout = 10.0) ~host ~port ~server_pub () =
+let connect ?(timeout = 10.0) ?max_frame ~host ~port ~server_pub () =
   Lwt.catch
     (fun () ->
       let addr = Unix.ADDR_INET (Unix.inet_addr_of_string host, port) in
@@ -82,7 +82,7 @@ let connect ?(timeout = 10.0) ~host ~port ~server_pub () =
       Lwt_unix.setsockopt fd Unix.TCP_NODELAY true;
       Lwt_unix.connect fd addr >>= fun () ->
       match
-        Ton_adnl.Conn.connect ~server_pub ~ephemeral_seed:(random 32)
+        Ton_adnl.Conn.connect ?max_frame ~server_pub ~ephemeral_seed:(random 32)
           ~aes_params:(random Ton_adnl.Handshake.params_size) ()
       with
       | Error e -> Lwt_unix.close fd >|= fun () -> Error (Client (C.Adnl e))
@@ -147,7 +147,7 @@ let close t =
   t.closed <- Some "closed locally";
   Lwt.catch (fun () -> Lwt_unix.close t.fd) (fun _ -> Lwt.return_unit)
 
-let with_connection ?timeout ~host ~port ~server_pub f =
-  connect ?timeout ~host ~port ~server_pub () >>= function
+let with_connection ?timeout ?max_frame ~host ~port ~server_pub f =
+  connect ?timeout ?max_frame ~host ~port ~server_pub () >>= function
   | Error e -> Lwt.return (Error e)
   | Ok t -> Lwt.finalize (fun () -> f t) (fun () -> close t)

@@ -158,7 +158,7 @@ let test_frame_rejections () =
   in
   Alcotest.(check string) "too small" "frame of 63 bytes is smaller than the 64 byte overhead"
     (err "\063\000\000\000");
-  Alcotest.(check string) "too large" "frame of 16777215 bytes exceeds the 262144 byte limit"
+  Alcotest.(check string) "too large" "frame of 16777215 bytes exceeds the 4194304 byte limit"
     (err "\255\255\255\000");
   let plain = Frame.encode ~nonce:(String.make 32 '\x01') "payload" in
   let b = Bytes.of_string plain in

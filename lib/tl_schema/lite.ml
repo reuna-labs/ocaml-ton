@@ -228,14 +228,14 @@ and lite_server_block_link_forward = {
   to_ : ton_node_block_id_ext;
   dest_proof : string;
   config_proof : string;
-  signatures : lite_server_signature_set;
+  signatures : lite_server_signature_set_union;
 }
 
 and lite_server_partial_block_proof = {
   complete : bool;
   from : ton_node_block_id_ext;
   to_ : ton_node_block_id_ext;
-  steps : lite_server_block_link list;
+  steps : lite_server_block_link_union list;
 }
 
 and lite_server_config_info = {
@@ -564,15 +564,15 @@ and lite_server_wait_masterchain_seqno = {
   timeout_ms : int32;
 }
 
-and adnl_message =
+and adnl_message_union =
   | Query of adnl_message_query
   | Answer of adnl_message_answer
 
-and lite_server_block_link =
+and lite_server_block_link_union =
   | Back of lite_server_block_link_back
   | Forward of lite_server_block_link_forward
 
-and lite_server_signature_set =
+and lite_server_signature_set_union =
   | Ordinary of lite_server_signature_set_ordinary
   | Simplex of lite_server_signature_set_simplex
 
@@ -1492,7 +1492,7 @@ and read_lite_server_block_link_forward r : lite_server_block_link_forward =
   let to_ = read_ton_node_block_id_ext r in
   let dest_proof = R.bytes r in
   let config_proof = R.bytes r in
-  let signatures = read_boxed_lite_server_signature_set r in
+  let signatures = read_union_lite_server_signature_set r in
   { to_key_block; from; to_; dest_proof; config_proof; signatures }
 
 and write_lite_server_block_link_forward w (v : lite_server_block_link_forward) =
@@ -1507,7 +1507,7 @@ and write_lite_server_block_link_forward w (v : lite_server_block_link_forward) 
   write_ton_node_block_id_ext w to_;
   W.bytes w dest_proof;
   W.bytes w config_proof;
-  write_boxed_lite_server_signature_set w signatures;
+  write_union_lite_server_signature_set w signatures;
   ()
 
 and read_boxed_lite_server_block_link_forward r : lite_server_block_link_forward = R.expect r lite_server_block_link_forward_id; read_lite_server_block_link_forward r
@@ -1518,7 +1518,7 @@ and read_lite_server_partial_block_proof r : lite_server_partial_block_proof =
   let complete = R.bool r in
   let from = read_ton_node_block_id_ext r in
   let to_ = read_ton_node_block_id_ext r in
-  let steps = R.vector r (fun r -> read_boxed_lite_server_block_link r) in
+  let steps = R.vector r (fun r -> read_union_lite_server_block_link r) in
   { complete; from; to_; steps }
 
 and write_lite_server_partial_block_proof w (v : lite_server_partial_block_proof) =
@@ -1529,7 +1529,7 @@ and write_lite_server_partial_block_proof w (v : lite_server_partial_block_proof
   W.bool w complete;
   write_ton_node_block_id_ext w from;
   write_ton_node_block_id_ext w to_;
-  W.vector w (fun w v -> write_boxed_lite_server_block_link w v) steps;
+  W.vector w (fun w v -> write_union_lite_server_block_link w v) steps;
   ()
 
 and read_boxed_lite_server_partial_block_proof r : lite_server_partial_block_proof = R.expect r lite_server_partial_block_proof_id; read_lite_server_partial_block_proof r
@@ -2573,33 +2573,33 @@ and read_boxed_lite_server_wait_masterchain_seqno r : lite_server_wait_mastercha
 
 and write_boxed_lite_server_wait_masterchain_seqno w v = W.constructor w lite_server_wait_masterchain_seqno_id; write_lite_server_wait_masterchain_seqno w v
 
-and read_boxed_adnl_message r : adnl_message =
+and read_union_adnl_message r : adnl_message_union =
   let id = R.constructor r in
   if id = adnl_message_query_id then Query (read_adnl_message_query r)
   else if id = adnl_message_answer_id then Answer (read_adnl_message_answer r)
   else R.fail (R.Message (Printf.sprintf "unexpected constructor %08lx for adnl.Message" id))
 
-and write_boxed_adnl_message w = function
+and write_union_adnl_message w = function
   | Query v -> W.constructor w adnl_message_query_id; write_adnl_message_query w v
   | Answer v -> W.constructor w adnl_message_answer_id; write_adnl_message_answer w v
 
-and read_boxed_lite_server_block_link r : lite_server_block_link =
+and read_union_lite_server_block_link r : lite_server_block_link_union =
   let id = R.constructor r in
   if id = lite_server_block_link_back_id then Back (read_lite_server_block_link_back r)
   else if id = lite_server_block_link_forward_id then Forward (read_lite_server_block_link_forward r)
   else R.fail (R.Message (Printf.sprintf "unexpected constructor %08lx for liteServer.BlockLink" id))
 
-and write_boxed_lite_server_block_link w = function
+and write_union_lite_server_block_link w = function
   | Back v -> W.constructor w lite_server_block_link_back_id; write_lite_server_block_link_back w v
   | Forward v -> W.constructor w lite_server_block_link_forward_id; write_lite_server_block_link_forward w v
 
-and read_boxed_lite_server_signature_set r : lite_server_signature_set =
+and read_union_lite_server_signature_set r : lite_server_signature_set_union =
   let id = R.constructor r in
   if id = lite_server_signature_set_ordinary_id then Ordinary (read_lite_server_signature_set_ordinary r)
   else if id = lite_server_signature_set_simplex_id then Simplex (read_lite_server_signature_set_simplex r)
   else R.fail (R.Message (Printf.sprintf "unexpected constructor %08lx for liteServer.SignatureSet" id))
 
-and write_boxed_lite_server_signature_set w = function
+and write_union_lite_server_signature_set w = function
   | Ordinary v -> W.constructor w lite_server_signature_set_ordinary_id; write_lite_server_signature_set_ordinary w v
   | Simplex v -> W.constructor w lite_server_signature_set_simplex_id; write_lite_server_signature_set_simplex w v
 

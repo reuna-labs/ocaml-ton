@@ -51,10 +51,17 @@ only then checks the account. Doing the two steps separately is possible but
 invites skipping the first, which would leave a hole exactly the size of
 "which shard block did you mean".
 
-What is *not* yet verified: the masterchain block root itself. It has to come
-from somewhere the caller trusts. Deriving it — walking `getBlockProof` from
-a hard-coded init block and checking validator signatures — is the remaining
-piece.
+The masterchain block root itself is derived rather than assumed.
+`Block_proof` walks the chain of key blocks from the `init_block` published in
+TON's global configuration, and follows each link only when validators
+carrying more than two thirds of the signing weight have signed the next
+block. The validator set comes out of the previous key block's own extra, so
+each step is authorised by the block before it, back to an anchor distributed
+out of band.
+
+What remains trusted: the anchor. That is unavoidable — a light client has to
+start somewhere — and it is a single published constant rather than anything
+a server says.
 
 **Two different cell hashes, deliberately.** `Cell.hash` (level 0) is the
 *representation hash* that addresses, signatures and Merkle proofs are built

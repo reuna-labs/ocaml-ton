@@ -113,6 +113,19 @@ module Query = struct
         (boxed Lite.write_boxed_lite_server_get_config_params { Lite.mode; id = block; param_list })
       ~expect:Lite.lite_server_config_info_id ~read:Lite.read_lite_server_config_info
 
+  let get_block_proof ~known ?target () =
+    let mode = if target = None then 0l else 1l in
+    simple
+      ~encode:
+        (boxed Lite.write_boxed_lite_server_get_block_proof
+           { Lite.mode; known_block = known; target_block = target })
+      ~expect:Lite.lite_server_partial_block_proof_id ~read:Lite.read_lite_server_partial_block_proof
+
+  let get_config_all ~block ~mode =
+    simple
+      ~encode:(boxed Lite.write_boxed_lite_server_get_config_all { Lite.mode; id = block })
+      ~expect:Lite.lite_server_config_info_id ~read:Lite.read_lite_server_config_info
+
   let get_all_shards_info id =
     simple
       ~encode:(boxed Lite.write_boxed_lite_server_get_all_shards_info { Lite.id })

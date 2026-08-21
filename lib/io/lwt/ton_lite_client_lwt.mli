@@ -17,7 +17,8 @@ type error =
 val pp_error : Format.formatter -> error -> unit
 
 val connect :
-  ?timeout:float -> host:string -> port:int -> server_pub:string -> unit -> (t, error) result Lwt.t
+  ?timeout:float -> ?max_frame:int -> host:string -> port:int -> server_pub:string -> unit ->
+  (t, error) result Lwt.t
 (** Open a connection and complete the ADNL handshake.
 
     [server_pub] is the liteserver's 32-byte Ed25519 key — the [key] field of
@@ -30,5 +31,5 @@ val ping : ?timeout:float -> t -> (int64, error) result Lwt.t
 val close : t -> unit Lwt.t
 
 val with_connection :
-  ?timeout:float -> host:string -> port:int -> server_pub:string ->
+  ?timeout:float -> ?max_frame:int -> host:string -> port:int -> server_pub:string ->
   (t -> ('a, error) result Lwt.t) -> ('a, error) result Lwt.t

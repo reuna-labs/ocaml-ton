@@ -150,5 +150,9 @@
   ton-cell
   ton-tlb
   ton-address
+  ton-crypto
+  ton-tl
+  ton-tl-schema
+  (digestif (>= 1.1.4))
   (zarith (>= 1.12))
   (alcotest :with-test)))
