@@ -1,0 +1,18 @@
+Vendored TL schemas.
+
+Source: https://github.com/ton-blockchain/ton
+Path:   tl/generate/scheme/
+Commit: b647a8d5fcdb48cc27eba6d1b30d3305fd1546b3
+Fetched: 2026-08-21
+
+  lite_api.tl   the liteserver protocol, plus the builtins and the
+                tonNode/adnl types it depends on
+  ton_api.tl    the full node protocol; only the pub.* and tcp.* slices are
+                compiled, which is what ADNL over TCP needs
+
+These are the input to tools/tlgen, which derives constructor identifiers
+from the schema text. Updating a schema therefore changes identifiers, so
+re-run the generator and inspect the diff rather than assuming it is inert:
+
+  dune build @runtest        # fails if the committed output is stale
+  dune promote               # accept the regenerated files

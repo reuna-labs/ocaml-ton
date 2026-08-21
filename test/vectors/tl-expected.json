@@ -1,0 +1,3741 @@
+{
+ "lite_api.tl": {
+  "tonNode.blockId": {
+   "source": "tonNode.blockId workchain:int shard:long seqno:int = tonNode.BlockId;",
+   "id": 3083710823,
+   "explicit": false
+  },
+  "tonNode.blockIdExt": {
+   "source": "tonNode.blockIdExt workchain:int shard:long seqno:int root_hash:int256 file_hash:int256 = tonNode.BlockIdExt;",
+   "id": 1733487480,
+   "explicit": false
+  },
+  "tonNode.zeroStateIdExt": {
+   "source": "tonNode.zeroStateIdExt workchain:int root_hash:int256 file_hash:int256 = tonNode.ZeroStateIdExt;",
+   "id": 494024110,
+   "explicit": false
+  },
+  "adnl.message.query": {
+   "source": "adnl.message.query query_id:int256 query:bytes = adnl.Message;",
+   "id": 3029072250,
+   "explicit": false
+  },
+  "adnl.message.answer": {
+   "source": "adnl.message.answer query_id:int256 answer:bytes = adnl.Message;",
+   "id": 262964246,
+   "explicit": false
+  },
+  "liteServer.error": {
+   "source": "liteServer.error code:int message:string = liteServer.Error;",
+   "id": 3148472648,
+   "explicit": false
+  },
+  "liteServer.accountId": {
+   "source": "liteServer.accountId workchain:int id:int256 = liteServer.AccountId;",
+   "id": 1973478085,
+   "explicit": false
+  },
+  "liteServer.libraryEntry": {
+   "source": "liteServer.libraryEntry hash:int256 data:bytes = liteServer.LibraryEntry;",
+   "id": 2331976774,
+   "explicit": false
+  },
+  "liteServer.masterchainInfo": {
+   "source": "liteServer.masterchainInfo last:tonNode.blockIdExt state_root_hash:int256 init:tonNode.zeroStateIdExt = liteServer.MasterchainInfo;",
+   "id": 2239965313,
+   "explicit": false
+  },
+  "liteServer.masterchainInfoExt": {
+   "source": "liteServer.masterchainInfoExt mode:# version:int capabilities:long last:tonNode.blockIdExt last_utime:int now:int state_root_hash:int256 init:tonNode.zeroStateIdExt = liteServer.MasterchainInfoExt;",
+   "id": 2831999221,
+   "explicit": false
+  },
+  "liteServer.currentTime": {
+   "source": "liteServer.currentTime now:int = liteServer.CurrentTime;",
+   "id": 3914530829,
+   "explicit": false
+  },
+  "liteServer.version": {
+   "source": "liteServer.version mode:# version:int capabilities:long now:int = liteServer.Version;",
+   "id": 1510248933,
+   "explicit": false
+  },
+  "liteServer.blockData": {
+   "source": "liteServer.blockData id:tonNode.blockIdExt data:bytes = liteServer.BlockData;",
+   "id": 2775903596,
+   "explicit": false
+  },
+  "liteServer.blockState": {
+   "source": "liteServer.blockState id:tonNode.blockIdExt root_hash:int256 file_hash:int256 data:bytes = liteServer.BlockState;",
+   "id": 2880297996,
+   "explicit": false
+  },
+  "liteServer.blockHeader": {
+   "source": "liteServer.blockHeader id:tonNode.blockIdExt mode:# header_proof:bytes = liteServer.BlockHeader;",
+   "id": 1965916697,
+   "explicit": false
+  },
+  "liteServer.sendMsgStatus": {
+   "source": "liteServer.sendMsgStatus status:int = liteServer.SendMsgStatus;",
+   "id": 961602967,
+   "explicit": false
+  },
+  "liteServer.accountState": {
+   "source": "liteServer.accountState id:tonNode.blockIdExt shardblk:tonNode.blockIdExt shard_proof:bytes proof:bytes state:bytes = liteServer.AccountState;",
+   "id": 1887029073,
+   "explicit": false
+  },
+  "liteServer.runMethodResult": {
+   "source": "liteServer.runMethodResult mode:# id:tonNode.blockIdExt shardblk:tonNode.blockIdExt shard_proof:mode.0?bytes proof:mode.0?bytes state_proof:mode.1?bytes init_c7:mode.3?bytes lib_extras:mode.4?bytes exit_code:int result:mode.2?bytes = liteServer.RunMethodResult;",
+   "id": 2744803691,
+   "explicit": false
+  },
+  "liteServer.shardInfo": {
+   "source": "liteServer.shardInfo id:tonNode.blockIdExt shardblk:tonNode.blockIdExt shard_proof:bytes shard_descr:bytes = liteServer.ShardInfo;",
+   "id": 2682703236,
+   "explicit": false
+  },
+  "liteServer.allShardsInfo": {
+   "source": "liteServer.allShardsInfo id:tonNode.blockIdExt proof:bytes data:bytes = liteServer.AllShardsInfo;",
+   "id": 160425773,
+   "explicit": false
+  },
+  "liteServer.transactionInfo": {
+   "source": "liteServer.transactionInfo id:tonNode.blockIdExt proof:bytes transaction:bytes = liteServer.TransactionInfo;",
+   "id": 249490759,
+   "explicit": false
+  },
+  "liteServer.transactionList": {
+   "source": "liteServer.transactionList ids:(vector tonNode.blockIdExt) transactions:bytes = liteServer.TransactionList;",
+   "id": 1864812043,
+   "explicit": false
+  },
+  "liteServer.transactionMetadata": {
+   "source": "liteServer.transactionMetadata mode:# depth:int initiator:liteServer.accountId initiator_lt:long = liteServer.TransactionMetadata;",
+   "id": 4285555589,
+   "explicit": false
+  },
+  "liteServer.transactionId": {
+   "source": "liteServer.transactionId#b12f65af mode:# account:mode.0?int256 lt:mode.1?long hash:mode.2?int256 metadata:mode.8?liteServer.transactionMetadata = liteServer.TransactionId;",
+   "id": 2972673455,
+   "explicit": true
+  },
+  "liteServer.transactionId3": {
+   "source": "liteServer.transactionId3 account:int256 lt:long = liteServer.TransactionId3;",
+   "id": 746707575,
+   "explicit": false
+  },
+  "liteServer.blockTransactions": {
+   "source": "liteServer.blockTransactions id:tonNode.blockIdExt req_count:# incomplete:Bool ids:(vector liteServer.transactionId) proof:bytes = liteServer.BlockTransactions;",
+   "id": 3180113195,
+   "explicit": false
+  },
+  "liteServer.blockTransactionsExt": {
+   "source": "liteServer.blockTransactionsExt id:tonNode.blockIdExt req_count:# incomplete:Bool transactions:bytes proof:bytes = liteServer.BlockTransactionsExt;",
+   "id": 4220517604,
+   "explicit": false
+  },
+  "liteServer.signature": {
+   "source": "liteServer.signature node_id_short:int256 signature:bytes = liteServer.Signature;",
+   "id": 2749298773,
+   "explicit": false
+  },
+  "liteServer.signatureSet.ordinary": {
+   "source": "liteServer.signatureSet.ordinary#f644a6e6 validator_set_hash:int catchain_seqno:int signatures:(vector liteServer.signature) = liteServer.SignatureSet;",
+   "id": 4131694310,
+   "explicit": true
+  },
+  "liteServer.signatureSet.simplex": {
+   "source": "liteServer.signatureSet.simplex cc_seqno:int validator_set_hash:int signatures:(vector liteServer.signature)     session_id:int256 slot:int candidate:bytes = liteServer.SignatureSet;",
+   "id": 2888079360,
+   "explicit": false
+  },
+  "liteServer.blockLinkBack": {
+   "source": "liteServer.blockLinkBack to_key_block:Bool from:tonNode.blockIdExt to:tonNode.blockIdExt dest_proof:bytes proof:bytes state_proof:bytes = liteServer.BlockLink;",
+   "id": 4018019311,
+   "explicit": false
+  },
+  "liteServer.blockLinkForward": {
+   "source": "liteServer.blockLinkForward to_key_block:Bool from:tonNode.blockIdExt to:tonNode.blockIdExt dest_proof:bytes config_proof:bytes signatures:liteServer.SignatureSet = liteServer.BlockLink;",
+   "id": 1376767516,
+   "explicit": false
+  },
+  "liteServer.partialBlockProof": {
+   "source": "liteServer.partialBlockProof complete:Bool from:tonNode.blockIdExt to:tonNode.blockIdExt steps:(vector liteServer.BlockLink) = liteServer.PartialBlockProof;",
+   "id": 2396050113,
+   "explicit": false
+  },
+  "liteServer.configInfo": {
+   "source": "liteServer.configInfo mode:# id:tonNode.blockIdExt state_proof:bytes config_proof:bytes = liteServer.ConfigInfo;",
+   "id": 2927306543,
+   "explicit": false
+  },
+  "liteServer.validatorStats": {
+   "source": "liteServer.validatorStats mode:# id:tonNode.blockIdExt count:int complete:Bool state_proof:bytes data_proof:bytes = liteServer.ValidatorStats;",
+   "id": 3120010968,
+   "explicit": false
+  },
+  "liteServer.libraryResult": {
+   "source": "liteServer.libraryResult result:(vector liteServer.libraryEntry) = liteServer.LibraryResult;",
+   "id": 293255531,
+   "explicit": false
+  },
+  "liteServer.libraryResultWithProof": {
+   "source": "liteServer.libraryResultWithProof id:tonNode.blockIdExt mode:# result:(vector liteServer.libraryEntry) state_proof:bytes data_proof:bytes = liteServer.LibraryResultWithProof;",
+   "id": 279521215,
+   "explicit": false
+  },
+  "liteServer.shardBlockLink": {
+   "source": "liteServer.shardBlockLink id:tonNode.blockIdExt proof:bytes = liteServer.ShardBlockLink;",
+   "id": 3540897650,
+   "explicit": false
+  },
+  "liteServer.shardBlockProof": {
+   "source": "liteServer.shardBlockProof masterchain_id:tonNode.blockIdExt links:(vector liteServer.shardBlockLink) = liteServer.ShardBlockProof;",
+   "id": 493002874,
+   "explicit": false
+  },
+  "liteServer.lookupBlockResult": {
+   "source": "liteServer.lookupBlockResult id:tonNode.blockIdExt mode:# mc_block_id:tonNode.blockIdExt client_mc_state_proof:bytes mc_block_proof:bytes shard_links:(vector liteServer.shardBlockLink) header:bytes prev_header:bytes = liteServer.LookupBlockResult;",
+   "id": 2574805991,
+   "explicit": false
+  },
+  "liteServer.outMsgQueueSize": {
+   "source": "liteServer.outMsgQueueSize id:tonNode.blockIdExt size:int = liteServer.OutMsgQueueSize;",
+   "id": 2814790789,
+   "explicit": false
+  },
+  "liteServer.outMsgQueueSizes": {
+   "source": "liteServer.outMsgQueueSizes shards:(vector liteServer.outMsgQueueSize) ext_msg_queue_size_limit:int = liteServer.OutMsgQueueSizes;",
+   "id": 4166011395,
+   "explicit": false
+  },
+  "liteServer.blockOutMsgQueueSize": {
+   "source": "liteServer.blockOutMsgQueueSize mode:# id:tonNode.blockIdExt size:long proof:mode.0?bytes = liteServer.BlockOutMsgQueueSize;",
+   "id": 2328739355,
+   "explicit": false
+  },
+  "liteServer.accountDispatchQueueInfo": {
+   "source": "liteServer.accountDispatchQueueInfo addr:int256 size:long min_lt:long max_lt:long = liteServer.AccountDispatchQueueInfo;",
+   "id": 2605886139,
+   "explicit": false
+  },
+  "liteServer.dispatchQueueInfo": {
+   "source": "liteServer.dispatchQueueInfo mode:# id:tonNode.blockIdExt account_dispatch_queues:(vector liteServer.accountDispatchQueueInfo) complete:Bool proof:mode.0?bytes = liteServer.DispatchQueueInfo;",
+   "id": 1561408208,
+   "explicit": false
+  },
+  "liteServer.dispatchQueueMessage": {
+   "source": "liteServer.dispatchQueueMessage addr:int256 lt:long hash:int256 metadata:liteServer.transactionMetadata = liteServer.DispatchQueueMessage;",
+   "id": 2227446762,
+   "explicit": false
+  },
+  "liteServer.dispatchQueueMessages": {
+   "source": "liteServer.dispatchQueueMessages mode:# id:tonNode.blockIdExt messages:(vector liteServer.dispatchQueueMessage) complete:Bool     proof:mode.0?bytes messages_boc:mode.2?bytes = liteServer.DispatchQueueMessages;",
+   "id": 1262516529,
+   "explicit": false
+  },
+  "liteServer.debug.verbosity": {
+   "source": "liteServer.debug.verbosity value:int = liteServer.debug.Verbosity;",
+   "id": 1564493619,
+   "explicit": false
+  },
+  "liteServer.nonfinal.candidateId": {
+   "source": "liteServer.nonfinal.candidateId block_id:tonNode.blockIdExt creator:int256 collated_data_hash:int256 = liteServer.nonfinal.CandidateId;",
+   "id": 1426358254,
+   "explicit": false
+  },
+  "liteServer.nonfinal.candidate": {
+   "source": "liteServer.nonfinal.candidate id:liteServer.nonfinal.candidateId data:bytes collated_data:bytes = liteServer.nonfinal.Candidate;",
+   "id": 2160281228,
+   "explicit": false
+  },
+  "liteServer.nonfinal.candidateInfo": {
+   "source": "liteServer.nonfinal.candidateInfo id:liteServer.nonfinal.candidateId available:Bool approved_weight:long signed_weight:long total_weight:long = liteServer.nonfinal.CandidateInfo;",
+   "id": 1307312597,
+   "explicit": false
+  },
+  "liteServer.nonfinal.validatorGroupInfo": {
+   "source": "liteServer.nonfinal.validatorGroupInfo next_block_id:tonNode.blockId cc_seqno:int prev:(vector tonNode.blockIdExt) candidates:(vector liteServer.nonfinal.candidateInfo) = liteServer.nonfinal.ValidatorGroupInfo;",
+   "id": 4191586983,
+   "explicit": false
+  },
+  "liteServer.nonfinal.validatorGroups": {
+   "source": "liteServer.nonfinal.validatorGroups groups:(vector liteServer.nonfinal.validatorGroupInfo) = liteServer.nonfinal.ValidatorGroups;",
+   "id": 2366348798,
+   "explicit": false
+  },
+  "liteServer.nonfinal.pendingShardBlocks": {
+   "source": "liteServer.nonfinal.pendingShardBlocks signed_blocks:(vector tonNode.blockIdExt) candidates:(vector tonNode.blockIdExt) = liteServer.nonfinal.PendingShardBlocks;",
+   "id": 533753421,
+   "explicit": false
+  },
+  "liteServer.getMasterchainInfo": {
+   "source": "liteServer.getMasterchainInfo = liteServer.MasterchainInfo;",
+   "id": 2310399534,
+   "explicit": false
+  },
+  "liteServer.getMasterchainInfoExt": {
+   "source": "liteServer.getMasterchainInfoExt mode:# = liteServer.MasterchainInfoExt;",
+   "id": 1889956319,
+   "explicit": false
+  },
+  "liteServer.getTime": {
+   "source": "liteServer.getTime = liteServer.CurrentTime;",
+   "id": 380459572,
+   "explicit": false
+  },
+  "liteServer.getVersion": {
+   "source": "liteServer.getVersion = liteServer.Version;",
+   "id": 590058507,
+   "explicit": false
+  },
+  "liteServer.getBlock": {
+   "source": "liteServer.getBlock id:tonNode.blockIdExt = liteServer.BlockData;",
+   "id": 1668796173,
+   "explicit": false
+  },
+  "liteServer.getState": {
+   "source": "liteServer.getState id:tonNode.blockIdExt = liteServer.BlockState;",
+   "id": 3127783094,
+   "explicit": false
+  },
+  "liteServer.getBlockHeader": {
+   "source": "liteServer.getBlockHeader id:tonNode.blockIdExt mode:# = liteServer.BlockHeader;",
+   "id": 569116318,
+   "explicit": false
+  },
+  "liteServer.sendMessage": {
+   "source": "liteServer.sendMessage body:bytes = liteServer.SendMsgStatus;",
+   "id": 1762317442,
+   "explicit": false
+  },
+  "liteServer.getAccountState": {
+   "source": "liteServer.getAccountState id:tonNode.blockIdExt account:liteServer.accountId = liteServer.AccountState;",
+   "id": 1804144165,
+   "explicit": false
+  },
+  "liteServer.getAccountStatePrunned": {
+   "source": "liteServer.getAccountStatePrunned id:tonNode.blockIdExt account:liteServer.accountId = liteServer.AccountState;",
+   "id": 1516864775,
+   "explicit": false
+  },
+  "liteServer.runSmcMethod": {
+   "source": "liteServer.runSmcMethod mode:# id:tonNode.blockIdExt account:liteServer.accountId method_id:long params:bytes = liteServer.RunMethodResult;",
+   "id": 1556504018,
+   "explicit": false
+  },
+  "liteServer.getShardInfo": {
+   "source": "liteServer.getShardInfo id:tonNode.blockIdExt workchain:int shard:long exact:Bool = liteServer.ShardInfo;",
+   "id": 1185084453,
+   "explicit": false
+  },
+  "liteServer.getAllShardsInfo": {
+   "source": "liteServer.getAllShardsInfo id:tonNode.blockIdExt = liteServer.AllShardsInfo;",
+   "id": 1960050027,
+   "explicit": false
+  },
+  "liteServer.getOneTransaction": {
+   "source": "liteServer.getOneTransaction id:tonNode.blockIdExt account:liteServer.accountId lt:long = liteServer.TransactionInfo;",
+   "id": 3557762282,
+   "explicit": false
+  },
+  "liteServer.getTransactions": {
+   "source": "liteServer.getTransactions count:# account:liteServer.accountId lt:long hash:int256 = liteServer.TransactionList;",
+   "id": 474015649,
+   "explicit": false
+  },
+  "liteServer.lookupBlock": {
+   "source": "liteServer.lookupBlock mode:# id:tonNode.blockId lt:mode.1?long utime:mode.2?int = liteServer.BlockHeader;",
+   "id": 4207474462,
+   "explicit": false
+  },
+  "liteServer.lookupBlockWithProof": {
+   "source": "liteServer.lookupBlockWithProof mode:# id:tonNode.blockId mc_block_id:tonNode.blockIdExt lt:mode.1?long utime:mode.2?int = liteServer.LookupBlockResult;",
+   "id": 2617532408,
+   "explicit": false
+  },
+  "liteServer.listBlockTransactions": {
+   "source": "liteServer.listBlockTransactions id:tonNode.blockIdExt mode:# count:# after:mode.7?liteServer.transactionId3 reverse_order:mode.6?true want_proof:mode.5?true = liteServer.BlockTransactions;",
+   "id": 2919024602,
+   "explicit": false
+  },
+  "liteServer.listBlockTransactionsExt": {
+   "source": "liteServer.listBlockTransactionsExt id:tonNode.blockIdExt mode:# count:# after:mode.7?liteServer.transactionId3 reverse_order:mode.6?true want_proof:mode.5?true = liteServer.BlockTransactionsExt;",
+   "id": 7986524,
+   "explicit": false
+  },
+  "liteServer.getBlockProof": {
+   "source": "liteServer.getBlockProof mode:# known_block:tonNode.blockIdExt target_block:mode.0?tonNode.blockIdExt = liteServer.PartialBlockProof;",
+   "id": 2330631236,
+   "explicit": false
+  },
+  "liteServer.getConfigAll": {
+   "source": "liteServer.getConfigAll mode:# id:tonNode.blockIdExt = liteServer.ConfigInfo;",
+   "id": 2434475703,
+   "explicit": false
+  },
+  "liteServer.getConfigParams": {
+   "source": "liteServer.getConfigParams mode:# id:tonNode.blockIdExt param_list:(vector int) = liteServer.ConfigInfo;",
+   "id": 705764377,
+   "explicit": false
+  },
+  "liteServer.getValidatorStats": {
+   "source": "liteServer.getValidatorStats#091a58bc mode:# id:tonNode.blockIdExt limit:int start_after:mode.0?int256 modified_after:mode.2?int = liteServer.ValidatorStats;",
+   "id": 152721596,
+   "explicit": true
+  },
+  "liteServer.getLibraries": {
+   "source": "liteServer.getLibraries library_list:(vector int256) = liteServer.LibraryResult;",
+   "id": 3508713058,
+   "explicit": false
+  },
+  "liteServer.getLibrariesWithProof": {
+   "source": "liteServer.getLibrariesWithProof id:tonNode.blockIdExt mode:# library_list:(vector int256) = liteServer.LibraryResultWithProof;",
+   "id": 3648426941,
+   "explicit": false
+  },
+  "liteServer.getShardBlockProof": {
+   "source": "liteServer.getShardBlockProof id:tonNode.blockIdExt = liteServer.ShardBlockProof;",
+   "id": 1285948240,
+   "explicit": false
+  },
+  "liteServer.getOutMsgQueueSizes": {
+   "source": "liteServer.getOutMsgQueueSizes mode:# wc:mode.0?int shard:mode.0?long = liteServer.OutMsgQueueSizes;",
+   "id": 2076286006,
+   "explicit": false
+  },
+  "liteServer.getBlockOutMsgQueueSize": {
+   "source": "liteServer.getBlockOutMsgQueueSize mode:# id:tonNode.blockIdExt want_proof:mode.0?true = liteServer.BlockOutMsgQueueSize;",
+   "id": 2406250361,
+   "explicit": false
+  },
+  "liteServer.getDispatchQueueInfo": {
+   "source": "liteServer.getDispatchQueueInfo mode:# id:tonNode.blockIdExt after_addr:mode.1?int256 max_accounts:int want_proof:mode.0?true = liteServer.DispatchQueueInfo;",
+   "id": 31878131,
+   "explicit": false
+  },
+  "liteServer.getDispatchQueueMessages": {
+   "source": "liteServer.getDispatchQueueMessages mode:# id:tonNode.blockIdExt addr:int256 after_lt:long max_messages:int     want_proof:mode.0?true one_account:mode.1?true messages_boc:mode.2?true = liteServer.DispatchQueueMessages;",
+   "id": 3153945657,
+   "explicit": false
+  },
+  "liteServer.nonfinal.getPendingShardBlocks": {
+   "source": "liteServer.nonfinal.getPendingShardBlocks mode:# wc:mode.0?int shard:mode.0?long = liteServer.nonfinal.PendingShardBlocks;",
+   "id": 1519314988,
+   "explicit": false
+  },
+  "liteServer.queryPrefix": {
+   "source": "liteServer.queryPrefix = Object;",
+   "id": 1926489734,
+   "explicit": false
+  },
+  "liteServer.query": {
+   "source": "liteServer.query data:bytes = Object;",
+   "id": 2039219935,
+   "explicit": false
+  },
+  "liteServer.waitMasterchainSeqno": {
+   "source": "liteServer.waitMasterchainSeqno seqno:int timeout_ms:int = Object;",
+   "id": 3135944850,
+   "explicit": false
+  }
+ },
+ "ton_api.tl": {
+  "testObject": {
+   "source": "testObject value:int o:object f:function = TestObject;",
+   "id": 2773961098,
+   "explicit": false
+  },
+  "testString": {
+   "source": "testString value:string = TestObject;",
+   "id": 3359994313,
+   "explicit": false
+  },
+  "testInt": {
+   "source": "testInt value:int = TestObject;",
+   "id": 731271633,
+   "explicit": false
+  },
+  "testVectorBytes": {
+   "source": "testVectorBytes value:(vector bytes) = TestObject;",
+   "id": 1267407827,
+   "explicit": false
+  },
+  "tcp.pong": {
+   "source": "tcp.pong random_id:long = tcp.Pong;",
+   "id": 3697933059,
+   "explicit": false
+  },
+  "tcp.authentificate": {
+   "source": "tcp.authentificate nonce:bytes = tcp.Message;",
+   "id": 1146858258,
+   "explicit": false
+  },
+  "tcp.authentificationNonce": {
+   "source": "tcp.authentificationNonce nonce:bytes = tcp.Message;",
+   "id": 3814542006,
+   "explicit": false
+  },
+  "tcp.authentificationComplete": {
+   "source": "tcp.authentificationComplete key:PublicKey signature:bytes = tcp.Message;",
+   "id": 4155350694,
+   "explicit": false
+  },
+  "fec.raptorQ": {
+   "source": "fec.raptorQ data_size:int symbol_size:int symbols_count:int = fec.Type;",
+   "id": 2341709792,
+   "explicit": false
+  },
+  "fec.roundRobin": {
+   "source": "fec.roundRobin data_size:int symbol_size:int symbols_count:int = fec.Type;",
+   "id": 854927588,
+   "explicit": false
+  },
+  "fec.online": {
+   "source": "fec.online data_size:int symbol_size:int symbols_count:int = fec.Type;",
+   "id": 19359244,
+   "explicit": false
+  },
+  "tcp.ping": {
+   "source": "tcp.ping random_id:long = tcp.Pong;",
+   "id": 1292381082,
+   "explicit": false
+  },
+  "getTestObject": {
+   "source": "getTestObject = TestObject;",
+   "id": 197109379,
+   "explicit": false
+  },
+  "pk.unenc": {
+   "source": "pk.unenc data:bytes = PrivateKey;",
+   "id": 2983959344,
+   "explicit": false
+  },
+  "pk.ed25519": {
+   "source": "pk.ed25519 key:int256 = PrivateKey;",
+   "id": 1231561495,
+   "explicit": false
+  },
+  "pk.aes": {
+   "source": "pk.aes key:int256 = PrivateKey;",
+   "id": 2783465783,
+   "explicit": false
+  },
+  "pk.overlay": {
+   "source": "pk.overlay name:bytes = PrivateKey;",
+   "id": 933623387,
+   "explicit": false
+  },
+  "pub.unenc": {
+   "source": "pub.unenc data:bytes = PublicKey;",
+   "id": 3055502602,
+   "explicit": false
+  },
+  "pub.ed25519": {
+   "source": "pub.ed25519 key:int256 = PublicKey;",
+   "id": 1209251014,
+   "explicit": false
+  },
+  "pub.aes": {
+   "source": "pub.aes key:int256 = PublicKey;",
+   "id": 767339988,
+   "explicit": false
+  },
+  "pub.overlay": {
+   "source": "pub.overlay name:bytes = PublicKey;",
+   "id": 884622795,
+   "explicit": false
+  },
+  "adnl.id.short": {
+   "source": "adnl.id.short id:int256 = adnl.id.Short;",
+   "id": 1044342095,
+   "explicit": false
+  },
+  "adnl.address.udp": {
+   "source": "adnl.address.udp ip:int port:int = adnl.Address;",
+   "id": 1728947943,
+   "explicit": false
+  },
+  "adnl.address.udp6": {
+   "source": "adnl.address.udp6 ip:int128 port:int = adnl.Address;",
+   "id": 3810354170,
+   "explicit": false
+  },
+  "adnl.address.tunnel": {
+   "source": "adnl.address.tunnel to:int256 pubkey:PublicKey = adnl.Address;",
+   "id": 153813739,
+   "explicit": false
+  },
+  "adnl.address.reverse": {
+   "source": "adnl.address.reverse = adnl.Address;",
+   "id": 662262406,
+   "explicit": false
+  },
+  "adnl.address.quic": {
+   "source": "adnl.address.quic ip:int port:int = adnl.Address;",
+   "id": 2013360723,
+   "explicit": false
+  },
+  "adnl.addressList": {
+   "source": "adnl.addressList addrs:(vector adnl.Address) version:int reinit_date:int priority:int expire_at:int = adnl.AddressList;",
+   "id": 573040216,
+   "explicit": false
+  },
+  "adnl.node": {
+   "source": "adnl.node id:PublicKey addr_list:adnl.addressList = adnl.Node;",
+   "id": 1800802949,
+   "explicit": false
+  },
+  "adnl.nodes": {
+   "source": "adnl.nodes nodes:(vector adnl.node) = adnl.Nodes;",
+   "id": 2718554966,
+   "explicit": false
+  },
+  "adnl.packetContents": {
+   "source": "adnl.packetContents   rand1:bytes   flags:#   from:flags.0?PublicKey   from_short:flags.1?adnl.id.short   message:flags.2?adnl.Message   messages:flags.3?(vector adnl.Message)   address:flags.4?adnl.addressList   priority_address:flags.5?adnl.addressList   seqno:flags.6?long   confirm_seqno:flags.7?long   recv_addr_list_version:flags.8?int   recv_priority_addr_list_version:flags.9?int   reinit_date:flags.10?int   dst_reinit_date:flags.10?int   signature:flags.11?bytes   rand2:bytes         = adnl.PacketContents;",
+   "id": 3510816137,
+   "explicit": false
+  },
+  "adnl.tunnelPacketContents": {
+   "source": "adnl.tunnelPacketContents   rand1:bytes   flags:#   from_ip:flags.0?int   from_port:flags.0?int   message:flags.1?bytes   statistics:flags.2?bytes   payment:flags.3?bytes   rand2:bytes         = adnl.TunnelPacketContents;",
+   "id": 3314628788,
+   "explicit": false
+  },
+  "adnl.message.createChannel": {
+   "source": "adnl.message.createChannel key:int256 date:int = adnl.Message;",
+   "id": 3866346427,
+   "explicit": false
+  },
+  "adnl.message.confirmChannel": {
+   "source": "adnl.message.confirmChannel key:int256 peer_key:int256 date:int = adnl.Message;",
+   "id": 1625103721,
+   "explicit": false
+  },
+  "adnl.message.custom": {
+   "source": "adnl.message.custom data:bytes = adnl.Message;",
+   "id": 541595893,
+   "explicit": false
+  },
+  "adnl.message.nop": {
+   "source": "adnl.message.nop = adnl.Message;",
+   "id": 402186202,
+   "explicit": false
+  },
+  "adnl.message.reinit": {
+   "source": "adnl.message.reinit date:int = adnl.Message;",
+   "id": 281150752,
+   "explicit": false
+  },
+  "adnl.message.query": {
+   "source": "adnl.message.query query_id:int256 query:bytes = adnl.Message;",
+   "id": 3029072250,
+   "explicit": false
+  },
+  "adnl.message.answer": {
+   "source": "adnl.message.answer query_id:int256 answer:bytes = adnl.Message;",
+   "id": 262964246,
+   "explicit": false
+  },
+  "adnl.message.part": {
+   "source": "adnl.message.part hash:int256 total_size:int offset:int data:bytes = adnl.Message;",
+   "id": 4249169209,
+   "explicit": false
+  },
+  "adnl.db.node.key": {
+   "source": "adnl.db.node.key local_id:int256 peer_id:int256 = adnl.db.Key;",
+   "id": 3315852334,
+   "explicit": false
+  },
+  "adnl.db.node.value": {
+   "source": "adnl.db.node.value date:int id:PublicKey addr_list:adnl.addressList priority_addr_list:adnl.addressList = adnl.db.node.Value;",
+   "id": 1415390983,
+   "explicit": false
+  },
+  "adnl.stats.packets": {
+   "source": "adnl.stats.packets ts_start:double ts_end:double     in_packets:long in_bytes:long in_packets_channel:long in_bytes_channel:long     out_packets:long out_bytes:long out_packets_channel:long out_bytes_channel:long     out_expired_messages:long out_expired_bytes:long = adnl.stats.Packets;",
+   "id": 2634771787,
+   "explicit": false
+  },
+  "adnl.stats.peerPair": {
+   "source": "adnl.stats.peerPair local_id:int256 peer_id:int256 ip_str:string     packets_recent:adnl.stats.packets packets_total:adnl.stats.packets     last_out_packet_ts:double last_in_packet_ts:double     connection_ready:Bool channel_status:int try_reinit_at:double     out_queue_messages:long out_queue_bytes:long     = adnl.stats.PeerPair;",
+   "id": 2844580676,
+   "explicit": false
+  },
+  "adnl.stats.ipPackets": {
+   "source": "adnl.stats.ipPackets ip_str:string packets:long = adnl.stats.IpPackets;",
+   "id": 2728807322,
+   "explicit": false
+  },
+  "adnl.stats.localIdPackets": {
+   "source": "adnl.stats.localIdPackets ts_start:double ts_end:double     decrypted_packets:(vector adnl.stats.ipPackets) dropped_packets:(vector adnl.stats.ipPackets) = adnl.stats.LocalIdPackets;",
+   "id": 4113774454,
+   "explicit": false
+  },
+  "adnl.stats.localId": {
+   "source": "adnl.stats.localId short_id:int256     current_decrypt:(vector adnl.stats.ipPackets)     packets_recent:adnl.stats.localIdPackets     peers:(vector adnl.stats.peerPair) = adnl.stats.LocalId;",
+   "id": 3994283636,
+   "explicit": false
+  },
+  "adnl.stats": {
+   "source": "adnl.stats timestamp:double local_ids:(vector adnl.stats.localId) = adnl.Stats;",
+   "id": 1638879389,
+   "explicit": false
+  },
+  "rldp2.messagePart": {
+   "source": "rldp2.messagePart transfer_id:int256 fec_type:fec.Type part:int total_size:long seqno:int data:bytes = rldp2.MessagePart;",
+   "id": 289934190,
+   "explicit": false
+  },
+  "rldp2.confirm": {
+   "source": "rldp2.confirm transfer_id:int256 part:int max_seqno:int received_mask:int received_count:int = rldp2.MessagePart;",
+   "id": 602315077,
+   "explicit": false
+  },
+  "rldp2.complete": {
+   "source": "rldp2.complete transfer_id:int256 part:int = rldp2.MessagePart;",
+   "id": 918095903,
+   "explicit": false
+  },
+  "rldp.messagePart": {
+   "source": "rldp.messagePart transfer_id:int256 fec_type:fec.Type part:int total_size:long seqno:int data:bytes = rldp.MessagePart;",
+   "id": 408691404,
+   "explicit": false
+  },
+  "rldp.confirm": {
+   "source": "rldp.confirm transfer_id:int256 part:int seqno:int = rldp.MessagePart;",
+   "id": 4118994008,
+   "explicit": false
+  },
+  "rldp.complete": {
+   "source": "rldp.complete transfer_id:int256 part:int = rldp.MessagePart;",
+   "id": 3154948799,
+   "explicit": false
+  },
+  "rldp.message": {
+   "source": "rldp.message id:int256 data:bytes = rldp.Message;",
+   "id": 2098973982,
+   "explicit": false
+  },
+  "rldp.query": {
+   "source": "rldp.query query_id:int256 max_answer_size:long timeout:int data:bytes = rldp.Message;",
+   "id": 2323205481,
+   "explicit": false
+  },
+  "rldp.answer": {
+   "source": "rldp.answer query_id:int256 data:bytes = rldp.Message;",
+   "id": 2751224835,
+   "explicit": false
+  },
+  "dht.node": {
+   "source": "dht.node id:PublicKey addr_list:adnl.addressList version:int signature:bytes = dht.Node;",
+   "id": 2220044872,
+   "explicit": false
+  },
+  "dht.nodes": {
+   "source": "dht.nodes nodes:(vector dht.node) = dht.Nodes;",
+   "id": 2037686462,
+   "explicit": false
+  },
+  "dht.key": {
+   "source": "dht.key id:int256 name:bytes idx:int = dht.Key;",
+   "id": 4134002319,
+   "explicit": false
+  },
+  "dht.updateRule.signature": {
+   "source": "dht.updateRule.signature = dht.UpdateRule;",
+   "id": 3432985079,
+   "explicit": false
+  },
+  "dht.updateRule.anybody": {
+   "source": "dht.updateRule.anybody = dht.UpdateRule;",
+   "id": 1633127956,
+   "explicit": false
+  },
+  "dht.updateRule.overlayNodes": {
+   "source": "dht.updateRule.overlayNodes = dht.UpdateRule;",
+   "id": 645370755,
+   "explicit": false
+  },
+  "dht.keyDescription": {
+   "source": "dht.keyDescription key:dht.key id:PublicKey update_rule:dht.UpdateRule signature:bytes = dht.KeyDescription;",
+   "id": 673009157,
+   "explicit": false
+  },
+  "dht.value": {
+   "source": "dht.value key:dht.keyDescription value:bytes ttl:int signature:bytes = dht.Value;",
+   "id": 2427267019,
+   "explicit": false
+  },
+  "dht.pong": {
+   "source": "dht.pong random_id:long = dht.Pong;",
+   "id": 1519054721,
+   "explicit": false
+  },
+  "dht.valueNotFound": {
+   "source": "dht.valueNotFound nodes:dht.nodes = dht.ValueResult;",
+   "id": 2724332904,
+   "explicit": false
+  },
+  "dht.valueFound": {
+   "source": "dht.valueFound value:dht.Value = dht.ValueResult;",
+   "id": 3826055028,
+   "explicit": false
+  },
+  "dht.clientNotFound": {
+   "source": "dht.clientNotFound nodes:dht.nodes = dht.ReversePingResult;",
+   "id": 756842095,
+   "explicit": false
+  },
+  "dht.reversePingOk": {
+   "source": "dht.reversePingOk = dht.ReversePingResult;",
+   "id": 541077666,
+   "explicit": false
+  },
+  "dht.stored": {
+   "source": "dht.stored = dht.Stored;",
+   "id": 1881602824,
+   "explicit": false
+  },
+  "dht.message": {
+   "source": "dht.message node:dht.node = dht.Message;",
+   "id": 3154959246,
+   "explicit": false
+  },
+  "dht.requestReversePingCont": {
+   "source": "dht.requestReversePingCont target:adnl.Node signature:bytes client:int256 = dht.RequestReversePingCont;",
+   "id": 3685597445,
+   "explicit": false
+  },
+  "dht.db.bucket": {
+   "source": "dht.db.bucket nodes:dht.nodes = dht.db.Bucket;",
+   "id": 3013409388,
+   "explicit": false
+  },
+  "dht.db.key.bucket": {
+   "source": "dht.db.key.bucket id:int = dht.db.Key;",
+   "id": 2741546572,
+   "explicit": false
+  },
+  "dht.ping": {
+   "source": "dht.ping random_id:long = dht.Pong;",
+   "id": 3421191960,
+   "explicit": false
+  },
+  "dht.store": {
+   "source": "dht.store value:dht.value = dht.Stored;",
+   "id": 882065938,
+   "explicit": false
+  },
+  "dht.findNode": {
+   "source": "dht.findNode key:int256 k:int = dht.Nodes;",
+   "id": 1826803307,
+   "explicit": false
+  },
+  "dht.findValue": {
+   "source": "dht.findValue key:int256 k:int = dht.ValueResult;",
+   "id": 2924175377,
+   "explicit": false
+  },
+  "dht.getSignedAddressList": {
+   "source": "dht.getSignedAddressList = dht.Node;",
+   "id": 2843298029,
+   "explicit": false
+  },
+  "dht.registerReverseConnection": {
+   "source": "dht.registerReverseConnection node:PublicKey ttl:int signature:bytes = dht.Stored;",
+   "id": 573357153,
+   "explicit": false
+  },
+  "dht.requestReversePing": {
+   "source": "dht.requestReversePing target:adnl.Node signature:bytes client:int256 k:int = dht.ReversePingResult;",
+   "id": 194290698,
+   "explicit": false
+  },
+  "dht.query": {
+   "source": "dht.query node:dht.node = True;",
+   "id": 2102593385,
+   "explicit": false
+  },
+  "overlay.node.toSign": {
+   "source": "overlay.node.toSign id:adnl.id.short overlay:int256 version:int = overlay.node.ToSign;",
+   "id": 64530657,
+   "explicit": false
+  },
+  "overlay.node.toSignEx": {
+   "source": "overlay.node.toSignEx id:adnl.id.short overlay:int256 flags:int version:int = overlay.node.ToSign;",
+   "id": 2222614505,
+   "explicit": false
+  },
+  "overlay.node": {
+   "source": "overlay.node id:PublicKey overlay:int256 version:int signature:bytes = overlay.Node;",
+   "id": 3094055555,
+   "explicit": false
+  },
+  "overlay.nodeV2": {
+   "source": "overlay.nodeV2 id:PublicKey overlay:int256 flags:int version:int signature:bytes certificate:overlay.MemberCertificate = overlay.NodeV2;",
+   "id": 3181096359,
+   "explicit": false
+  },
+  "overlay.nodes": {
+   "source": "overlay.nodes nodes:(vector overlay.node) = overlay.Nodes;",
+   "id": 3834063118,
+   "explicit": false
+  },
+  "overlay.nodesV2": {
+   "source": "overlay.nodesV2 nodes:(vector overlay.nodeV2) = overlay.NodesV2;",
+   "id": 3825670210,
+   "explicit": false
+  },
+  "overlay.pong": {
+   "source": "overlay.pong = overlay.Pong;",
+   "id": 1735395332,
+   "explicit": false
+  },
+  "overlay.messageExtra": {
+   "source": "overlay.messageExtra flags:# certificate:flags.0?overlay.MemberCertificate = overlay.MessageExtra;",
+   "id": 785967269,
+   "explicit": false
+  },
+  "overlay.message": {
+   "source": "overlay.message overlay:int256 = overlay.Message;",
+   "id": 1965368352,
+   "explicit": false
+  },
+  "overlay.messageWithExtra": {
+   "source": "overlay.messageWithExtra overlay:int256 extra:overlay.messageExtra = overlay.Message;",
+   "id": 2721194813,
+   "explicit": false
+  },
+  "overlay.broadcastList": {
+   "source": "overlay.broadcastList hashes:(vector int256) = overlay.BroadcastList;",
+   "id": 416407263,
+   "explicit": false
+  },
+  "overlay.fec.received": {
+   "source": "overlay.fec.received hash:int256 = overlay.Broadcast;",
+   "id": 3579581676,
+   "explicit": false
+  },
+  "overlay.fec.completed": {
+   "source": "overlay.fec.completed hash:int256 = overlay.Broadcast;",
+   "id": 165112084,
+   "explicit": false
+  },
+  "overlay.broadcast.id": {
+   "source": "overlay.broadcast.id src:int256 data_hash:int256 flags:int = overlay.broadcast.Id;",
+   "id": 1375565978,
+   "explicit": false
+  },
+  "overlay.broadcastFec.id": {
+   "source": "overlay.broadcastFec.id src:int256 type:int256 data_hash:int256 size:int flags:int = overlay.broadcastFec.Id;",
+   "id": 4214314406,
+   "explicit": false
+  },
+  "overlay.broadcastFec.partId": {
+   "source": "overlay.broadcastFec.partId broadcast_hash:int256 data_hash:int256 seqno:int = overlay.broadcastFec.PartId;",
+   "id": 2758370000,
+   "explicit": false
+  },
+  "overlay.broadcast.toSign": {
+   "source": "overlay.broadcast.toSign hash:int256 date:int = overlay.broadcast.ToSign;",
+   "id": 4197928572,
+   "explicit": false
+  },
+  "overlay.memberCertificateId": {
+   "source": "overlay.memberCertificateId node:adnl.id.short flags:int slot:int expire_at:int = overlay.MemberCertificateId;",
+   "id": 747101234,
+   "explicit": false
+  },
+  "overlay.memberCertificate": {
+   "source": "overlay.memberCertificate issued_by:PublicKey flags:int slot:int expire_at:int signature:bytes = overlay.MemberCertificate;",
+   "id": 3254815833,
+   "explicit": false
+  },
+  "overlay.emptyMemberCertificate": {
+   "source": "overlay.emptyMemberCertificate = overlay.MemberCertificate;",
+   "id": 3223601634,
+   "explicit": false
+  },
+  "overlay.certificate": {
+   "source": "overlay.certificate issued_by:PublicKey expire_at:int max_size:int signature:bytes = overlay.Certificate;",
+   "id": 3768506161,
+   "explicit": false
+  },
+  "overlay.certificateV2": {
+   "source": "overlay.certificateV2 issued_by:PublicKey expire_at:int max_size:int flags:int signature:bytes = overlay.Certificate;",
+   "id": 3024067715,
+   "explicit": false
+  },
+  "overlay.emptyCertificate": {
+   "source": "overlay.emptyCertificate = overlay.Certificate;",
+   "id": 853195983,
+   "explicit": false
+  },
+  "overlay.certificateId": {
+   "source": "overlay.certificateId overlay_id:int256 node:int256 expire_at:int max_size:int = overlay.CertificateId;",
+   "id": 2410569913,
+   "explicit": false
+  },
+  "overlay.certificateIdV2": {
+   "source": "overlay.certificateIdV2 overlay_id:int256 node:int256 expire_at:int max_size:int flags:int = overlay.CertificateId;",
+   "id": 4234990247,
+   "explicit": false
+  },
+  "overlay.unicast": {
+   "source": "overlay.unicast data:bytes = overlay.Broadcast;",
+   "id": 861097508,
+   "explicit": false
+  },
+  "overlay.broadcast": {
+   "source": "overlay.broadcast src:PublicKey certificate:overlay.Certificate flags:int data:bytes date:int signature:bytes = overlay.Broadcast;",
+   "id": 2975476587,
+   "explicit": false
+  },
+  "overlay.broadcastFec": {
+   "source": "overlay.broadcastFec src:PublicKey certificate:overlay.Certificate data_hash:int256 data_size:int flags:int           data:bytes seqno:int fec:fec.Type date:int signature:bytes = overlay.Broadcast;",
+   "id": 3134702442,
+   "explicit": false
+  },
+  "overlay.broadcastFecShort": {
+   "source": "overlay.broadcastFecShort src:PublicKey certificate:overlay.Certificate broadcast_hash:int256 part_data_hash:int256 seqno:int signature:bytes = overlay.Broadcast;",
+   "id": 4052226882,
+   "explicit": false
+  },
+  "overlay.broadcastNotFound": {
+   "source": "overlay.broadcastNotFound = overlay.Broadcast;",
+   "id": 2508600868,
+   "explicit": false
+  },
+  "overlay.broadcastTwostepSimple": {
+   "source": "overlay.broadcastTwostepSimple flags:int date:int src:PublicKey src_adnl_id:int256 certificate:overlay.Certificate data:bytes extra:bytes signature:bytes = overlay.Broadcast;",
+   "id": 2159565232,
+   "explicit": false
+  },
+  "overlay.broadcastTwostepFec": {
+   "source": "overlay.broadcastTwostepFec flags:int date:int src:PublicKey src_adnl_id:int256 certificate:overlay.Certificate data_hash:int256 data_size:int seqno:int part:bytes extra:bytes signature:bytes = overlay.Broadcast;",
+   "id": 4188001853,
+   "explicit": false
+  },
+  "overlay.broadcastTwostep.id": {
+   "source": "overlay.broadcastTwostep.id flags:int date:int src:int256 src_adnl_id:int256 data_hash:int256 data_size:int part_size:int extra:bytes = overlay.broadcastTwostep.Id;",
+   "id": 1079610562,
+   "explicit": false
+  },
+  "overlay.broadcastTwostepSimple.toSign": {
+   "source": "overlay.broadcastTwostepSimple.toSign id:int256 data:bytes = overlay.broadcastTwostepSimple.ToSign;",
+   "id": 710161795,
+   "explicit": false
+  },
+  "overlay.broadcastTwostepFec.toSign": {
+   "source": "overlay.broadcastTwostepFec.toSign id:int256 seqno:int part:bytes = overlay.broadcastTwostepFec.ToSign;",
+   "id": 2257617033,
+   "explicit": false
+  },
+  "overlay.getRandomPeers": {
+   "source": "overlay.getRandomPeers peers:overlay.nodes = overlay.Nodes;",
+   "id": 1223582891,
+   "explicit": false
+  },
+  "overlay.getRandomPeersV2": {
+   "source": "overlay.getRandomPeersV2 peers:overlay.nodesV2 = overlay.NodesV2;",
+   "id": 2777579212,
+   "explicit": false
+  },
+  "overlay.ping": {
+   "source": "overlay.ping = overlay.Pong;",
+   "id": 1762440321,
+   "explicit": false
+  },
+  "overlay.query": {
+   "source": "overlay.query overlay:int256 = True;",
+   "id": 3439166531,
+   "explicit": false
+  },
+  "overlay.queryWithExtra": {
+   "source": "overlay.queryWithExtra overlay:int256 extra:overlay.messageExtra = True;",
+   "id": 2499789801,
+   "explicit": false
+  },
+  "overlay.getBroadcast": {
+   "source": "overlay.getBroadcast hash:int256 = overlay.Broadcast;",
+   "id": 758510240,
+   "explicit": false
+  },
+  "overlay.getBroadcastList": {
+   "source": "overlay.getBroadcastList list:overlay.broadcastList = overlay.BroadcastList;",
+   "id": 1109141562,
+   "explicit": false
+  },
+  "overlay.repairPlumtreePart": {
+   "source": "overlay.repairPlumtreePart broadcast_id:int256 timestamp:double part_index:int tree_index:int = overlay.Broadcast;",
+   "id": 2077251853,
+   "explicit": false
+  },
+  "overlay.db.nodesV2": {
+   "source": "overlay.db.nodesV2 nodes:overlay.nodesV2 = overlay.db.Nodes;",
+   "id": 917053760,
+   "explicit": false
+  },
+  "overlay.db.nodes": {
+   "source": "overlay.db.nodes nodes:overlay.nodes = overlay.db.Nodes;",
+   "id": 3582512666,
+   "explicit": false
+  },
+  "overlay.db.key.nodes": {
+   "source": "overlay.db.key.nodes local_id:int256 overlay:int256 = overlay.db.Key;",
+   "id": 3301995286,
+   "explicit": false
+  },
+  "validatorSession.candidate": {
+   "source": "validatorSession.candidate src:int256 round:int root_hash:int256 data:bytes collated_data:bytes = validatorSession.Candidate;",
+   "id": 2100525125,
+   "explicit": false
+  },
+  "validatorSession.compressedCandidate": {
+   "source": "validatorSession.compressedCandidate flags:# src:int256 round:int root_hash:int256 decompressed_size:int data:bytes = validatorSession.Candidate;",
+   "id": 1108526967,
+   "explicit": false
+  },
+  "validatorSession.compressedCandidateV2": {
+   "source": "validatorSession.compressedCandidateV2 flags:# src:int256 round:int root_hash:int256 data:bytes = validatorSession.Candidate;",
+   "id": 858322463,
+   "explicit": false
+  },
+  "hashable.bool": {
+   "source": "hashable.bool value:Bool = Hashable;",
+   "id": 3479258140,
+   "explicit": false
+  },
+  "hashable.int32": {
+   "source": "hashable.int32 value:int = Hashable;",
+   "id": 3551892310,
+   "explicit": false
+  },
+  "hashable.int64": {
+   "source": "hashable.int64 value:long = Hashable;",
+   "id": 3889860162,
+   "explicit": false
+  },
+  "hashable.int256": {
+   "source": "hashable.int256 value:int256 = Hashable;",
+   "id": 975377359,
+   "explicit": false
+  },
+  "hashable.bytes": {
+   "source": "hashable.bytes value:bytes = Hashable;",
+   "id": 118742546,
+   "explicit": false
+  },
+  "hashable.pair": {
+   "source": "hashable.pair left:int right:int = Hashable;",
+   "id": 3353700501,
+   "explicit": false
+  },
+  "hashable.vector": {
+   "source": "hashable.vector value:(vector int) = Hashable;",
+   "id": 3744777069,
+   "explicit": false
+  },
+  "hashable.validatorSessionOldRound": {
+   "source": "hashable.validatorSessionOldRound seqno:int block:int signatures:int approve_signatures:int = Hashable;",
+   "id": 1200318377,
+   "explicit": false
+  },
+  "hashable.validatorSessionRoundAttempt": {
+   "source": "hashable.validatorSessionRoundAttempt seqno:int votes:int precommitted:int vote_for_inited:int vote_for:int = Hashable;",
+   "id": 1276247981,
+   "explicit": false
+  },
+  "hashable.validatorSessionRound": {
+   "source": "hashable.validatorSessionRound locked_round:int locked_block:int seqno:int precommitted:Bool           first_attempt:int approved_blocks:int signatures:int attempts:int = Hashable;",
+   "id": 897011683,
+   "explicit": false
+  },
+  "hashable.blockSignature": {
+   "source": "hashable.blockSignature signature:int = Hashable;",
+   "id": 937530018,
+   "explicit": false
+  },
+  "hashable.sentBlock": {
+   "source": "hashable.sentBlock src:int root_hash:int file_hash:int collated_data_file_hash:int = Hashable;",
+   "id": 3183056171,
+   "explicit": false
+  },
+  "hashable.sentBlockEmpty": {
+   "source": "hashable.sentBlockEmpty = Hashable;",
+   "id": 2666677935,
+   "explicit": false
+  },
+  "hashable.vote": {
+   "source": "hashable.vote block:int node:int = Hashable;",
+   "id": 2931764165,
+   "explicit": false
+  },
+  "hashable.blockCandidate": {
+   "source": "hashable.blockCandidate block:int approved:int = Hashable;",
+   "id": 195670285,
+   "explicit": false
+  },
+  "hashable.blockVoteCandidate": {
+   "source": "hashable.blockVoteCandidate block:int approved:int = Hashable;",
+   "id": 3473764325,
+   "explicit": false
+  },
+  "hashable.blockCandidateAttempt": {
+   "source": "hashable.blockCandidateAttempt block:int votes:int = Hashable;",
+   "id": 1063025931,
+   "explicit": false
+  },
+  "hashable.cntVector": {
+   "source": "hashable.cntVector data:int = Hashable;",
+   "id": 187199288,
+   "explicit": false
+  },
+  "hashable.cntSortedVector": {
+   "source": "hashable.cntSortedVector data:int = Hashable;",
+   "id": 2073445977,
+   "explicit": false
+  },
+  "hashable.validatorSession": {
+   "source": "hashable.validatorSession ts:int old_rounds:int cur_round:int = Hashable;",
+   "id": 1746035669,
+   "explicit": false
+  },
+  "tonNode.sessionId": {
+   "source": "tonNode.sessionId workchain:int shard:long cc_seqno:int opts_hash:int256 = tonNode.SessionId;",
+   "id": 2056402618,
+   "explicit": false
+  },
+  "tonNode.blockSignature": {
+   "source": "tonNode.blockSignature who:int256 signature:bytes = tonNode.BlockSignature;",
+   "id": 1357921331,
+   "explicit": false
+  },
+  "tonNode.signatureSet.ordinary": {
+   "source": "tonNode.signatureSet.ordinary cc_seqno:int validator_set_hash:int signatures:(vector tonNode.blockSignature) = tonNode.SignatureSet;",
+   "id": 2898832676,
+   "explicit": false
+  },
+  "tonNode.signatureSet.simplex": {
+   "source": "tonNode.signatureSet.simplex final:Bool cc_seqno:int validator_set_hash:int signatures:(vector tonNode.blockSignature)     session_id:int256 slot:int candidate:consensus.CandidateHashData = tonNode.SignatureSet;",
+   "id": 1780734722,
+   "explicit": false
+  },
+  "tonNode.blockId": {
+   "source": "tonNode.blockId workchain:int shard:long seqno:int = tonNode.BlockId;",
+   "id": 3083710823,
+   "explicit": false
+  },
+  "tonNode.blockIdExt": {
+   "source": "tonNode.blockIdExt workchain:int shard:long seqno:int root_hash:int256 file_hash:int256 = tonNode.BlockIdExt;",
+   "id": 1733487480,
+   "explicit": false
+  },
+  "tonNode.shardId": {
+   "source": "tonNode.shardId workchain:int shard:long = tonNode.ShardId;",
+   "id": 687474807,
+   "explicit": false
+  },
+  "overlay.broadcastPlumtreeSimple": {
+   "source": "overlay.broadcastPlumtreeSimple flags:int timestamp:double src:PublicKey certificate:overlay.Certificate broadcast_id:int256 tree_index:int data:bytes signature:bytes = overlay.Broadcast;",
+   "id": 1053610605,
+   "explicit": false
+  },
+  "overlay.broadcastPlumtreeFec": {
+   "source": "overlay.broadcastPlumtreeFec flags:int timestamp:double src:PublicKey certificate:overlay.Certificate full_data_hash:int256 full_data_size:int part_index:int tree_index:int data:bytes signature:bytes = overlay.Broadcast;",
+   "id": 2361024463,
+   "explicit": false
+  },
+  "overlay.broadcastPlumtreeIHave": {
+   "source": "overlay.broadcastPlumtreeIHave broadcast_id:int256 timestamp:double part_index:int tree_index:int src:PublicKey certificate:overlay.Certificate payload_timestamp:double data_size:int data_hash:int256 signature:bytes = overlay.Broadcast;",
+   "id": 1632682107,
+   "explicit": false
+  },
+  "overlay.broadcastPlumtreePrune": {
+   "source": "overlay.broadcastPlumtreePrune broadcast_id:int256 timestamp:double part_index:int tree_index:int = overlay.Broadcast;",
+   "id": 4042731926,
+   "explicit": false
+  },
+  "overlay.broadcastPlumtreeUseful": {
+   "source": "overlay.broadcastPlumtreeUseful broadcast_id:int256 timestamp:double part_index:int tree_index:int = overlay.Broadcast;",
+   "id": 2944556675,
+   "explicit": false
+  },
+  "overlay.plumtreeStatsRecord": {
+   "source": "overlay.plumtreeStatsRecord src:int256 epoch:int tree_index:int eager_0:(vector long) eager_index:(vector long) delivered_bcsts:int parts_in_p99_bcsts:int useful_avg_ms:int useful_max_ms:int useful_p99_ms:int = overlay.PlumtreeStatsRecord;",
+   "id": 3842337326,
+   "explicit": false
+  },
+  "overlay.plumtreeStatsPush": {
+   "source": "overlay.plumtreeStatsPush record:overlay.plumtreeStatsRecord = overlay.Broadcast;",
+   "id": 585083502,
+   "explicit": false
+  },
+  "overlay.plumtreeStatsExchange": {
+   "source": "overlay.plumtreeStatsExchange overlay:int256 overlay_type:string shard:tonNode.shardId records:(vector overlay.plumtreeStatsRecord) = overlay.PlumtreeStatsExchange;",
+   "id": 1948103401,
+   "explicit": false
+  },
+  "overlay.plumtreeStatsDump": {
+   "source": "overlay.plumtreeStatsDump overlay:int256 overlay_type:string shard:tonNode.shardId received_from:int256 received_at:double records:(vector overlay.plumtreeStatsRecord) = overlay.PlumtreeStatsDump;",
+   "id": 3611566594,
+   "explicit": false
+  },
+  "overlay.broadcastPlumtreeFec.id": {
+   "source": "overlay.broadcastPlumtreeFec.id flags:int full_data_hash:int256 full_data_size:int part_size:int = overlay.broadcastPlumtreeFec.Id;",
+   "id": 111300660,
+   "explicit": false
+  },
+  "overlay.broadcastPlumtreeSimple.toSign": {
+   "source": "overlay.broadcastPlumtreeSimple.toSign id:int256 timestamp:double tree_index:int data_size:int data_hash:int256 = overlay.broadcastPlumtreeSimple.ToSign;",
+   "id": 955462542,
+   "explicit": false
+  },
+  "overlay.broadcastPlumtreeFec.toSign": {
+   "source": "overlay.broadcastPlumtreeFec.toSign id:int256 timestamp:double part_index:int tree_index:int data_size:int data_hash:int256 = overlay.broadcastPlumtreeFec.ToSign;",
+   "id": 3286352020,
+   "explicit": false
+  },
+  "tonNode.zeroStateIdExt": {
+   "source": "tonNode.zeroStateIdExt workchain:int root_hash:int256 file_hash:int256 = tonNode.ZeroStateIdExt;",
+   "id": 494024110,
+   "explicit": false
+  },
+  "tonNode.blockDescriptionEmpty": {
+   "source": "tonNode.blockDescriptionEmpty = tonNode.BlockDescription;",
+   "id": 2206510741,
+   "explicit": false
+  },
+  "tonNode.blockDescription": {
+   "source": "tonNode.blockDescription id:tonNode.blockIdExt = tonNode.BlockDescription;",
+   "id": 1185009800,
+   "explicit": false
+  },
+  "tonNode.blocksDescription": {
+   "source": "tonNode.blocksDescription ids:(vector tonNode.blockIdExt) incomplete:Bool = tonNode.BlocksDescription;",
+   "id": 3593101612,
+   "explicit": false
+  },
+  "tonNode.preparedProofEmpty": {
+   "source": "tonNode.preparedProofEmpty = tonNode.PreparedProof;",
+   "id": 3345596794,
+   "explicit": false
+  },
+  "tonNode.preparedProof": {
+   "source": "tonNode.preparedProof = tonNode.PreparedProof;",
+   "id": 2308938315,
+   "explicit": false
+  },
+  "tonNode.preparedProofLink": {
+   "source": "tonNode.preparedProofLink = tonNode.PreparedProof;",
+   "id": 1040134797,
+   "explicit": false
+  },
+  "tonNode.preparedState": {
+   "source": "tonNode.preparedState = tonNode.PreparedState;",
+   "id": 928762733,
+   "explicit": false
+  },
+  "tonNode.notFoundState": {
+   "source": "tonNode.notFoundState = tonNode.PreparedState;",
+   "id": 842598993,
+   "explicit": false
+  },
+  "tonNode.persistentStateIdV2": {
+   "source": "tonNode.persistentStateIdV2 block:tonNode.blockIdExt masterchain_block:tonNode.blockIdExt effective_shard:long = tonNode.PersistentStateIdV2;",
+   "id": 166482019,
+   "explicit": false
+  },
+  "tonNode.persistentStateSize": {
+   "source": "tonNode.persistentStateSize size:long = tonNode.PersistentStateSize;",
+   "id": 4062499794,
+   "explicit": false
+  },
+  "tonNode.persistentStateSizeNotFound": {
+   "source": "tonNode.persistentStateSizeNotFound = tonNode.PersistentStateSize;",
+   "id": 4199989355,
+   "explicit": false
+  },
+  "tonNode.prepared": {
+   "source": "tonNode.prepared = tonNode.Prepared;",
+   "id": 3938761677,
+   "explicit": false
+  },
+  "tonNode.notFound": {
+   "source": "tonNode.notFound = tonNode.Prepared;",
+   "id": 3804446118,
+   "explicit": false
+  },
+  "tonNode.data": {
+   "source": "tonNode.data data:bytes = tonNode.Data;",
+   "id": 1443505284,
+   "explicit": false
+  },
+  "tonNode.externalMessage": {
+   "source": "tonNode.externalMessage data:bytes = tonNode.ExternalMessage;",
+   "id": 3698696713,
+   "explicit": false
+  },
+  "tonNode.newShardBlock": {
+   "source": "tonNode.newShardBlock block:tonNode.blockIdExt cc_seqno:int data:bytes = tonNode.NewShardBlock;",
+   "id": 2761802281,
+   "explicit": false
+  },
+  "tonNode.blockBroadcastCompressed.data": {
+   "source": "tonNode.blockBroadcastCompressed.data signatures:(vector tonNode.blockSignature) proof_data:bytes = tonNode.blockBroadcaseCompressed.Data;",
+   "id": 4270920630,
+   "explicit": false
+  },
+  "tonNode.blockBroadcast": {
+   "source": "tonNode.blockBroadcast id:tonNode.blockIdExt catchain_seqno:int validator_set_hash:int               signatures:(vector tonNode.blockSignature)               proof:bytes data:bytes = tonNode.Broadcast;",
+   "id": 2922254597,
+   "explicit": false
+  },
+  "tonNode.blockBroadcastCompressed": {
+   "source": "tonNode.blockBroadcastCompressed id:tonNode.blockIdExt catchain_seqno:int validator_set_hash:int               flags:# compressed:bytes = tonNode.Broadcast;",
+   "id": 167581507,
+   "explicit": false
+  },
+  "tonNode.blockBroadcastCompressedV2": {
+   "source": "tonNode.blockBroadcastCompressedV2 id:tonNode.blockIdExt signature_set:tonNode.SignatureSet flags:# proof:bytes data_compressed:bytes = tonNode.Broadcast;",
+   "id": 1344487512,
+   "explicit": false
+  },
+  "tonNode.finalityBroadcastId": {
+   "source": "tonNode.finalityBroadcastId id:tonNode.blockIdExt = tonNode.FinalityBroadcastId;",
+   "id": 2545542351,
+   "explicit": false
+  },
+  "tonNode.blockFinalityBroadcast": {
+   "source": "tonNode.blockFinalityBroadcast id:tonNode.blockIdExt signature_set:tonNode.SignatureSet = tonNode.Broadcast;",
+   "id": 2582497567,
+   "explicit": false
+  },
+  "tonNode.externalMessageBroadcast": {
+   "source": "tonNode.externalMessageBroadcast message:tonNode.externalMessage = tonNode.Broadcast;",
+   "id": 1025185895,
+   "explicit": false
+  },
+  "tonNode.newShardBlockBroadcast": {
+   "source": "tonNode.newShardBlockBroadcast block:tonNode.newShardBlock = tonNode.Broadcast;",
+   "id": 183696060,
+   "explicit": false
+  },
+  "tonNode.newBlockCandidateBroadcast": {
+   "source": "tonNode.newBlockCandidateBroadcast id:tonNode.blockIdExt catchain_seqno:int validator_set_hash:int               collator_signature:tonNode.blockSignature data:bytes = tonNode.Broadcast;",
+   "id": 3219983808,
+   "explicit": false
+  },
+  "tonNode.newBlockCandidateBroadcastCompressed": {
+   "source": "tonNode.newBlockCandidateBroadcastCompressed id:tonNode.blockIdExt catchain_seqno:int validator_set_hash:int               collator_signature:tonNode.blockSignature flags:# compressed:bytes = tonNode.Broadcast;",
+   "id": 215509140,
+   "explicit": false
+  },
+  "tonNode.newBlockCandidateBroadcastCompressedV2": {
+   "source": "tonNode.newBlockCandidateBroadcastCompressedV2 id:tonNode.blockIdExt catchain_seqno:int validator_set_hash:int               collator_signature:tonNode.blockSignature flags:# compressed:bytes = tonNode.Broadcast;",
+   "id": 2668527413,
+   "explicit": false
+  },
+  "tonNode.outMsgQueueProofBroadcast": {
+   "source": "tonNode.outMsgQueueProofBroadcast dst_shard:tonNode.shardId block:tonNode.blockIdExt               limits:ImportedMsgQueueLimits proof:tonNode.OutMsgQueueProof = tonNode.Broadcast;",
+   "id": 912191409,
+   "explicit": false
+  },
+  "tonNode.shardPublicOverlayId": {
+   "source": "tonNode.shardPublicOverlayId workchain:int shard:long zero_state_file_hash:int256 = tonNode.ShardPublicOverlayId;",
+   "id": 1302254377,
+   "explicit": false
+  },
+  "tonNode.privateBlockOverlayId": {
+   "source": "tonNode.privateBlockOverlayId zero_state_file_hash:int256 nodes:(vector int256) = tonNode.PrivateBlockOverlayId;",
+   "id": 2801064034,
+   "explicit": false
+  },
+  "tonNode.customOverlayId": {
+   "source": "tonNode.customOverlayId zero_state_file_hash:int256 name:string nodes:(vector int256) = tonNode.CustomOverlayId;",
+   "id": 968105638,
+   "explicit": false
+  },
+  "tonNode.fastSyncOverlayId": {
+   "source": "tonNode.fastSyncOverlayId zero_state_file_hash:int256 shard:tonNode.shardId = tonNode.FastSyncOverlayId;",
+   "id": 452003156,
+   "explicit": false
+  },
+  "tonNode.keyBlocks": {
+   "source": "tonNode.keyBlocks blocks:(vector tonNode.blockIdExt) incomplete:Bool error:Bool = tonNode.KeyBlocks;",
+   "id": 124144985,
+   "explicit": false
+  },
+  "ton.blockId": {
+   "source": "ton.blockId root_cell_hash:int256 file_hash:int256 = ton.BlockId;",
+   "id": 3305860720,
+   "explicit": false
+  },
+  "ton.blockIdApprove": {
+   "source": "ton.blockIdApprove root_cell_hash:int256 file_hash:int256 = ton.BlockId;",
+   "id": 768887369,
+   "explicit": false
+  },
+  "tonNode.dataFull": {
+   "source": "tonNode.dataFull id:tonNode.blockIdExt proof:bytes block:bytes is_link:Bool = tonNode.DataFull;",
+   "id": 3193479059,
+   "explicit": false
+  },
+  "tonNode.dataFullCompressed": {
+   "source": "tonNode.dataFullCompressed id:tonNode.blockIdExt flags:# compressed:bytes is_link:Bool = tonNode.DataFull;",
+   "id": 1178414245,
+   "explicit": false
+  },
+  "tonNode.dataFullCompressedV2": {
+   "source": "tonNode.dataFullCompressedV2 id:tonNode.blockIdExt flags:# proof:bytes block_compressed:bytes is_link:Bool = tonNode.DataFull;",
+   "id": 3030087764,
+   "explicit": false
+  },
+  "tonNode.dataFullEmpty": {
+   "source": "tonNode.dataFullEmpty = tonNode.DataFull;",
+   "id": 1466861002,
+   "explicit": false
+  },
+  "tonNode.nextBlocksFull": {
+   "source": "tonNode.nextBlocksFull blocks:(vector tonNode.DataFull) = tonNode.NextBlocksFull;",
+   "id": 1198316229,
+   "explicit": false
+  },
+  "tonNode.capabilities": {
+   "source": "tonNode.capabilities#f5bf60c0 version_major:int version_minor:int flags:# = tonNode.Capabilities;",
+   "id": 4122960064,
+   "explicit": true
+  },
+  "tonNode.success": {
+   "source": "tonNode.success = tonNode.Success;",
+   "id": 3231065167,
+   "explicit": false
+  },
+  "tonNode.archiveNotFound": {
+   "source": "tonNode.archiveNotFound = tonNode.ArchiveInfo;",
+   "id": 2569606787,
+   "explicit": false
+  },
+  "tonNode.archiveInfo": {
+   "source": "tonNode.archiveInfo id:long = tonNode.ArchiveInfo;",
+   "id": 435158924,
+   "explicit": false
+  },
+  "tonNode.importedMsgQueueLimits": {
+   "source": "tonNode.importedMsgQueueLimits max_bytes:int max_msgs:int = ImportedMsgQueueLimits;",
+   "id": 4157465355,
+   "explicit": false
+  },
+  "tonNode.outMsgQueueProof": {
+   "source": "tonNode.outMsgQueueProof queue_proofs:bytes block_state_proofs:bytes msg_counts:(vector int) = tonNode.OutMsgQueueProof;",
+   "id": 1543642066,
+   "explicit": false
+  },
+  "tonNode.outMsgQueueProofEmpty": {
+   "source": "tonNode.outMsgQueueProofEmpty = tonNode.OutMsgQueueProof;",
+   "id": 2694450914,
+   "explicit": false
+  },
+  "tonNode.forgetPeer": {
+   "source": "tonNode.forgetPeer = tonNode.ForgetPeer;",
+   "id": 2871194753,
+   "explicit": false
+  },
+  "tonNode.newFastSyncMemberCertificate": {
+   "source": "tonNode.newFastSyncMemberCertificate adnl_id:int256 certificate:overlay.MemberCertificate = tonNode.NewFastSyncMemberCertificate;",
+   "id": 1939862959,
+   "explicit": false
+  },
+  "tonNode.getNextBlockDescription": {
+   "source": "tonNode.getNextBlockDescription prev_block:tonNode.blockIdExt = tonNode.BlockDescription;",
+   "id": 341160179,
+   "explicit": false
+  },
+  "tonNode.getNextBlocksDescription": {
+   "source": "tonNode.getNextBlocksDescription prev_block:tonNode.blockIdExt limit:int = tonNode.BlocksDescription;",
+   "id": 1059590852,
+   "explicit": false
+  },
+  "tonNode.getPrevBlocksDescription": {
+   "source": "tonNode.getPrevBlocksDescription next_block:tonNode.blockIdExt limit:int cutoff_seqno:int = tonNode.BlocksDescription;",
+   "id": 1550675145,
+   "explicit": false
+  },
+  "tonNode.prepareBlockProof": {
+   "source": "tonNode.prepareBlockProof block:tonNode.blockIdExt allow_partial:Bool = tonNode.PreparedProof;",
+   "id": 2270966536,
+   "explicit": false
+  },
+  "tonNode.prepareKeyBlockProof": {
+   "source": "tonNode.prepareKeyBlockProof block:tonNode.blockIdExt allow_partial:Bool = tonNode.PreparedProof;",
+   "id": 2000047160,
+   "explicit": false
+  },
+  "tonNode.prepareBlock": {
+   "source": "tonNode.prepareBlock block:tonNode.blockIdExt = tonNode.Prepared;",
+   "id": 1973649230,
+   "explicit": false
+  },
+  "tonNode.prepareZeroState": {
+   "source": "tonNode.prepareZeroState block:tonNode.blockIdExt = tonNode.PreparedState;",
+   "id": 1104021541,
+   "explicit": false
+  },
+  "tonNode.getNextKeyBlockIds": {
+   "source": "tonNode.getNextKeyBlockIds block:tonNode.blockIdExt max_size:int = tonNode.KeyBlocks;",
+   "id": 4075278267,
+   "explicit": false
+  },
+  "tonNode.downloadNextBlockFull": {
+   "source": "tonNode.downloadNextBlockFull prev_block:tonNode.blockIdExt = tonNode.DataFull;",
+   "id": 1855993674,
+   "explicit": false
+  },
+  "tonNode.downloadNextBlocksFull": {
+   "source": "tonNode.downloadNextBlocksFull prev_block:tonNode.blockIdExt max_blocks:int = tonNode.NextBlocksFull;",
+   "id": 3300718735,
+   "explicit": false
+  },
+  "tonNode.downloadBlockFull": {
+   "source": "tonNode.downloadBlockFull block:tonNode.blockIdExt = tonNode.DataFull;",
+   "id": 1780991133,
+   "explicit": false
+  },
+  "tonNode.downloadBlock": {
+   "source": "tonNode.downloadBlock block:tonNode.blockIdExt = tonNode.Data;",
+   "id": 3799153091,
+   "explicit": false
+  },
+  "tonNode.downloadZeroState": {
+   "source": "tonNode.downloadZeroState block:tonNode.blockIdExt = tonNode.Data;",
+   "id": 2915835482,
+   "explicit": false
+  },
+  "tonNode.downloadBlockProof": {
+   "source": "tonNode.downloadBlockProof block:tonNode.blockIdExt = tonNode.Data;",
+   "id": 1272334218,
+   "explicit": false
+  },
+  "tonNode.downloadKeyBlockProof": {
+   "source": "tonNode.downloadKeyBlockProof block:tonNode.blockIdExt = tonNode.Data;",
+   "id": 3961735226,
+   "explicit": false
+  },
+  "tonNode.downloadBlockProofLink": {
+   "source": "tonNode.downloadBlockProofLink block:tonNode.blockIdExt = tonNode.Data;",
+   "id": 632488134,
+   "explicit": false
+  },
+  "tonNode.downloadKeyBlockProofLink": {
+   "source": "tonNode.downloadKeyBlockProofLink block:tonNode.blockIdExt = tonNode.Data;",
+   "id": 316943058,
+   "explicit": false
+  },
+  "tonNode.getArchiveInfo": {
+   "source": "tonNode.getArchiveInfo masterchain_seqno:int = tonNode.ArchiveInfo;",
+   "id": 2066602305,
+   "explicit": false
+  },
+  "tonNode.getShardArchiveInfo": {
+   "source": "tonNode.getShardArchiveInfo masterchain_seqno:int shard_prefix:tonNode.shardId = tonNode.ArchiveInfo;",
+   "id": 318454616,
+   "explicit": false
+  },
+  "tonNode.getArchiveSlice": {
+   "source": "tonNode.getArchiveSlice archive_id:long offset:long max_size:int = tonNode.Data;",
+   "id": 540758376,
+   "explicit": false
+  },
+  "tonNode.getOutMsgQueueProof": {
+   "source": "tonNode.getOutMsgQueueProof dst_shard:tonNode.shardId blocks:(vector tonNode.blockIdExt)     limits:tonNode.importedMsgQueueLimits = tonNode.OutMsgQueueProof;",
+   "id": 2219596065,
+   "explicit": false
+  },
+  "tonNode.preparePersistentState": {
+   "source": "tonNode.preparePersistentState block:tonNode.blockIdExt masterchain_block:tonNode.blockIdExt = tonNode.PreparedState;",
+   "id": 4276758174,
+   "explicit": false
+  },
+  "tonNode.downloadPersistentStateSliceV2": {
+   "source": "tonNode.downloadPersistentStateSliceV2 state:tonNode.persistentStateIdV2 offset:long max_size:long = tonNode.Data;",
+   "id": 2257355792,
+   "explicit": false
+  },
+  "tonNode.getPersistentStateSizeV2": {
+   "source": "tonNode.getPersistentStateSizeV2 state:tonNode.persistentStateIdV2 = tonNode.PersistentStateSize;",
+   "id": 1268950808,
+   "explicit": false
+  },
+  "tonNode.getCapabilities": {
+   "source": "tonNode.getCapabilities = tonNode.Capabilities;",
+   "id": 3739621624,
+   "explicit": false
+  },
+  "tonNode.slave.sendExtMessage": {
+   "source": "tonNode.slave.sendExtMessage message:tonNode.externalMessage = tonNode.Success;",
+   "id": 58127017,
+   "explicit": false
+  },
+  "tonNode.query": {
+   "source": "tonNode.query = Object;",
+   "id": 1777542355,
+   "explicit": false
+  },
+  "db.root.dbDescription": {
+   "source": "db.root.dbDescription version:int first_masterchain_block_id:tonNode.blockIdExt flags:int = db.root.DbDescription;",
+   "id": 3021501427,
+   "explicit": false
+  },
+  "db.root.key.cellDb": {
+   "source": "db.root.key.cellDb version:int = db.root.Key;",
+   "id": 1928966974,
+   "explicit": false
+  },
+  "db.root.key.blockDb": {
+   "source": "db.root.key.blockDb version:int = db.root.Key;",
+   "id": 806534976,
+   "explicit": false
+  },
+  "db.root.config": {
+   "source": "db.root.config celldb_version:int blockdb_version:int = db.root.Config;",
+   "id": 3591471777,
+   "explicit": false
+  },
+  "db.root.key.config": {
+   "source": "db.root.key.config = db.root.Key;",
+   "id": 331559556,
+   "explicit": false
+  },
+  "db.celldb.value": {
+   "source": "db.celldb.value block_id:tonNode.blockIdExt prev:int256 next:int256 root_hash:int256 = db.celldb.Value;",
+   "id": 3859813440,
+   "explicit": false
+  },
+  "db.celldb.key.value": {
+   "source": "db.celldb.key.value hash:int256 = db.celldb.key.Value;",
+   "id": 1538341155,
+   "explicit": false
+  },
+  "db.block.info": {
+   "source": "db.block.info#4ac6e727 id:tonNode.blockIdExt flags:# prev_left:flags.1?tonNode.blockIdExt                                             prev_right:flags.2?tonNode.blockIdExt                                             next_left:flags.3?tonNode.blockIdExt                                             next_right:flags.4?tonNode.blockIdExt                                             lt:flags.13?long                                             ts:flags.14?int                                             state:flags.17?int256                                             masterchain_ref_seqno:flags.23?int = db.block.Info;",
+   "id": 1254549287,
+   "explicit": true
+  },
+  "db.block.packedInfo": {
+   "source": "db.block.packedInfo id:tonNode.blockIdExt unixtime:int offset:long = db.block.Info;",
+   "id": 1186697618,
+   "explicit": false
+  },
+  "db.block.archivedInfo": {
+   "source": "db.block.archivedInfo id:tonNode.blockIdExt flags:# next:flags.0?tonNode.blockIdExt = db.block.Info;",
+   "id": 543128145,
+   "explicit": false
+  },
+  "db.blockdb.value": {
+   "source": "db.blockdb.value next:tonNode.blockIdExt data:bytes = db.blockdb.Value;",
+   "id": 2995700781,
+   "explicit": false
+  },
+  "db.blockdb.lru": {
+   "source": "db.blockdb.lru id:tonNode.blockIdExt prev:int256 next:int256 = db.blockdb.Lru;",
+   "id": 3239466419,
+   "explicit": false
+  },
+  "db.blockdb.key.lru": {
+   "source": "db.blockdb.key.lru id:tonNode.blockIdExt = db.blockdb.Key;",
+   "id": 1354536506,
+   "explicit": false
+  },
+  "db.blockdb.key.value": {
+   "source": "db.blockdb.key.value id:tonNode.blockIdExt = db.blockdb.Key;",
+   "id": 2136461683,
+   "explicit": false
+  },
+  "db.candidate": {
+   "source": "db.candidate source:PublicKey id:tonNode.blockIdExt data:bytes collated_data:bytes = db.Candidate;",
+   "id": 1708747482,
+   "explicit": false
+  },
+  "db.candidate.id": {
+   "source": "db.candidate.id source:PublicKey id:tonNode.blockIdExt collated_data_file_hash:int256 = db.candidate.Id;",
+   "id": 935375495,
+   "explicit": false
+  },
+  "db.filedb.key.empty": {
+   "source": "db.filedb.key.empty = db.filedb.Key;",
+   "id": 2080319307,
+   "explicit": false
+  },
+  "db.filedb.key.blockFile": {
+   "source": "db.filedb.key.blockFile block_id:tonNode.blockIdExt = db.filedb.Key;",
+   "id": 2968183921,
+   "explicit": false
+  },
+  "db.filedb.key.zeroStateFile": {
+   "source": "db.filedb.key.zeroStateFile block_id:tonNode.blockIdExt = db.filedb.Key;",
+   "id": 307398205,
+   "explicit": false
+  },
+  "db.filedb.key.persistentStateFile": {
+   "source": "db.filedb.key.persistentStateFile block_id:tonNode.blockIdExt masterchain_block_id:tonNode.blockIdExt = db.filedb.Key;",
+   "id": 2947970636,
+   "explicit": false
+  },
+  "db.filedb.key.splitAccountStateFile": {
+   "source": "db.filedb.key.splitAccountStateFile block_id:tonNode.blockIdExt masterchain_block_id:tonNode.blockIdExt effective_shard:long = db.filedb.Key;",
+   "id": 3329008998,
+   "explicit": false
+  },
+  "db.filedb.key.splitPersistentStateFile": {
+   "source": "db.filedb.key.splitPersistentStateFile block_id:tonNode.blockIdExt masterchain_block_id:tonNode.blockIdExt = db.filedb.Key;",
+   "id": 2612015967,
+   "explicit": false
+  },
+  "db.filedb.key.proof": {
+   "source": "db.filedb.key.proof block_id:tonNode.blockIdExt = db.filedb.Key;",
+   "id": 3667217900,
+   "explicit": false
+  },
+  "db.filedb.key.proofLink": {
+   "source": "db.filedb.key.proofLink block_id:tonNode.blockIdExt = db.filedb.Key;",
+   "id": 2566637006,
+   "explicit": false
+  },
+  "db.filedb.key.signatures": {
+   "source": "db.filedb.key.signatures block_id:tonNode.blockIdExt = db.filedb.Key;",
+   "id": 3609791755,
+   "explicit": false
+  },
+  "db.filedb.key.candidate": {
+   "source": "db.filedb.key.candidate id:db.candidate.id = db.filedb.Key;",
+   "id": 3800697529,
+   "explicit": false
+  },
+  "db.filedb.key.candidateRef": {
+   "source": "db.filedb.key.candidateRef id:tonNode.blockIdExt = db.filedb.Key;",
+   "id": 3863823038,
+   "explicit": false
+  },
+  "db.filedb.key.blockInfo": {
+   "source": "db.filedb.key.blockInfo block_id:tonNode.blockIdExt = db.filedb.Key;",
+   "id": 3298415868,
+   "explicit": false
+  },
+  "db.filedb.value": {
+   "source": "db.filedb.value key:db.filedb.Key prev:int256 next:int256 file_hash:int256 = db.filedb.Value;",
+   "id": 4074576429,
+   "explicit": false
+  },
+  "db.state.destroyedSessions": {
+   "source": "db.state.destroyedSessions sessions:(vector int256) = db.state.DestroyedSessions;",
+   "id": 2913524100,
+   "explicit": false
+  },
+  "db.state.initBlockId": {
+   "source": "db.state.initBlockId block:tonNode.blockIdExt = db.state.InitBlockId;",
+   "id": 1932303605,
+   "explicit": false
+  },
+  "db.state.gcBlockId": {
+   "source": "db.state.gcBlockId block:tonNode.blockIdExt = db.state.GcBlockId;",
+   "id": 3744513359,
+   "explicit": false
+  },
+  "db.state.shardClient": {
+   "source": "db.state.shardClient block:tonNode.blockIdExt = db.state.ShardClient;",
+   "id": 186033821,
+   "explicit": false
+  },
+  "db.state.asyncSerializer": {
+   "source": "db.state.asyncSerializer block:tonNode.blockIdExt last:tonNode.blockIdExt last_ts:int = db.state.AsyncSerializer;",
+   "id": 3543083425,
+   "explicit": false
+  },
+  "db.state.hardforks": {
+   "source": "db.state.hardforks blocks:(vector tonNode.blockIdExt) = db.state.Hardforks;",
+   "id": 2247298308,
+   "explicit": false
+  },
+  "db.state.dbVersion": {
+   "source": "db.state.dbVersion version:int = db.state.DbVersion;",
+   "id": 3644268791,
+   "explicit": false
+  },
+  "db.state.persistentStateDescriptionShards": {
+   "source": "db.state.persistentStateDescriptionShards shard_blocks:(vector tonNode.blockIdExt) = db.state.PersistentStateDescriptionShards;",
+   "id": 3861943376,
+   "explicit": false
+  },
+  "db.state.persistentStateDescriptionShard": {
+   "source": "db.state.persistentStateDescriptionShard block:tonNode.blockIdExt split_depth:int = db.state.PersistentStateDescriptionShard;",
+   "id": 2465879625,
+   "explicit": false
+  },
+  "db.state.persistentStateDescriptionShardsV2": {
+   "source": "db.state.persistentStateDescriptionShardsV2 shard_blocks:(vector db.state.PersistentStateDescriptionShard) = db.state.PersistentStateDescriptionShards;",
+   "id": 3694696015,
+   "explicit": false
+  },
+  "db.state.persistentStateDescriptionHeader": {
+   "source": "db.state.persistentStateDescriptionHeader masterchain_id:tonNode.blockIdExt start_time:int end_time:int = db.state.PersistentStateDescriptionHeader;",
+   "id": 2969838420,
+   "explicit": false
+  },
+  "db.state.persistentStateDescriptionsList": {
+   "source": "db.state.persistentStateDescriptionsList list:(vector db.state.persistentStateDescriptionHeader) = db.state.PersistentStateDescriptionsList;",
+   "id": 2809640697,
+   "explicit": false
+  },
+  "db.state.key.destroyedSessions": {
+   "source": "db.state.key.destroyedSessions = db.state.Key;",
+   "id": 3908563289,
+   "explicit": false
+  },
+  "db.state.key.initBlockId": {
+   "source": "db.state.key.initBlockId = db.state.Key;",
+   "id": 1971484899,
+   "explicit": false
+  },
+  "db.state.key.gcBlockId": {
+   "source": "db.state.key.gcBlockId = db.state.Key;",
+   "id": 3279549406,
+   "explicit": false
+  },
+  "db.state.key.shardClient": {
+   "source": "db.state.key.shardClient = db.state.Key;",
+   "id": 3382391175,
+   "explicit": false
+  },
+  "db.state.key.asyncSerializer": {
+   "source": "db.state.key.asyncSerializer = db.state.Key;",
+   "id": 699304479,
+   "explicit": false
+  },
+  "db.state.key.hardforks": {
+   "source": "db.state.key.hardforks = db.state.Key;",
+   "id": 3874760634,
+   "explicit": false
+  },
+  "db.state.key.dbVersion": {
+   "source": "db.state.key.dbVersion = db.state.Key;",
+   "id": 1917788500,
+   "explicit": false
+  },
+  "db.state.key.persistentStateDescriptionShards": {
+   "source": "db.state.key.persistentStateDescriptionShards masterchain_seqno:int = db.state.Key;",
+   "id": 2442905480,
+   "explicit": false
+  },
+  "db.state.key.persistentStateDescriptionsList": {
+   "source": "db.state.key.persistentStateDescriptionsList = db.state.Key;",
+   "id": 1511487946,
+   "explicit": false
+  },
+  "db.lt.el.key": {
+   "source": "db.lt.el.key workchain:int shard:long idx:int = db.lt.Key;",
+   "id": 2771524322,
+   "explicit": false
+  },
+  "db.lt.desc.key": {
+   "source": "db.lt.desc.key workchain:int shard:long = db.lt.Key;",
+   "id": 4058245009,
+   "explicit": false
+  },
+  "db.lt.shard.key": {
+   "source": "db.lt.shard.key idx:int = db.lt.Key;",
+   "id": 1353120015,
+   "explicit": false
+  },
+  "db.lt.status.key": {
+   "source": "db.lt.status.key = db.lt.Key;",
+   "id": 2003591255,
+   "explicit": false
+  },
+  "db.lt.el.value": {
+   "source": "db.lt.el.value id:tonNode.blockIdExt lt:long ts:int = db.lt.el.Value;",
+   "id": 2514902884,
+   "explicit": false
+  },
+  "db.lt.desc.value": {
+   "source": "db.lt.desc.value first_idx:int last_idx:int last_seqno:int last_lt:long last_ts:int = db.lt.desc.Value;",
+   "id": 1907315124,
+   "explicit": false
+  },
+  "db.lt.shard.value": {
+   "source": "db.lt.shard.value workchain:int shard:long = db.lt.shard.Value;",
+   "id": 1014209147,
+   "explicit": false
+  },
+  "db.lt.status.value": {
+   "source": "db.lt.status.value total_shards:int = db.lt.status.Value;",
+   "id": 4206816569,
+   "explicit": false
+  },
+  "db.files.index.key": {
+   "source": "db.files.index.key = db.files.Key;",
+   "id": 2109998338,
+   "explicit": false
+  },
+  "db.files.package.key": {
+   "source": "db.files.package.key package_id:int key:Bool temp:Bool = db.files.Key;",
+   "id": 2768503614,
+   "explicit": false
+  },
+  "db.files.index.value": {
+   "source": "db.files.index.value packages:(vector int) key_packages:(vector int) temp_packages:(vector int) = db.files.index.Value;",
+   "id": 2729564924,
+   "explicit": false
+  },
+  "db.files.package.firstBlock": {
+   "source": "db.files.package.firstBlock workchain:int shard:long seqno:int unixtime:int lt:long = db.files.package.FirstBlock;",
+   "id": 1880254951,
+   "explicit": false
+  },
+  "db.files.package.value": {
+   "source": "db.files.package.value package_id:int key:Bool temp:Bool firstblocks:(vector db.files.package.firstBlock) deleted:Bool                    = db.files.package.Value;",
+   "id": 3830240555,
+   "explicit": false
+  },
+  "db.event.blockApplied": {
+   "source": "db.event.blockApplied block_id:tonNode.blockIdExt = db.Event;",
+   "id": 1690862171,
+   "explicit": false
+  },
+  "db.event.blockSigned": {
+   "source": "db.event.blockSigned block_id:tonNode.blockIdExt = db.Event;",
+   "id": 3362965698,
+   "explicit": false
+  },
+  "db.event.blockCandidateReceived": {
+   "source": "db.event.blockCandidateReceived block_id:tonNode.blockIdExt = db.Event;",
+   "id": 1909566111,
+   "explicit": false
+  },
+  "validator.groupMember": {
+   "source": "validator.groupMember public_key_hash:int256 adnl:int256 weight:long = engine.validator.GroupMember;",
+   "id": 2341758436,
+   "explicit": false
+  },
+  "validator.groupNew": {
+   "source": "validator.groupNew workchain:int shard:long vertical_seqno:int last_key_block_seqno:int catchain_seqno:int config_hash:int256 members:(vector validator.groupMember) = validator.Group;",
+   "id": 2554569037,
+   "explicit": false
+  },
+  "validator.telemetry": {
+   "source": "validator.telemetry flags:# timestamp:double adnl_id:int256     node_version:string os_version:string node_started_at:int     ram_size:long cpu_cores:int node_threads:int = validator.Telemetry;",
+   "id": 1560508273,
+   "explicit": false
+  },
+  "id.config.local": {
+   "source": "id.config.local id:PrivateKey = id.config.Local;",
+   "id": 2460600206,
+   "explicit": false
+  },
+  "dht.config.local": {
+   "source": "dht.config.local id:adnl.id.short = dht.config.Local;",
+   "id": 1981827695,
+   "explicit": false
+  },
+  "dht.config.random.local": {
+   "source": "dht.config.random.local cnt:int = dht.config.Local;",
+   "id": 2615879031,
+   "explicit": false
+  },
+  "liteserver.config.local": {
+   "source": "liteserver.config.local id:PrivateKey port:int = liteserver.config.Local;",
+   "id": 1182002063,
+   "explicit": false
+  },
+  "liteserver.config.random.local": {
+   "source": "liteserver.config.random.local port:int = liteserver.config.Local;",
+   "id": 2093565243,
+   "explicit": false
+  },
+  "validator.config.local": {
+   "source": "validator.config.local id:adnl.id.short = validator.config.Local;",
+   "id": 1716256616,
+   "explicit": false
+  },
+  "validator.config.random.local": {
+   "source": "validator.config.random.local addr_list:adnl.addressList = validator.config.Local;",
+   "id": 1501795426,
+   "explicit": false
+  },
+  "control.config.local": {
+   "source": "control.config.local priv:PrivateKey pub:int256 port:int = control.config.Local;",
+   "id": 1964895469,
+   "explicit": false
+  },
+  "config.local": {
+   "source": "config.local local_ids:(vector id.config.local) dht:(vector dht.config.Local) validators:(vector validator.config.Local) liteservers:(vector liteserver.config.Local) control:(vector control.config.local) = config.Local;",
+   "id": 2023657820,
+   "explicit": false
+  },
+  "dht.config.global": {
+   "source": "dht.config.global static_nodes:dht.nodes k:int a:int = dht.config.Global;",
+   "id": 2228144647,
+   "explicit": false
+  },
+  "dht.config.global_v2": {
+   "source": "dht.config.global_v2 static_nodes:dht.nodes k:int a:int network_id:int = dht.config.Global;",
+   "id": 1768129575,
+   "explicit": false
+  },
+  "adnl.config.global": {
+   "source": "adnl.config.global static_nodes:adnl.nodes = adnl.config.Global;",
+   "id": 3194978512,
+   "explicit": false
+  },
+  "catchain.config.global": {
+   "source": "catchain.config.global tag:int256 nodes:(vector PublicKey) = catchain.config.Global;",
+   "id": 1757918801,
+   "explicit": false
+  },
+  "dummyworkchain0.config.global": {
+   "source": "dummyworkchain0.config.global zero_state_hash:int256 = dummyworkchain0.config.Global;",
+   "id": 3663818451,
+   "explicit": false
+  },
+  "validator.config.global": {
+   "source": "validator.config.global zero_state:tonNode.blockIdExt init_block:tonNode.blockIdExt hardforks:(vector tonNode.blockIdExt) = validator.config.Global;",
+   "id": 2256404330,
+   "explicit": false
+  },
+  "config.global": {
+   "source": "config.global adnl:adnl.config.global dht:dht.config.Global validator:validator.config.global = config.Global;",
+   "id": 4033276336,
+   "explicit": false
+  },
+  "liteserver.descV2.sliceSimple": {
+   "source": "liteserver.descV2.sliceSimple shards:(vector tonNode.shardId) = liteserver.descV2.Slice;",
+   "id": 2294895883,
+   "explicit": false
+  },
+  "liteserver.descV2.shardInfo": {
+   "source": "liteserver.descV2.shardInfo shard_id:tonNode.shardId seqno:int utime:int lt:long = liteserver.descV2.ShardInfo;",
+   "id": 36288420,
+   "explicit": false
+  },
+  "liteserver.descV2.sliceTimed": {
+   "source": "liteserver.descV2.sliceTimed shards_from:(vector liteserver.descV2.shardInfo) shards_to:(vector liteserver.descV2.shardInfo) = liteserver.descV2.Slice;",
+   "id": 3276746226,
+   "explicit": false
+  },
+  "liteserver.desc": {
+   "source": "liteserver.desc id:PublicKey ip:int port:int hostname:string = liteserver.Desc;",
+   "id": 3982689141,
+   "explicit": false
+  },
+  "liteserver.descV2": {
+   "source": "liteserver.descV2 id:PublicKey ip:int port:int hostname:string slices:(vector liteserver.descV2.Slice) = liteserver.DescV2;",
+   "id": 4227162422,
+   "explicit": false
+  },
+  "liteclient.config.global": {
+   "source": "liteclient.config.global liteservers:(vector liteserver.desc) liteservers_v2:(vector liteserver.descV2) validator:validator.config.global = liteclient.config.Global;",
+   "id": 3901325229,
+   "explicit": false
+  },
+  "engine.adnl": {
+   "source": "engine.adnl id:int256 category:int = engine.Adnl;",
+   "id": 1658283344,
+   "explicit": false
+  },
+  "engine.addr": {
+   "source": "engine.addr ip:int port:int categories:(vector int) priority_categories:(vector int) = engine.Addr;",
+   "id": 4012974060,
+   "explicit": false
+  },
+  "engine.quicAddr": {
+   "source": "engine.quicAddr ip:int port:int categories:(vector int) priority_categories:(vector int) = engine.Addr;",
+   "id": 1477167623,
+   "explicit": false
+  },
+  "engine.dht": {
+   "source": "engine.dht id:int256 = engine.Dht;",
+   "id": 1575613178,
+   "explicit": false
+  },
+  "engine.validatorTempKey": {
+   "source": "engine.validatorTempKey key:int256 expire_at:int = engine.ValidatorTempKey;",
+   "id": 1581962974,
+   "explicit": false
+  },
+  "engine.validatorAdnlAddress": {
+   "source": "engine.validatorAdnlAddress id:int256 expire_at:int = engine.ValidatorAdnlAddress;",
+   "id": 3544532414,
+   "explicit": false
+  },
+  "engine.validator": {
+   "source": "engine.validator id:int256 temp_keys:(vector engine.validatorTempKey) adnl_addrs:(vector engine.validatorAdnlAddress) election_date:int expire_at:int = engine.Validator;",
+   "id": 2287987241,
+   "explicit": false
+  },
+  "engine.liteServer": {
+   "source": "engine.liteServer id:int256 port:int = engine.LiteServer;",
+   "id": 3144716030,
+   "explicit": false
+  },
+  "engine.controlProcess": {
+   "source": "engine.controlProcess id:int256 permissions:int = engine.ControlProcess;",
+   "id": 1790986263,
+   "explicit": false
+  },
+  "engine.controlInterface": {
+   "source": "engine.controlInterface id:int256 port:int allowed:(vector engine.controlProcess) = engine.ControlInterface;",
+   "id": 830566315,
+   "explicit": false
+  },
+  "engine.gc": {
+   "source": "engine.gc ids:(vector int256) = engine.Gc;",
+   "id": 3216873595,
+   "explicit": false
+  },
+  "engine.dht.config": {
+   "source": "engine.dht.config dht:(vector engine.dht) gc:engine.gc = engine.dht.Config;",
+   "id": 4097671366,
+   "explicit": false
+  },
+  "engine.validator.fullNodeMaster": {
+   "source": "engine.validator.fullNodeMaster port:int adnl:int256 = engine.validator.FullNodeMaster;",
+   "id": 2223371880,
+   "explicit": false
+  },
+  "engine.validator.fullNodeSlave": {
+   "source": "engine.validator.fullNodeSlave ip:int port:int adnl:PublicKey = engine.validator.FullNodeSlave;",
+   "id": 2284153721,
+   "explicit": false
+  },
+  "engine.validator.fullNodeConfig": {
+   "source": "engine.validator.fullNodeConfig ext_messages_broadcast_disabled:Bool = engine.validator.FullNodeConfig;",
+   "id": 704557332,
+   "explicit": false
+  },
+  "engine.validator.fastSyncMemberCertificate": {
+   "source": "engine.validator.fastSyncMemberCertificate adnl_id:int256 certificate:overlay.MemberCertificate = engine.validator.FastSyncMemberCertificate;",
+   "id": 3572145695,
+   "explicit": false
+  },
+  "engine.validator.fastSyncOverlayClient": {
+   "source": "engine.validator.fastSyncOverlayClient adnl_id:int256 slot:int = engine.validator.FastSyncOverlayClient;",
+   "id": 1395058805,
+   "explicit": false
+  },
+  "engine.validator.collatorNodeWhitelist": {
+   "source": "engine.validator.collatorNodeWhitelist enabled:Bool adnl_ids:(vector int256) = engine.validator.CollatorNodeWhitelist;",
+   "id": 3810848817,
+   "explicit": false
+  },
+  "engine.validator.extraConfig": {
+   "source": "engine.validator.extraConfig state_serializer_enabled:Bool fast_sync_member_certificates:(vector engine.validator.fastSyncMemberCertificate)     collator_node_whitelist:engine.validator.collatorNodeWhitelist     fast_sync_overlay_clients:(vector engine.validator.fastSyncOverlayClient) = engine.validator.ExtraConfig;",
+   "id": 847549418,
+   "explicit": false
+  },
+  "engine.validator.config": {
+   "source": "engine.validator.config out_port:int addrs:(vector engine.Addr) adnl:(vector engine.adnl)         dht:(vector engine.dht)         validators:(vector engine.validator) collators:(vector int256)         fullnode:int256 fullnodeslaves:(vector engine.validator.fullNodeSlave)         fullnodemasters:(vector engine.validator.fullNodeMaster)         fullnodeconfig:engine.validator.fullNodeConfig         extraconfig:engine.validator.extraConfig         liteservers:(vector engine.liteServer) control:(vector engine.controlInterface)         shards_to_monitor:(vector tonNode.shardId)         gc:engine.gc = engine.validator.Config;",
+   "id": 480810964,
+   "explicit": false
+  },
+  "engine.validator.customOverlayNode": {
+   "source": "engine.validator.customOverlayNode adnl_id:int256 msg_sender:Bool msg_sender_priority:int block_sender:Bool accept_queries:Bool = engine.validator.CustomOverlayNode;",
+   "id": 2709487202,
+   "explicit": false
+  },
+  "engine.validator.customOverlay": {
+   "source": "engine.validator.customOverlay name:string nodes:(vector engine.validator.customOverlayNode) sender_shards:(vector tonNode.shardId)     skip_public_msg_send:Bool use_quic:Bool send_queries:Bool = engine.validator.CustomOverlay;",
+   "id": 890638380,
+   "explicit": false
+  },
+  "engine.validator.customOverlaysConfig": {
+   "source": "engine.validator.customOverlaysConfig overlays:(vector engine.validator.customOverlay) = engine.validator.CustomOverlaysConfig;",
+   "id": 1081752345,
+   "explicit": false
+  },
+  "engine.validator.collatorOptions": {
+   "source": "engine.validator.collatorOptions   deferring_enabled:Bool defer_messages_after:int defer_out_queue_size_limit:long   dispatch_phase_2_max_total:int dispatch_phase_3_max_total:int   dispatch_phase_2_max_per_initiator:int dispatch_phase_3_max_per_initiator:int   whitelist:(vector string) prioritylist:(vector string)   force_full_collated_data:Bool ignore_collated_data_limits:Bool = engine.validator.CollatorOptions;",
+   "id": 71182465,
+   "explicit": false
+  },
+  "engine.validator.collatorsList.collator": {
+   "source": "engine.validator.collatorsList.collator adnl_id:int256 = engine.validator.collatorsList.Collator;",
+   "id": 3508507534,
+   "explicit": false
+  },
+  "engine.validator.collatorsList": {
+   "source": "engine.validator.collatorsList collators:(vector engine.validator.collatorsList.collator) disable_self_collate:Bool   register_collators:(vector engine.validator.collatorsList.collator) = engine.validator.CollatorsList;",
+   "id": 3206540062,
+   "explicit": false
+  },
+  "engine.validator.shardBlockVerifierConfig.shard": {
+   "source": "engine.validator.shardBlockVerifierConfig.shard shard_id:(tonNode.shardId) trusted_nodes:(vector int256)     required_confirms:int = engine.validator.shardBlockVerifierConfig.Shard;",
+   "id": 2865392722,
+   "explicit": false
+  },
+  "engine.validator.shardBlockVerifierConfig": {
+   "source": "engine.validator.shardBlockVerifierConfig shards:(vector engine.validator.shardBlockVerifierConfig.shard)     = engine.validator.ShardBlockVerifierConfig;",
+   "id": 1167010179,
+   "explicit": false
+  },
+  "adnl.pong": {
+   "source": "adnl.pong value:long = adnl.Pong;",
+   "id": 544504846,
+   "explicit": false
+  },
+  "adnl.ping": {
+   "source": "adnl.ping value:long = adnl.Pong;",
+   "id": 531276223,
+   "explicit": false
+  },
+  "engine.validator.keyHash": {
+   "source": "engine.validator.keyHash key_hash:int256 = engine.validator.KeyHash;",
+   "id": 3267798350,
+   "explicit": false
+  },
+  "engine.validator.signature": {
+   "source": "engine.validator.signature signature:bytes = engine.validator.Signature;",
+   "id": 4218176296,
+   "explicit": false
+  },
+  "engine.validator.oneStat": {
+   "source": "engine.validator.oneStat key:string value:string = engine.validator.OneStat;",
+   "id": 2761439981,
+   "explicit": false
+  },
+  "engine.validator.stats": {
+   "source": "engine.validator.stats stats:(vector engine.validator.oneStat) = engine.validator.Stats;",
+   "id": 1565119343,
+   "explicit": false
+  },
+  "engine.validator.textStats": {
+   "source": "engine.validator.textStats data:string = engine.validator.TextStats;",
+   "id": 3118164025,
+   "explicit": false
+  },
+  "engine.validator.controlQueryError": {
+   "source": "engine.validator.controlQueryError code:int message:string = engine.validator.ControlQueryError;",
+   "id": 1999018527,
+   "explicit": false
+  },
+  "engine.validator.time": {
+   "source": "engine.validator.time time:int = engine.validator.Time;",
+   "id": 3747586558,
+   "explicit": false
+  },
+  "engine.validator.success": {
+   "source": "engine.validator.success = engine.validator.Success;",
+   "id": 3018106507,
+   "explicit": false
+  },
+  "engine.validator.jsonConfig": {
+   "source": "engine.validator.jsonConfig data:string = engine.validator.JsonConfig;",
+   "id": 321753611,
+   "explicit": false
+  },
+  "engine.validator.electionBid": {
+   "source": "engine.validator.electionBid election_date:int perm_key:int256 adnl_addr:int256 to_send_payload:bytes = engine.validator.ElectionBid;",
+   "id": 598899261,
+   "explicit": false
+  },
+  "engine.validator.proposalVote": {
+   "source": "engine.validator.proposalVote perm_key:int256 to_send:bytes = engine.validator.ProposalVote;",
+   "id": 2137401069,
+   "explicit": false
+  },
+  "engine.validator.dhtServerStatus": {
+   "source": "engine.validator.dhtServerStatus id:int256 status:int = engine.validator.DhtServerStatus;",
+   "id": 2971527006,
+   "explicit": false
+  },
+  "engine.validator.dhtServersStatus": {
+   "source": "engine.validator.dhtServersStatus servers:(vector engine.validator.dhtServerStatus) = engine.validator.DhtServersStatus;",
+   "id": 725155112,
+   "explicit": false
+  },
+  "engine.validator.overlayStatsTraffic": {
+   "source": "engine.validator.overlayStatsTraffic t_out_bytes:long t_in_bytes:long t_out_pckts:int t_in_pckts:int = engine.validator.OverlayStatsTraffic;",
+   "id": 1494746854,
+   "explicit": false
+  },
+  "engine.validator.overlayStatsNode": {
+   "source": "engine.validator.overlayStatsNode adnl_id:int256 ip_addr:string is_neighbour:Bool is_alive:Bool node_flags:int     bdcst_errors:int fec_bdcst_errors:int last_in_query:int last_out_query:int     traffic:engine.validator.overlayStatsTraffic traffic_responses:engine.validator.overlayStatsTraffic     last_ping_at:double last_ping_time:double = engine.validator.OverlayStatsNode;",
+   "id": 3651512995,
+   "explicit": false
+  },
+  "engine.validator.overlayStatsBroadcasts": {
+   "source": "engine.validator.overlayStatsBroadcasts source:int256 ts_start:double ts_end:double     count:long total_size:long total_out_traffic:long = engine.validator.OverlayStatsBroadcasts;",
+   "id": 1157668990,
+   "explicit": false
+  },
+  "engine.validator.overlayStats": {
+   "source": "engine.validator.overlayStats overlay_id:int256 overlay_id_full:PublicKey adnl_id:int256 scope:string     nodes:(vector engine.validator.overlayStatsNode) stats:(vector engine.validator.oneStat)     total_traffic:engine.validator.overlayStatsTraffic total_traffic_responses:engine.validator.overlayStatsTraffic     broadcasts:(vector engine.validator.overlayStatsBroadcasts)     extra:string = engine.validator.OverlayStats;",
+   "id": 2239674371,
+   "explicit": false
+  },
+  "engine.validator.overlaysStats": {
+   "source": "engine.validator.overlaysStats overlays:(vector engine.validator.overlayStats) = engine.validator.OverlaysStats;",
+   "id": 2617845375,
+   "explicit": false
+  },
+  "engine.validator.shardOverlayStats.neighbour": {
+   "source": "engine.validator.shardOverlayStats.neighbour id:string verison_major:int version_minor:int flags:#     roundtrip:double unreliability:double = engine.validator.shardOverlayStats.Neighbour;",
+   "id": 2570975122,
+   "explicit": false
+  },
+  "engine.validator.shardOverlayStats": {
+   "source": "engine.validator.shardOverlayStats shard:string active:Bool     neighbours:(vector engine.validator.shardOverlayStats.neighbour) = engine.validator.ShardOverlayStats;",
+   "id": 1131748080,
+   "explicit": false
+  },
+  "engine.validator.fastSyncOverlayStats": {
+   "source": "engine.validator.fastSyncOverlayStats shard:string validators_adnl:(vector int256) root_public_keys:(vector int256)     member_certificate:overlay.MemberCertificate receive_broadcasts:Bool = engine.validator.FastSyncOverlayStats;",
+   "id": 3288131947,
+   "explicit": false
+  },
+  "engine.validator.onePerfTimerStat": {
+   "source": "engine.validator.onePerfTimerStat time:int min:double avg:double max:double = engine.validator.OnePerfTimerStat;",
+   "id": 2435031912,
+   "explicit": false
+  },
+  "engine.validator.perfTimerStatsByName": {
+   "source": "engine.validator.perfTimerStatsByName name:string stats:(vector engine.validator.OnePerfTimerStat) = engine.validator.PerfTimerStatsByName;",
+   "id": 2193280484,
+   "explicit": false
+  },
+  "engine.validator.perfTimerStats": {
+   "source": "engine.validator.perfTimerStats stats:(vector engine.validator.PerfTimerStatsByName) = engine.validator.PerfTimerStats;",
+   "id": 1607488795,
+   "explicit": false
+  },
+  "engine.validator.shardOutQueueSize": {
+   "source": "engine.validator.shardOutQueueSize size:long = engine.validator.ShardOutQueueSize;",
+   "id": 2098409467,
+   "explicit": false
+  },
+  "engine.validator.exportedPrivateKeys": {
+   "source": "engine.validator.exportedPrivateKeys encrypted_data:bytes = engine.validator.ExportedPrivateKeys;",
+   "id": 3105913233,
+   "explicit": false
+  },
+  "engine.validator.getTime": {
+   "source": "engine.validator.getTime = engine.validator.Time;",
+   "id": 3779116753,
+   "explicit": false
+  },
+  "engine.validator.importPrivateKey": {
+   "source": "engine.validator.importPrivateKey key:PrivateKey = engine.validator.KeyHash;",
+   "id": 360741575,
+   "explicit": false
+  },
+  "engine.validator.exportPrivateKey": {
+   "source": "engine.validator.exportPrivateKey key_hash:int256 = PrivateKey;",
+   "id": 3430056008,
+   "explicit": false
+  },
+  "engine.validator.exportPublicKey": {
+   "source": "engine.validator.exportPublicKey key_hash:int256 = PublicKey;",
+   "id": 1647618233,
+   "explicit": false
+  },
+  "engine.validator.generateKeyPair": {
+   "source": "engine.validator.generateKeyPair = engine.validator.KeyHash;",
+   "id": 3945095291,
+   "explicit": false
+  },
+  "engine.validator.addAdnlId": {
+   "source": "engine.validator.addAdnlId key_hash:int256 category:int = engine.validator.Success;",
+   "id": 3984938155,
+   "explicit": false
+  },
+  "engine.validator.addDhtId": {
+   "source": "engine.validator.addDhtId key_hash:int256 = engine.validator.Success;",
+   "id": 4111212172,
+   "explicit": false
+  },
+  "engine.validator.addValidatorPermanentKey": {
+   "source": "engine.validator.addValidatorPermanentKey key_hash:int256 election_date:int ttl:int = engine.validator.Success;",
+   "id": 2450851192,
+   "explicit": false
+  },
+  "engine.validator.addValidatorTempKey": {
+   "source": "engine.validator.addValidatorTempKey permanent_key_hash:int256 key_hash:int256 ttl:int = engine.validator.Success;",
+   "id": 2368958258,
+   "explicit": false
+  },
+  "engine.validator.addValidatorAdnlAddress": {
+   "source": "engine.validator.addValidatorAdnlAddress permanent_key_hash:int256 key_hash:int256 ttl:int = engine.validator.Success;",
+   "id": 3670779522,
+   "explicit": false
+  },
+  "engine.validator.changeFullNodeAdnlAddress": {
+   "source": "engine.validator.changeFullNodeAdnlAddress adnl_id:int256 = engine.validator.Success;",
+   "id": 3200698757,
+   "explicit": false
+  },
+  "engine.validator.addLiteserver": {
+   "source": "engine.validator.addLiteserver key_hash:int256 port:int = engine.validator.Success;",
+   "id": 4035579719,
+   "explicit": false
+  },
+  "engine.validator.addControlInterface": {
+   "source": "engine.validator.addControlInterface key_hash:int256 port:int = engine.validator.Success;",
+   "id": 881587196,
+   "explicit": false
+  },
+  "engine.validator.addControlProcess": {
+   "source": "engine.validator.addControlProcess key_hash:int256 port:int peer_key:int256 permissions:int = engine.validator.Success;",
+   "id": 1524692816,
+   "explicit": false
+  },
+  "engine.validator.delAdnlId": {
+   "source": "engine.validator.delAdnlId key_hash:int256 = engine.validator.Success;",
+   "id": 691696882,
+   "explicit": false
+  },
+  "engine.validator.delDhtId": {
+   "source": "engine.validator.delDhtId key_hash:int256 = engine.validator.Success;",
+   "id": 2231196478,
+   "explicit": false
+  },
+  "engine.validator.delValidatorPermanentKey": {
+   "source": "engine.validator.delValidatorPermanentKey key_hash:int256 = engine.validator.Success;",
+   "id": 390777082,
+   "explicit": false
+  },
+  "engine.validator.delValidatorTempKey": {
+   "source": "engine.validator.delValidatorTempKey permanent_key_hash:int256 key_hash:int256 = engine.validator.Success;",
+   "id": 2699485393,
+   "explicit": false
+  },
+  "engine.validator.delValidatorAdnlAddress": {
+   "source": "engine.validator.delValidatorAdnlAddress permanent_key_hash:int256 key_hash:int256 = engine.validator.Success;",
+   "id": 4144513882,
+   "explicit": false
+  },
+  "engine.validator.addListeningPort": {
+   "source": "engine.validator.addListeningPort ip:int port:int categories:(vector int) priority_categories:(vector int) = engine.validator.Success;",
+   "id": 3932916149,
+   "explicit": false
+  },
+  "engine.validator.delListeningPort": {
+   "source": "engine.validator.delListeningPort ip:int port:int categories:(vector int) priority_categories:(vector int) = engine.validator.Success;",
+   "id": 828094543,
+   "explicit": false
+  },
+  "engine.validator.addQuicAddr": {
+   "source": "engine.validator.addQuicAddr ip:int port:int categories:(vector int) priority_categories:(vector int) = engine.validator.Success;",
+   "id": 3686329030,
+   "explicit": false
+  },
+  "engine.validator.delQuicAddr": {
+   "source": "engine.validator.delQuicAddr ip:int port:int categories:(vector int) priority_categories:(vector int) = engine.validator.Success;",
+   "id": 1829540503,
+   "explicit": false
+  },
+  "engine.validator.sign": {
+   "source": "engine.validator.sign key_hash:int256 data:bytes = engine.validator.Signature;",
+   "id": 451549736,
+   "explicit": false
+  },
+  "engine.validator.exportAllPrivateKeys": {
+   "source": "engine.validator.exportAllPrivateKeys encryption_key:PublicKey = engine.validator.ExportedPrivateKeys;",
+   "id": 3444986866,
+   "explicit": false
+  },
+  "engine.validator.getStats": {
+   "source": "engine.validator.getStats = engine.validator.Stats;",
+   "id": 1389740817,
+   "explicit": false
+  },
+  "engine.validator.getConfig": {
+   "source": "engine.validator.getConfig = engine.validator.JsonConfig;",
+   "id": 1504518693,
+   "explicit": false
+  },
+  "engine.validator.setVerbosity": {
+   "source": "engine.validator.setVerbosity verbosity:int = engine.validator.Success;",
+   "id": 2978111106,
+   "explicit": false
+  },
+  "engine.validator.setLogCategoryVerbosity": {
+   "source": "engine.validator.setLogCategoryVerbosity name:string verbosity:int = engine.validator.Success;",
+   "id": 193346303,
+   "explicit": false
+  },
+  "engine.validator.getLogCategories": {
+   "source": "engine.validator.getLogCategories = engine.validator.TextStats;",
+   "id": 2516100520,
+   "explicit": false
+  },
+  "engine.validator.createElectionBid": {
+   "source": "engine.validator.createElectionBid election_date:int election_addr:string wallet:string = engine.validator.ElectionBid;",
+   "id": 3843928389,
+   "explicit": false
+  },
+  "engine.validator.createProposalVote": {
+   "source": "engine.validator.createProposalVote vote:bytes = engine.validator.ProposalVote;",
+   "id": 498278765,
+   "explicit": false
+  },
+  "engine.validator.createComplaintVote": {
+   "source": "engine.validator.createComplaintVote election_id:int vote:bytes = engine.validator.ProposalVote;",
+   "id": 2961440554,
+   "explicit": false
+  },
+  "engine.validator.checkDhtServers": {
+   "source": "engine.validator.checkDhtServers id:int256 = engine.validator.DhtServersStatus;",
+   "id": 3521388746,
+   "explicit": false
+  },
+  "engine.validator.getOverlaysStats": {
+   "source": "engine.validator.getOverlaysStats = engine.validator.OverlaysStats;",
+   "id": 4242058446,
+   "explicit": false
+  },
+  "engine.validator.controlQuery": {
+   "source": "engine.validator.controlQuery data:bytes = Object;",
+   "id": 2759245248,
+   "explicit": false
+  },
+  "engine.validator.importCertificate": {
+   "source": "engine.validator.importCertificate overlay_id:int256 local_id:adnl.id.short signed_key:engine.validator.KeyHash cert:overlay.Certificate = engine.validator.Success;",
+   "id": 1015201999,
+   "explicit": false
+  },
+  "engine.validator.signShardOverlayCertificate": {
+   "source": "engine.validator.signShardOverlayCertificate workchain:int shard:long signed_key:engine.validator.KeyHash expire_at:int max_size:int = overlay.Certificate;",
+   "id": 1553415254,
+   "explicit": false
+  },
+  "engine.validator.importShardOverlayCertificate": {
+   "source": "engine.validator.importShardOverlayCertificate workchain:int shard:long signed_key:engine.validator.KeyHash cert:overlay.Certificate = engine.validator.Success;",
+   "id": 448989784,
+   "explicit": false
+  },
+  "engine.validator.getPerfTimerStats": {
+   "source": "engine.validator.getPerfTimerStats name:string = engine.validator.PerfTimerStats;",
+   "id": 3930257647,
+   "explicit": false
+  },
+  "engine.validator.getShardOutQueueSize": {
+   "source": "engine.validator.getShardOutQueueSize flags:# block_id:tonNode.blockId dest_wc:flags.0?int dest_shard:flags.0?long = engine.validator.ShardOutQueueSize;",
+   "id": 1537301584,
+   "explicit": false
+  },
+  "engine.validator.setExtMessagesBroadcastDisabled": {
+   "source": "engine.validator.setExtMessagesBroadcastDisabled disabled:Bool = engine.validator.Success;",
+   "id": 2324761050,
+   "explicit": false
+  },
+  "engine.validator.addCustomOverlay": {
+   "source": "engine.validator.addCustomOverlay overlay:engine.validator.customOverlay = engine.validator.Success;",
+   "id": 994042376,
+   "explicit": false
+  },
+  "engine.validator.delCustomOverlay": {
+   "source": "engine.validator.delCustomOverlay name:string = engine.validator.Success;",
+   "id": 2034844268,
+   "explicit": false
+  },
+  "engine.validator.showCustomOverlays": {
+   "source": "engine.validator.showCustomOverlays = engine.validator.CustomOverlaysConfig;",
+   "id": 3108115771,
+   "explicit": false
+  },
+  "engine.validator.setStateSerializerEnabled": {
+   "source": "engine.validator.setStateSerializerEnabled enabled:Bool = engine.validator.Success;",
+   "id": 2057046485,
+   "explicit": false
+  },
+  "engine.validator.setCollatorOptionsJson": {
+   "source": "engine.validator.setCollatorOptionsJson json:string = engine.validator.Success;",
+   "id": 1503354240,
+   "explicit": false
+  },
+  "engine.validator.getCollatorOptionsJson": {
+   "source": "engine.validator.getCollatorOptionsJson = engine.validator.JsonConfig;",
+   "id": 1279450873,
+   "explicit": false
+  },
+  "engine.validator.getAdnlStats": {
+   "source": "engine.validator.getAdnlStats all:Bool = adnl.Stats;",
+   "id": 2476728035,
+   "explicit": false
+  },
+  "engine.validator.getActorTextStats": {
+   "source": "engine.validator.getActorTextStats = engine.validator.TextStats;",
+   "id": 1755376848,
+   "explicit": false
+  },
+  "engine.validator.addShard": {
+   "source": "engine.validator.addShard shard:tonNode.shardId = engine.validator.Success;",
+   "id": 3822215257,
+   "explicit": false
+  },
+  "engine.validator.delShard": {
+   "source": "engine.validator.delShard shard:tonNode.shardId = engine.validator.Success;",
+   "id": 1328182971,
+   "explicit": false
+  },
+  "engine.validator.addCollator": {
+   "source": "engine.validator.addCollator adnl_id:int256 = engine.validator.Success;",
+   "id": 516371781,
+   "explicit": false
+  },
+  "engine.validator.delCollator": {
+   "source": "engine.validator.delCollator adnl_id:int256 = engine.validator.Success;",
+   "id": 3464641937,
+   "explicit": false
+  },
+  "engine.validator.collatorNodeSetWhitelistedValidator": {
+   "source": "engine.validator.collatorNodeSetWhitelistedValidator adnl_id:int256 add:Bool = engine.validator.Success;",
+   "id": 365758025,
+   "explicit": false
+  },
+  "engine.validator.collatorNodeSetWhitelistEnabled": {
+   "source": "engine.validator.collatorNodeSetWhitelistEnabled enabled:Bool = engine.validator.Success;",
+   "id": 4158802261,
+   "explicit": false
+  },
+  "engine.validator.showCollatorNodeWhitelist": {
+   "source": "engine.validator.showCollatorNodeWhitelist = engine.validator.CollatorNodeWhitelist;",
+   "id": 2153830393,
+   "explicit": false
+  },
+  "engine.validator.setCollatorsList": {
+   "source": "engine.validator.setCollatorsList list:engine.validator.collatorsList = engine.validator.Success;",
+   "id": 1500768396,
+   "explicit": false
+  },
+  "engine.validator.clearCollatorsList": {
+   "source": "engine.validator.clearCollatorsList = engine.validator.Success;",
+   "id": 3337925198,
+   "explicit": false
+  },
+  "engine.validator.showCollatorsList": {
+   "source": "engine.validator.showCollatorsList = engine.validator.CollatorsList;",
+   "id": 801133077,
+   "explicit": false
+  },
+  "engine.validator.signOverlayMemberCertificate": {
+   "source": "engine.validator.signOverlayMemberCertificate sign_by:int256 adnl_id:int256 slot:int expire_at:int = overlay.MemberCertificate;",
+   "id": 1098167522,
+   "explicit": false
+  },
+  "engine.validator.importFastSyncMemberCertificate": {
+   "source": "engine.validator.importFastSyncMemberCertificate adnl_id:int256 certificate:overlay.MemberCertificate = engine.validator.Success;",
+   "id": 365076401,
+   "explicit": false
+  },
+  "engine.validator.addFastSyncClient": {
+   "source": "engine.validator.addFastSyncClient adnl_id:int256 slot:int = engine.validator.Success;",
+   "id": 1412546423,
+   "explicit": false
+  },
+  "engine.validator.delFastSyncClient": {
+   "source": "engine.validator.delFastSyncClient adnl_id:int256 = engine.validator.Success;",
+   "id": 3993491553,
+   "explicit": false
+  },
+  "engine.validator.setShardBlockVerifierConfig": {
+   "source": "engine.validator.setShardBlockVerifierConfig config:engine.validator.shardBlockVerifierConfig = engine.validator.Success;",
+   "id": 3568876383,
+   "explicit": false
+  },
+  "engine.validator.showShardBlockVerifierConfig": {
+   "source": "engine.validator.showShardBlockVerifierConfig = engine.validator.ShardBlockVerifierConfig;",
+   "id": 2281542891,
+   "explicit": false
+  },
+  "engine.validator.waitForLiteServer": {
+   "source": "engine.validator.waitForLiteServer = engine.validator.Success;",
+   "id": 277258706,
+   "explicit": false
+  },
+  "engine.validator.waitForInitialSync": {
+   "source": "engine.validator.waitForInitialSync = engine.validator.Success;",
+   "id": 678819139,
+   "explicit": false
+  },
+  "storage.pong": {
+   "source": "storage.pong = storage.Pong;",
+   "id": 1828046501,
+   "explicit": false
+  },
+  "storage.ok": {
+   "source": "storage.ok = Ok;",
+   "id": 3274382341,
+   "explicit": false
+  },
+  "storage.state": {
+   "source": "storage.state will_upload:Bool want_download:Bool = storage.State;",
+   "id": 856912010,
+   "explicit": false
+  },
+  "storage.piece": {
+   "source": "storage.piece proof:bytes data:bytes = storage.Piece;",
+   "id": 2159344141,
+   "explicit": false
+  },
+  "storage.torrentInfo": {
+   "source": "storage.torrentInfo data:bytes = storage.TorrentInfo;",
+   "id": 349098222,
+   "explicit": false
+  },
+  "storage.updateInit": {
+   "source": "storage.updateInit have_pieces:bytes have_pieces_offset:int state:storage.State = storage.Update;",
+   "id": 3459506358,
+   "explicit": false
+  },
+  "storage.updateHavePieces": {
+   "source": "storage.updateHavePieces piece_id:(vector int) = storage.Update;",
+   "id": 1006116937,
+   "explicit": false
+  },
+  "storage.updateState": {
+   "source": "storage.updateState state:storage.State = storage.Update;",
+   "id": 95433909,
+   "explicit": false
+  },
+  "storage.ping": {
+   "source": "storage.ping session_id:long = storage.Pong;",
+   "id": 1156837905,
+   "explicit": false
+  },
+  "storage.addUpdate": {
+   "source": "storage.addUpdate session_id:long seqno:int update:storage.Update = Ok;",
+   "id": 1295070674,
+   "explicit": false
+  },
+  "storage.getTorrentInfo": {
+   "source": "storage.getTorrentInfo = storage.TorrentInfo;",
+   "id": 2445579818,
+   "explicit": false
+  },
+  "storage.getPiece": {
+   "source": "storage.getPiece piece_id:int = storage.Piece;",
+   "id": 2155538016,
+   "explicit": false
+  },
+  "http.header": {
+   "source": "http.header name:string value:string = http.Header;",
+   "id": 2392581393,
+   "explicit": false
+  },
+  "http.payloadPart": {
+   "source": "http.payloadPart data:bytes trailer:(vector http.header) last:Bool = http.PayloadPart;",
+   "id": 693819236,
+   "explicit": false
+  },
+  "http.response": {
+   "source": "http.response http_version:string status_code:int reason:string headers:(vector http.header) no_payload:Bool = http.Response;",
+   "id": 3393759050,
+   "explicit": false
+  },
+  "http.proxy.capabilities": {
+   "source": "http.proxy.capabilities capabilities:long = http.proxy.Capabilities;",
+   "id": 831679505,
+   "explicit": false
+  },
+  "http.request": {
+   "source": "http.request id:int256 method:string url:string http_version:string headers:(vector http.header) = http.Response;",
+   "id": 1639027169,
+   "explicit": false
+  },
+  "http.getNextPayloadPart": {
+   "source": "http.getNextPayloadPart id:int256 seqno:int max_chunk_size:int = http.PayloadPart;",
+   "id": 2423545100,
+   "explicit": false
+  },
+  "http.proxy.getCapabilities": {
+   "source": "http.proxy.getCapabilities capabilities:long = http.proxy.Capabilities;",
+   "id": 3681689481,
+   "explicit": false
+  },
+  "http.server.dnsEntry": {
+   "source": "http.server.dnsEntry domain:string addr:adnl.id.short = http.server.DnsEntry;",
+   "id": 3631374486,
+   "explicit": false
+  },
+  "http.server.host": {
+   "source": "http.server.host domains:(vector string) ip:int port:int adnl_id:adnl.id.short = http.server.Host;",
+   "id": 3313361575,
+   "explicit": false
+  },
+  "http.server.config": {
+   "source": "http.server.config dhs:(vector http.server.dnsEntry) local_hosts:(vector http.server.host) = http.server.Config;",
+   "id": 974419964,
+   "explicit": false
+  },
+  "validatorStats.stats.producer": {
+   "source": "validatorStats.stats.producer flags:#   validator_id:int256 block_status:int   candidate_id:flags.0?int256 block_id:flags.0?tonNode.blockIdExt collated_data_hash:flags.0?int256   is_accepted:flags.0?Bool is_ours:flags.0?Bool   got_block_at:flags.0?double got_block_by:flags.0?int got_submit_at:flags.0?double gen_utime:flags.0?int comment:flags.0?string   collation_time:flags.1?double collated_at:flags.1?double collation_cached:flags.1?Bool self_collated:flags.1?Bool collator_node_id:flags.2?int256   validation_time:flags.3?double validated_at:flags.3?double validation_cached:flags.3?Bool   approved_weight:flags.0?long approved_33pct_at:flags.0?double approved_66pct_at:flags.0?double approvers:flags.0?string   signed_weight:flags.0?long signed_33pct_at:flags.0?double signed_66pct_at:flags.0?double signers:flags.0?string   serialize_time:flags.4?double deserialize_time:flags.4?double serialized_size:flags.4?int = validatorStats.stats.Producer;",
+   "id": 1864790669,
+   "explicit": false
+  },
+  "validatorStats.stats.round": {
+   "source": "validatorStats.stats.round started_at:double producers:(vector validatorStats.stats.producer) = validatorStats.stats.Round;",
+   "id": 620582254,
+   "explicit": false
+  },
+  "validatorStats.stats": {
+   "source": "validatorStats.stats flags:#     session_id:int256 self:int256 block_id:tonNode.blockIdExt cc_seqno:int success:Bool timestamp:double     creator:flags.0?int256     total_validators:int total_weight:long     signatures:flags.0?int signatures_weight:flags.0?long     approve_signatures:flags.0?int approve_signatures_weight:flags.0?long     first_round:int rounds:(vector validatorStats.stats.round) = validatorStats.Stats;",
+   "id": 1157091964,
+   "explicit": false
+  },
+  "validatorStats.blockLimitsStatus": {
+   "source": "validatorStats.blockLimitsStatus     bytes:int gas:int lt_delta:int collated_data_bytes:int     cat_bytes:int cat_gas:int cat_lt_delta:int cat_collated_data_bytes:int     load_fraction_queue_cleanup:double load_fraction_dispatch:double     load_fraction_internals:double load_fraction_externals:double     load_fraction_new_msgs:double     limits_log:string     overload_reason:int want_split:Bool peak_block_limit_class:int = validatorStats.BlockLimitsStatus;",
+   "id": 1221692552,
+   "explicit": false
+  },
+  "validatorStats.blockStats.extMsgsStats": {
+   "source": "validatorStats.blockStats.extMsgsStats     ext_msgs_total:int ext_msgs_filtered:int ext_msgs_accepted:int ext_msgs_rejected:int = validatorStats.ExtMsgsStats;",
+   "id": 2751190284,
+   "explicit": false
+  },
+  "validatorStats.blockStats.neighborStats": {
+   "source": "validatorStats.blockStats.neighborStats shard:tonNode.shardId is_trivial:Bool is_local:Bool msg_limit:int     processed_msgs:int skipped_msgs:int limit_reached:Bool = validatorStats.blockStats.NeighborStats;",
+   "id": 3429820416,
+   "explicit": false
+  },
+  "validatorStats.blockStats": {
+   "source": "validatorStats.blockStats     ext_msgs:validatorStats.blockStats.extMsgsStats transactions:int shard_configuration:(vector tonNode.blockIdExt)     old_out_msg_queue_size:long new_out_msg_queue_size:long msg_queue_cleaned:int     neighbors:(vector validatorStats.blockStats.neighborStats)     mc_block_id:tonNode.blockIdExt = validatorStats.BlockStats;",
+   "id": 1803214467,
+   "explicit": false
+  },
+  "validatorStats.storageStatCacheStats": {
+   "source": "validatorStats.storageStatCacheStats     small_cnt:long small_cells:long hit_cnt:long hit_cells:long miss_cnt:long miss_cells:long = validatorStats.StorageStatCacheStats;",
+   "id": 4202818305,
+   "explicit": false
+  },
+  "validatorStats.collatedBlock": {
+   "source": "validatorStats.collatedBlock     block_id:tonNode.blockIdExt collated_data_hash:int256 cc_seqno:int collated_at:double     bytes:int collated_data_bytes:int attempt:int     self:int256 is_validator:Bool     total_time:double work_time:double cpu_work_time:double time_stats:string     work_time_real_stats:string     work_time_cpu_stats:string     wait_externals_time:double check_load_do_collate_time:double check_load_total_time:double     block_limits:validatorStats.blockLimitsStatus     block_stats:validatorStats.blockStats     storage_stat_cache:validatorStats.storageStatCacheStats = validatorSession.stats.CollatedBlock;",
+   "id": 4077874520,
+   "explicit": false
+  },
+  "validatorStats.validatedBlock": {
+   "source": "validatorStats.validatedBlock     block_id:tonNode.blockIdExt collated_data_hash:int256 validated_at:double     self:int256     valid:Bool comment:string     bytes:int collated_data_bytes:int     total_time:double work_time:double actual_time:double cpu_work_time:double time_stats:string     work_time_real_stats:string     work_time_cpu_stats:string     storage_stat_cache:validatorStats.storageStatCacheStats     parallel_accounts_validation:Bool = validatorStats.ValidatedBlock;",
+   "id": 4193403007,
+   "explicit": false
+  },
+  "validatorStats.newValidatorGroup.node": {
+   "source": "validatorStats.newValidatorGroup.node id:int256 pubkey:PublicKey adnl_id:int256 weight:long = validatorStats.newValidatorGroup.Node;",
+   "id": 3155979012,
+   "explicit": false
+  },
+  "validatorStats.newValidatorGroup": {
+   "source": "validatorStats.newValidatorGroup session_id:int256 shard:tonNode.shardId cc_seqno:int     last_key_block_seqno:int started_at:double prev:(vector tonNode.blockIdExt)     self_idx:int self:int256 nodes:(vector validatorStats.newValidatorGroup.node) = validatorStats.NewValidatorGroup;",
+   "id": 3469821503,
+   "explicit": false
+  },
+  "validatorStats.endValidatorGroup.node": {
+   "source": "validatorStats.endValidatorGroup.node id:int256 catchain_blocks:int = validatorStats.endValidatorGroup.Node;",
+   "id": 2048931237,
+   "explicit": false
+  },
+  "validatorStats.endValidatorGroup": {
+   "source": "validatorStats.endValidatorGroup session_id:int256 timestamp:double self:int256     nodes:(vector validatorStats.endValidatorGroup.node) = validatorStats.EndValidatorGroup;",
+   "id": 2701958974,
+   "explicit": false
+  },
+  "validatorStats.collatorNodeResponse": {
+   "source": "validatorStats.collatorNodeResponse self:int256 validator_id:int256 timestamp:double     block_id:tonNode.blockIdExt original_block_id:tonNode.blockIdExt collated_data_hash:int256     = validatorStats.CollatorNodeResponse;",
+   "id": 474244860,
+   "explicit": false
+  },
+  "collatorNode.candidate": {
+   "source": "collatorNode.candidate source:PublicKey id:tonNode.blockIdExt data:bytes collated_data:bytes = collatorNode.Candidate;",
+   "id": 540932103,
+   "explicit": false
+  },
+  "collatorNode.compressedCandidate": {
+   "source": "collatorNode.compressedCandidate flags:# source:PublicKey id:tonNode.blockIdExt decompressed_size:int data:bytes = collatorNode.Candidate;",
+   "id": 3120034635,
+   "explicit": false
+  },
+  "collatorNode.compressedCandidateV2": {
+   "source": "collatorNode.compressedCandidateV2 flags:# source:PublicKey id:tonNode.blockIdExt data:bytes = collatorNode.Candidate;",
+   "id": 3982879106,
+   "explicit": false
+  },
+  "collatorNode.pong": {
+   "source": "collatorNode.pong#5bbf0521 flags:# version:flags.0?int = collatorNode.Pong;",
+   "id": 1539245345,
+   "explicit": true
+  },
+  "collatorNode.error": {
+   "source": "collatorNode.error code:int message:string = collatorNode.Error;",
+   "id": 2398060466,
+   "explicit": false
+  },
+  "shardBlockVerifier.subscribed": {
+   "source": "shardBlockVerifier.subscribed flags:# = shardBlockVerifier.Subscribed;",
+   "id": 260233485,
+   "explicit": false
+  },
+  "shardBlockVerifier.confirmBlocks": {
+   "source": "shardBlockVerifier.confirmBlocks blocks:(vector tonNode.blockIdExt) = shardBlockVerifier.ConfirmBlocks;",
+   "id": 1872896984,
+   "explicit": false
+  },
+  "collatorNode.generateBlock": {
+   "source": "collatorNode.generateBlock shard:tonNode.shardId cc_seqno:int prev_blocks:(vector tonNode.blockIdExt)     creator:int256 round:int first_block_round:int priority:int = collatorNode.Candidate;",
+   "id": 3830919732,
+   "explicit": false
+  },
+  "collatorNode.requestBlockCallback": {
+   "source": "collatorNode.requestBlockCallback flags:# block_id:tonNode.BlockIdExt = collatorNode.Candidate;",
+   "id": 3565731746,
+   "explicit": false
+  },
+  "collatorNode.ping": {
+   "source": "collatorNode.ping flags:# = collatorNode.Pong;",
+   "id": 2112845767,
+   "explicit": false
+  },
+  "shardBlockVerifier.subscribe": {
+   "source": "shardBlockVerifier.subscribe shard:tonNode.shardId flags:# = shardBlockVerifier.Subscribed;",
+   "id": 3896255602,
+   "explicit": false
+  },
+  "storage.db.key.torrentList": {
+   "source": "storage.db.key.torrentList = storage.db.key.TorrentList;",
+   "id": 3418810454,
+   "explicit": false
+  },
+  "storage.db.key.torrent": {
+   "source": "storage.db.key.torrent hash:int256 = storage.db.key.TorrentShort;",
+   "id": 3112702511,
+   "explicit": false
+  },
+  "storage.db.key.torrentMeta": {
+   "source": "storage.db.key.torrentMeta hash:int256 = storage.db.key.TorrentMeta;",
+   "id": 1646501222,
+   "explicit": false
+  },
+  "storage.db.key.priorities": {
+   "source": "storage.db.key.priorities hash:int256 = storage.db.key.Priorities;",
+   "id": 3052522093,
+   "explicit": false
+  },
+  "storage.db.key.piecesInDb": {
+   "source": "storage.db.key.piecesInDb hash:int256 = storage.db.key.PiecesInDb;",
+   "id": 3689466339,
+   "explicit": false
+  },
+  "storage.db.key.pieceInDb": {
+   "source": "storage.db.key.pieceInDb hash:int256 idx:long = storage.db.key.PieceInDb;",
+   "id": 3289050573,
+   "explicit": false
+  },
+  "storage.db.key.config": {
+   "source": "storage.db.key.config = storage.db.key.Config;",
+   "id": 3717739527,
+   "explicit": false
+  },
+  "storage.db.config": {
+   "source": "storage.db.config flags:# download_speed_limit:double upload_speed_limit:double = storage.db.Config;",
+   "id": 1569738024,
+   "explicit": false
+  },
+  "storage.db.torrentList": {
+   "source": "storage.db.torrentList torrents:(vector int256) = storage.db.TorrentList;",
+   "id": 1508893569,
+   "explicit": false
+  },
+  "storage.db.torrent": {
+   "source": "storage.db.torrent root_dir:string active_download:Bool active_upload:Bool = storage.db.TorrentShort;",
+   "id": 2905421722,
+   "explicit": false
+  },
+  "storage.db.torrentV2": {
+   "source": "storage.db.torrentV2 flags:# root_dir:string added_at:int active_download:Bool active_upload:Bool = storage.db.TorrentShort;",
+   "id": 2314008731,
+   "explicit": false
+  },
+  "storage.db.priorities": {
+   "source": "storage.db.priorities actions:(vector storage.PriorityAction) = storage.db.Priorities;",
+   "id": 959048526,
+   "explicit": false
+  },
+  "storage.db.piecesInDb": {
+   "source": "storage.db.piecesInDb pieces:(vector long) = storage.db.PiecesInDb;",
+   "id": 102347836,
+   "explicit": false
+  },
+  "storage.priorityAction.all": {
+   "source": "storage.priorityAction.all priority:int = storage.PriorityAction;",
+   "id": 4263741760,
+   "explicit": false
+  },
+  "storage.priorityAction.idx": {
+   "source": "storage.priorityAction.idx idx:long priority:int = storage.PriorityAction;",
+   "id": 2500835112,
+   "explicit": false
+  },
+  "storage.priorityAction.name": {
+   "source": "storage.priorityAction.name name:string priority:int = storage.PriorityAction;",
+   "id": 19190208,
+   "explicit": false
+  },
+  "storage.daemon.config": {
+   "source": "storage.daemon.config server_key:PublicKey cli_key_hash:int256 provider_address:string adnl_id:PublicKey dht_id:PublicKey = storage.daemon.provider.Config;",
+   "id": 4039546039,
+   "explicit": false
+  },
+  "storage.daemon.provider.params": {
+   "source": "storage.daemon.provider.params accept_new_contracts:Bool rate_per_mb_day:string max_span:int     minimal_file_size:long maximal_file_size:long = storage.daemon.provider.Params;",
+   "id": 2893245959,
+   "explicit": false
+  },
+  "storage.provider.db.key.state": {
+   "source": "storage.provider.db.key.state = storage.provider.db.key.State;",
+   "id": 4095791010,
+   "explicit": false
+  },
+  "storage.provider.db.key.contractList": {
+   "source": "storage.provider.db.key.contractList = storage.provider.db.key.ContractList;",
+   "id": 1435683910,
+   "explicit": false
+  },
+  "storage.provider.db.key.storageContract": {
+   "source": "storage.provider.db.key.storageContract wc:int addr:int256 = storage.provider.db.key.StorageContract;",
+   "id": 3428764446,
+   "explicit": false
+  },
+  "storage.provider.db.key.microchunkTree": {
+   "source": "storage.provider.db.key.microchunkTree wc:int addr:int256 = storage.provider.db.key.MicrochunkTree;",
+   "id": 697887353,
+   "explicit": false
+  },
+  "storage.provider.db.key.providerConfig": {
+   "source": "storage.provider.db.key.providerConfig = storage.provider.db.key.ProviderConfig;",
+   "id": 3890743602,
+   "explicit": false
+  },
+  "storage.provider.db.state": {
+   "source": "storage.provider.db.state last_processed_lt:long = storage.provider.db.State;",
+   "id": 27874803,
+   "explicit": false
+  },
+  "storage.provider.db.contractAddress": {
+   "source": "storage.provider.db.contractAddress wc:int addr:int256 = storage.db.ContractAddress;",
+   "id": 3797478653,
+   "explicit": false
+  },
+  "storage.provider.db.contractList": {
+   "source": "storage.provider.db.contractList contracts:(vector storage.provider.db.contractAddress) = storage.db.ContractList;",
+   "id": 3661162263,
+   "explicit": false
+  },
+  "storage.provider.db.storageContract": {
+   "source": "storage.provider.db.storageContract torrent_hash:int256 microchunk_hash:int256 created_time:int state:int file_size:long     rate:string max_span:int = storage.provider.db.StorageContract;",
+   "id": 4004751154,
+   "explicit": false
+  },
+  "storage.provider.db.microchunkTree": {
+   "source": "storage.provider.db.microchunkTree data:bytes = storage.provider.db.MicrochunkTree;",
+   "id": 3268022082,
+   "explicit": false
+  },
+  "storage.daemon.queryError": {
+   "source": "storage.daemon.queryError message:string = storage.daemon.QueryError;",
+   "id": 79542980,
+   "explicit": false
+  },
+  "storage.daemon.success": {
+   "source": "storage.daemon.success = storage.daemon.Success;",
+   "id": 3014586140,
+   "explicit": false
+  },
+  "storage.daemon.torrent": {
+   "source": "storage.daemon.torrent     hash:int256 flags:#     total_size:flags.0?long description:flags.0?string     files_count:flags.1?long included_size:flags.1?long dir_name:flags.1?string     downloaded_size:long     added_at:int root_dir:string active_download:Bool active_upload:Bool completed:Bool     download_speed:double upload_speed:double     fatal_error:flags.2?string     = storage.daemon.Torrent;",
+   "id": 364055399,
+   "explicit": false
+  },
+  "storage.daemon.fileInfo": {
+   "source": "storage.daemon.fileInfo     name:string size:long flags:#     priority:int     downloaded_size:long     = storage.daemon.FileInfo;",
+   "id": 1903680510,
+   "explicit": false
+  },
+  "storage.daemon.torrentFull": {
+   "source": "storage.daemon.torrentFull torrent:storage.daemon.torrent files:(vector storage.daemon.fileInfo) = storage.daemon.TorrentFull;",
+   "id": 1604881447,
+   "explicit": false
+  },
+  "storage.daemon.torrentList": {
+   "source": "storage.daemon.torrentList torrents:(vector storage.daemon.torrent) = storage.daemon.TorrentList;",
+   "id": 1327241282,
+   "explicit": false
+  },
+  "storage.daemon.torrentMeta": {
+   "source": "storage.daemon.torrentMeta meta:bytes = storage.daemon.TorrentMeta;",
+   "id": 3569229544,
+   "explicit": false
+  },
+  "storage.daemon.filePiecesInfo": {
+   "source": "storage.daemon.filePiecesInfo name:string range_l:long range_r:long = storage.daemon.FilePiecesInfo;",
+   "id": 55915843,
+   "explicit": false
+  },
+  "storage.daemon.torrentPiecesInfo": {
+   "source": "storage.daemon.torrentPiecesInfo     flags:#      total_pieces:long piece_size:int     range_l:long range_r:long piece_ready_bitset:bytes     files:flags.0?(vector storage.daemon.filePiecesInfo)      = storage.daemon.TorrentPiecesInfo;",
+   "id": 152873873,
+   "explicit": false
+  },
+  "storage.daemon.newContractParams": {
+   "source": "storage.daemon.newContractParams rate:string max_span:int = storage.daemon.NewContractParams;",
+   "id": 1432029316,
+   "explicit": false
+  },
+  "storage.daemon.newContractParamsAuto": {
+   "source": "storage.daemon.newContractParamsAuto provider_address:string = storage.daemon.NewContractParams;",
+   "id": 2943838125,
+   "explicit": false
+  },
+  "storage.daemon.newContractMessage": {
+   "source": "storage.daemon.newContractMessage body:bytes rate:string max_span:int = storage.daemon.NewContractMessage;",
+   "id": 4119440886,
+   "explicit": false
+  },
+  "storage.daemon.peer": {
+   "source": "storage.daemon.peer adnl_id:int256 ip_str:string download_speed:double upload_speed:double ready_parts:long = storage.daemon.Peer;",
+   "id": 3174322228,
+   "explicit": false
+  },
+  "storage.daemon.peerList": {
+   "source": "storage.daemon.peerList peers:(vector storage.daemon.peer) download_speed:double upload_speed:double total_parts:long = storage.daemon.PeerList;",
+   "id": 2782803989,
+   "explicit": false
+  },
+  "storage.daemon.prioritySet": {
+   "source": "storage.daemon.prioritySet = storage.daemon.SetPriorityStatus;",
+   "id": 3068698583,
+   "explicit": false
+  },
+  "storage.daemon.priorityPending": {
+   "source": "storage.daemon.priorityPending = storage.daemon.SetPriorityStatus;",
+   "id": 2215207334,
+   "explicit": false
+  },
+  "storage.daemon.keyHash": {
+   "source": "storage.daemon.keyHash key_hash:int256 = storage.daemon.KeyHash;",
+   "id": 2243257052,
+   "explicit": false
+  },
+  "storage.daemon.speedLimits": {
+   "source": "storage.daemon.speedLimits download:double upload:double = storage.daemon.SpeedLimits;",
+   "id": 4273006873,
+   "explicit": false
+  },
+  "storage.daemon.providerConfig": {
+   "source": "storage.daemon.providerConfig max_contracts:int max_total_size:long = storage.daemon.ProviderConfig;",
+   "id": 2108492436,
+   "explicit": false
+  },
+  "storage.daemon.contractInfo": {
+   "source": "storage.daemon.contractInfo address:string state:int torrent:int256 created_time:int file_size:long downloaded_size:long     rate:string max_span:int client_balance:string contract_balance:string = storage.daemon.ContractInfo;",
+   "id": 3614723849,
+   "explicit": false
+  },
+  "storage.daemon.providerInfo": {
+   "source": "storage.daemon.providerInfo address:string balance:string config:storage.daemon.providerConfig     contracts_count:int contracts_total_size:long     contracts:(vector storage.daemon.contractInfo) = storage.daemon.ProviderInfo;",
+   "id": 3882549549,
+   "explicit": false
+  },
+  "storage.daemon.providerAddress": {
+   "source": "storage.daemon.providerAddress address:string = storage.daemon.ProviderAddress;",
+   "id": 2287909138,
+   "explicit": false
+  },
+  "storage.daemon.setVerbosity": {
+   "source": "storage.daemon.setVerbosity verbosity:int = storage.daemon.Success;",
+   "id": 649903000,
+   "explicit": false
+  },
+  "storage.daemon.createTorrent": {
+   "source": "storage.daemon.createTorrent path:string description:string allow_upload:Bool copy_inside:Bool flags:# = storage.daemon.TorrentFull;",
+   "id": 2644098091,
+   "explicit": false
+  },
+  "storage.daemon.addByHash": {
+   "source": "storage.daemon.addByHash hash:int256 root_dir:string start_download:Bool allow_upload:Bool priorities:(vector storage.PriorityAction) flags:# = storage.daemon.TorrentFull;",
+   "id": 3040176286,
+   "explicit": false
+  },
+  "storage.daemon.addByMeta": {
+   "source": "storage.daemon.addByMeta meta:bytes root_dir:string start_download:Bool allow_upload:Bool priorities:(vector storage.PriorityAction) flags:# = storage.daemon.TorrentFull;",
+   "id": 3059291742,
+   "explicit": false
+  },
+  "storage.daemon.setActiveDownload": {
+   "source": "storage.daemon.setActiveDownload hash:int256 active:Bool = storage.daemon.Success;",
+   "id": 1954176413,
+   "explicit": false
+  },
+  "storage.daemon.setActiveUpload": {
+   "source": "storage.daemon.setActiveUpload hash:int256 active:Bool = storage.daemon.Success;",
+   "id": 1001305755,
+   "explicit": false
+  },
+  "storage.daemon.getTorrents": {
+   "source": "storage.daemon.getTorrents flags:# = storage.daemon.TorrentList;",
+   "id": 590740314,
+   "explicit": false
+  },
+  "storage.daemon.getTorrentFull": {
+   "source": "storage.daemon.getTorrentFull hash:int256 flags:# = storage.daemon.TorrentFull;",
+   "id": 1553612902,
+   "explicit": false
+  },
+  "storage.daemon.getTorrentMeta": {
+   "source": "storage.daemon.getTorrentMeta hash:int256 flags:# = storage.daemon.TorrentMeta;",
+   "id": 1935486449,
+   "explicit": false
+  },
+  "storage.daemon.getNewContractMessage": {
+   "source": "storage.daemon.getNewContractMessage hash:int256 query_id:long params:storage.daemon.NewContractParams = storage.daemon.NewContractMessage;",
+   "id": 3920363412,
+   "explicit": false
+  },
+  "storage.daemon.getTorrentPeers": {
+   "source": "storage.daemon.getTorrentPeers hash:int256 flags:# = storage.daemon.PeerList;",
+   "id": 297259161,
+   "explicit": false
+  },
+  "storage.daemon.getTorrentPiecesInfo": {
+   "source": "storage.daemon.getTorrentPiecesInfo hash:int256     flags:#      offset:long max_pieces:long     = storage.daemon.TorrentPiecesInfo;",
+   "id": 4088182566,
+   "explicit": false
+  },
+  "storage.daemon.setFilePriorityAll": {
+   "source": "storage.daemon.setFilePriorityAll hash:int256 priority:int = storage.daemon.SetPriorityStatus;",
+   "id": 2373624441,
+   "explicit": false
+  },
+  "storage.daemon.setFilePriorityByIdx": {
+   "source": "storage.daemon.setFilePriorityByIdx hash:int256 idx:long priority:int = storage.daemon.SetPriorityStatus;",
+   "id": 1134024347,
+   "explicit": false
+  },
+  "storage.daemon.setFilePriorityByName": {
+   "source": "storage.daemon.setFilePriorityByName hash:int256 name:string priority:int = storage.daemon.SetPriorityStatus;",
+   "id": 3727499977,
+   "explicit": false
+  },
+  "storage.daemon.removeTorrent": {
+   "source": "storage.daemon.removeTorrent hash:int256 remove_files:Bool = storage.daemon.Success;",
+   "id": 175789147,
+   "explicit": false
+  },
+  "storage.daemon.loadFrom": {
+   "source": "storage.daemon.loadFrom hash:int256 meta:bytes path:string flags:# = storage.daemon.Torrent;",
+   "id": 3357531687,
+   "explicit": false
+  },
+  "storage.daemon.getSpeedLimits": {
+   "source": "storage.daemon.getSpeedLimits flags:# = storage.daemon.SpeedLimits;",
+   "id": 2595131519,
+   "explicit": false
+  },
+  "storage.daemon.setSpeedLimits": {
+   "source": "storage.daemon.setSpeedLimits flags:# download:flags.0?double upload:flags.1?double = storage.daemon.Success;",
+   "id": 732030954,
+   "explicit": false
+  },
+  "storage.daemon.importPrivateKey": {
+   "source": "storage.daemon.importPrivateKey key:PrivateKey = storage.daemon.KeyHash;",
+   "id": 2147449850,
+   "explicit": false
+  },
+  "storage.daemon.initProvider": {
+   "source": "storage.daemon.initProvider account_address:string = storage.daemon.Success;",
+   "id": 673143500,
+   "explicit": false
+  },
+  "storage.daemon.deployProvider": {
+   "source": "storage.daemon.deployProvider = storage.daemon.ProviderAddress;",
+   "id": 2108811237,
+   "explicit": false
+  },
+  "storage.daemon.getProviderParams": {
+   "source": "storage.daemon.getProviderParams address:string = storage.daemon.provider.Params;",
+   "id": 2462946929,
+   "explicit": false
+  },
+  "storage.daemon.setProviderParams": {
+   "source": "storage.daemon.setProviderParams params:storage.daemon.provider.params = storage.daemon.Success;",
+   "id": 1615801628,
+   "explicit": false
+  },
+  "storage.daemon.getProviderInfo": {
+   "source": "storage.daemon.getProviderInfo with_balances:Bool with_contracts:Bool = storage.daemon.ProviderInfo;",
+   "id": 859666907,
+   "explicit": false
+  },
+  "storage.daemon.setProviderConfig": {
+   "source": "storage.daemon.setProviderConfig config:storage.daemon.providerConfig = storage.daemon.Success;",
+   "id": 2376906636,
+   "explicit": false
+  },
+  "storage.daemon.withdraw": {
+   "source": "storage.daemon.withdraw contract:string = storage.daemon.Success;",
+   "id": 4257005553,
+   "explicit": false
+  },
+  "storage.daemon.sendCoins": {
+   "source": "storage.daemon.sendCoins address:string amount:string message:string = storage.daemon.Success;",
+   "id": 21329702,
+   "explicit": false
+  },
+  "storage.daemon.closeStorageContract": {
+   "source": "storage.daemon.closeStorageContract address:string = storage.daemon.Success;",
+   "id": 4135037712,
+   "explicit": false
+  },
+  "storage.daemon.removeStorageProvider": {
+   "source": "storage.daemon.removeStorageProvider = storage.daemon.Success;",
+   "id": 1121689494,
+   "explicit": false
+  },
+  "proxyLiteserver.config": {
+   "source": "proxyLiteserver.config port:int id:PublicKey = proxyLiteserver.Config;",
+   "id": 808543630,
+   "explicit": false
+  },
+  "quic.message": {
+   "source": "quic.message data:bytes = quic.Request;",
+   "id": 3758350129,
+   "explicit": false
+  },
+  "quic.query": {
+   "source": "quic.query data:bytes = quic.Request;",
+   "id": 3859505278,
+   "explicit": false
+  },
+  "quic.answer": {
+   "source": "quic.answer data:bytes = quic.Response;",
+   "id": 3735288754,
+   "explicit": false
+  },
+  "engineConsoleClient.config": {
+   "source": "engineConsoleClient.config address:string server_public_key:PublicKey client_private_key:PrivateKey = engineConsoleClient.Config;",
+   "id": 709554133,
+   "explicit": false
+  },
+  "consensus.overlayId": {
+   "source": "consensus.overlayId session_id:int256 nodes:(vector int256) = consensus.OverlayId;",
+   "id": 556371356,
+   "explicit": false
+  },
+  "consensus.blockSyncOverlayId": {
+   "source": "consensus.blockSyncOverlayId session_id:int256 = consensus.BlockOverlayId;",
+   "id": 2641961490,
+   "explicit": false
+  },
+  "consensus.dbId": {
+   "source": "consensus.dbId session_id:int256 is_validator:Bool validator_key:int256 adnl_id:int256 = consensus.DbId;",
+   "id": 3070385104,
+   "explicit": false
+  },
+  "consensus.dataToSign": {
+   "source": "consensus.dataToSign session_id:int256 data:bytes = consensus.DataToSign;",
+   "id": 2833464824,
+   "explicit": false
+  },
+  "consensus.candidateId": {
+   "source": "consensus.candidateId slot:int hash:int256 = consensus.CandidateId;",
+   "id": 3063008575,
+   "explicit": false
+  },
+  "consensus.candidateParent": {
+   "source": "consensus.candidateParent id:consensus.CandidateId = consensus.CandidateParent;",
+   "id": 441162481,
+   "explicit": false
+  },
+  "consensus.candidateWithoutParents": {
+   "source": "consensus.candidateWithoutParents = consensus.CandidateParent;",
+   "id": 583781545,
+   "explicit": false
+  },
+  "consensus.candidateHashDataOrdinary": {
+   "source": "consensus.candidateHashDataOrdinary block:tonNode.blockIdExt collated_file_hash:int256 parent:consensus.CandidateParent = consensus.CandidateHashData;",
+   "id": 3908680924,
+   "explicit": false
+  },
+  "consensus.candidateHashDataEmpty": {
+   "source": "consensus.candidateHashDataEmpty block:tonNode.blockIdExt parent:consensus.candidateId = consensus.CandidateHashData;",
+   "id": 1924454707,
+   "explicit": false
+  },
+  "consensus.block": {
+   "source": "consensus.block slot:int parent:consensus.CandidateParent candidate:bytes signature:bytes = consensus.CandidateData;",
+   "id": 1010235861,
+   "explicit": false
+  },
+  "consensus.empty": {
+   "source": "consensus.empty slot:int parent:consensus.CandidateId block:tonNode.blockIdExt signature:bytes = consensus.CandidateData;",
+   "id": 4044880127,
+   "explicit": false
+  },
+  "consensus.delegationToSign": {
+   "source": "consensus.delegationToSign window_start_slot:int collator_id:int256 = consensus.DelegationToSign;",
+   "id": 536199568,
+   "explicit": false
+  },
+  "consensus.delegation": {
+   "source": "consensus.delegation collator_key:PublicKey signature:bytes = consensus.Delegation;",
+   "id": 1541242464,
+   "explicit": false
+  },
+  "consensus.candidate": {
+   "source": "consensus.candidate flags:# data:consensus.CandidateData delegation:flags.0?consensus.Delegation = consensus.Candidate;",
+   "id": 1903410993,
+   "explicit": false
+  },
+  "consensus.broadcastExtraLegacy": {
+   "source": "consensus.broadcastExtraLegacy#921297fa slot:int = consensus.BroadcastExtra;",
+   "id": 2450692090,
+   "explicit": true
+  },
+  "consensus.broadcastExtra": {
+   "source": "consensus.broadcastExtra flags:# slot:int delegation:flags.0?consensus.Delegation = consensus.BroadcastExtra;",
+   "id": 4028542671,
+   "explicit": false
+  },
+  "consensus.requestError": {
+   "source": "consensus.requestError = consensus.RequestError;",
+   "id": 2200774004,
+   "explicit": false
+  },
+  "consensus.simplex.notarizeVote": {
+   "source": "consensus.simplex.notarizeVote id:consensus.CandidateId = consensus.simplex.UnsignedVote;",
+   "id": 3455452584,
+   "explicit": false
+  },
+  "consensus.simplex.finalizeVote": {
+   "source": "consensus.simplex.finalizeVote id:consensus.CandidateId = consensus.simplex.UnsignedVote;",
+   "id": 1084743941,
+   "explicit": false
+  },
+  "consensus.simplex.skipVote": {
+   "source": "consensus.simplex.skipVote slot:int = consensus.simplex.UnsignedVote;",
+   "id": 795549478,
+   "explicit": false
+  },
+  "consensus.simplex.vote": {
+   "source": "consensus.simplex.vote vote:consensus.simplex.UnsignedVote signature:bytes = consensus.simplex.Vote;",
+   "id": 3279877363,
+   "explicit": false
+  },
+  "consensus.simplex.voteSignature": {
+   "source": "consensus.simplex.voteSignature who:int signature:bytes = consensus.simplex.VoteSignature;",
+   "id": 2724505976,
+   "explicit": false
+  },
+  "consensus.simplex.voteSignatureSet": {
+   "source": "consensus.simplex.voteSignatureSet votes:(vector consensus.simplex.VoteSignature) = consensus.simplex.VoteSignatureSet;",
+   "id": 912187896,
+   "explicit": false
+  },
+  "consensus.simplex.certificate": {
+   "source": "consensus.simplex.certificate vote:consensus.simplex.UnsignedVote signatures:consensus.simplex.VoteSignatureSet = consensus.simplex.Certificate;",
+   "id": 3195754298,
+   "explicit": false
+  },
+  "consensus.simplex.candidateAndCert": {
+   "source": "consensus.simplex.candidateAndCert candidate:bytes notar:bytes = consensus.simplex.CandidateAndCert;",
+   "id": 3527814188,
+   "explicit": false
+  },
+  "consensus.simplex.db.key.vote": {
+   "source": "consensus.simplex.db.key.vote vote_hash:int256 = consensus.simplex.db.key.Vote;",
+   "id": 1706847458,
+   "explicit": false
+  },
+  "consensus.simplex.db.ourVote": {
+   "source": "consensus.simplex.db.ourVote vote:consensus.simplex.UnsignedVote seqno:long = consensus.simplex.db.Vote;",
+   "id": 2222143252,
+   "explicit": false
+  },
+  "consensus.simplex.db.cert": {
+   "source": "consensus.simplex.db.cert cert:consensus.simplex.Certificate = consensus.simplex.db.Vote;",
+   "id": 2939659912,
+   "explicit": false
+  },
+  "consensus.simplex.db.key.poolState": {
+   "source": "consensus.simplex.db.key.poolState = consensus.simplex.db.key.PoolState;",
+   "id": 1609734219,
+   "explicit": false
+  },
+  "consensus.simplex.db.poolState": {
+   "source": "consensus.simplex.db.poolState first_nonannounced_window:int = consensus.simplex.db.PoolState;",
+   "id": 2544281302,
+   "explicit": false
+  },
+  "consensus.simplex.db.key.finalizedBlock": {
+   "source": "consensus.simplex.db.key.finalizedBlock candidateId:consensus.candidateId = consensus.simplex.db.key.FinalizedBlock;",
+   "id": 4020515313,
+   "explicit": false
+  },
+  "consensus.simplex.db.finalizedBlock": {
+   "source": "consensus.simplex.db.finalizedBlock block_id:tonNode.blockIdExt parent:consensus.CandidateParent is_final:Bool = consensus.simplex.db.FinalizedBlock;",
+   "id": 2469030002,
+   "explicit": false
+  },
+  "consensus.simplex.db.key.candidate": {
+   "source": "consensus.simplex.db.key.candidate candidateId:consensus.candidateId = consensus.simplex.db.key.Candidate;",
+   "id": 2604866083,
+   "explicit": false
+  },
+  "consensus.simplex.db.key.candidateResolver.candidateInfo": {
+   "source": "consensus.simplex.db.key.candidateResolver.candidateInfo candidateId:consensus.candidateId = consensus.simplex.db.key.candidateResolver.CandidateInfo;",
+   "id": 4262696410,
+   "explicit": false
+  },
+  "consensus.simplex.db.candidateResolver.candidateInfo": {
+   "source": "consensus.simplex.db.candidateResolver.candidateInfo leader_id:int candidate_hash_data:consensus.CandidateHashData signature:bytes = consensus.simplex.db.candidateResolver.CandidateInfo;",
+   "id": 1763503439,
+   "explicit": false
+  },
+  "consensus.simplex.db.key.candidateResolver.notarCert": {
+   "source": "consensus.simplex.db.key.candidateResolver.notarCert candidateId:consensus.candidateId = consensus.simplex.db.key.candidateResolver.NotarCert;",
+   "id": 300563331,
+   "explicit": false
+  },
+  "consensus.simplex.db.candidateResolver.notarCert": {
+   "source": "consensus.simplex.db.candidateResolver.notarCert notar:consensus.simplex.voteSignatureSet = consensus.simplex.db.candidateResolver.NotarCert;",
+   "id": 2097506222,
+   "explicit": false
+  },
+  "consensus.simplex.db.key.delegationSignature": {
+   "source": "consensus.simplex.db.key.delegationSignature start_slot:int = consensus.simplex.db.key.DelegationSignature;",
+   "id": 3725899762,
+   "explicit": false
+  },
+  "consensus.simplex.db.delegationSignature": {
+   "source": "consensus.simplex.db.delegationSignature signature:bytes = consensus.simplex.db.DelegationSignature;",
+   "id": 2374010784,
+   "explicit": false
+  },
+  "consensus.db.key.delegatedWindow": {
+   "source": "consensus.db.key.delegatedWindow start_slot:int = consensus.db.key.DelegatedWindow;",
+   "id": 66048994,
+   "explicit": false
+  },
+  "consensus.db.delegatedWindow": {
+   "source": "consensus.db.delegatedWindow collator_id:int256 = consensus.db.DelegatedWindow;",
+   "id": 4293498065,
+   "explicit": false
+  },
+  "consensus.stats.block": {
+   "source": "consensus.stats.block id:tonNode.blockIdExt = consensus.stats.CandidateBlock;",
+   "id": 989343726,
+   "explicit": false
+  },
+  "consensus.stats.empty": {
+   "source": "consensus.stats.empty = consensus.stats.CandidateBlock;",
+   "id": 3327761951,
+   "explicit": false
+  },
+  "consensus.stats.id": {
+   "source": "consensus.stats.id workchain:int shard:long cc_seqno:int idx:int total_validators:int weight:long total_weight:long slots_per_leader_window:int = consensus.stats.Event;",
+   "id": 3366905902,
+   "explicit": false
+  },
+  "consensus.stats.collateStarted": {
+   "source": "consensus.stats.collateStarted target_slot:int = consensus.stats.Event;",
+   "id": 765701862,
+   "explicit": false
+  },
+  "consensus.stats.collateFinished": {
+   "source": "consensus.stats.collateFinished target_slot:int id:consensus.candidateId = consensus.stats.Event;",
+   "id": 2751879565,
+   "explicit": false
+  },
+  "consensus.stats.collatedEmpty": {
+   "source": "consensus.stats.collatedEmpty id:consensus.candidateId = consensus.stats.Event;",
+   "id": 246887059,
+   "explicit": false
+  },
+  "consensus.stats.candidateReceived": {
+   "source": "consensus.stats.candidateReceived id:consensus.candidateId parent:consensus.CandidateParent block:consensus.stats.CandidateBlock is_collator:Bool = consensus.stats.Event;",
+   "id": 628859599,
+   "explicit": false
+  },
+  "consensus.stats.validationStarted": {
+   "source": "consensus.stats.validationStarted id:consensus.candidateId = consensus.stats.Event;",
+   "id": 3517712841,
+   "explicit": false
+  },
+  "consensus.stats.validationFinished": {
+   "source": "consensus.stats.validationFinished id:consensus.candidateId = consensus.stats.Event;",
+   "id": 2172840828,
+   "explicit": false
+  },
+  "consensus.stats.blockAccepted": {
+   "source": "consensus.stats.blockAccepted id:consensus.candidateId = consensus.stats.Event;",
+   "id": 581403908,
+   "explicit": false
+  },
+  "consensus.stats.timestampedEvent": {
+   "source": "consensus.stats.timestampedEvent ts:double event:consensus.stats.Event = consensus.stats.TimestampedEvent;",
+   "id": 1298141201,
+   "explicit": false
+  },
+  "consensus.stats.events": {
+   "source": "consensus.stats.events id:int256 events:(vector consensus.stats.timestampedEvent) = consensus.stats.Events;",
+   "id": 828627083,
+   "explicit": false
+  },
+  "consensus.simplex.stats.voted": {
+   "source": "consensus.simplex.stats.voted vote:consensus.simplex.UnsignedVote = consensus.stats.Event;",
+   "id": 124935831,
+   "explicit": false
+  },
+  "consensus.simplex.stats.certObserved": {
+   "source": "consensus.simplex.stats.certObserved vote:consensus.simplex.UnsignedVote = consensus.stats.Event;",
+   "id": 1906519093,
+   "explicit": false
+  },
+  "consensus.simplex.noncriticalParams": {
+   "source": "consensus.simplex.noncriticalParams     flags:#     target_rate_ms:flags.0?int     first_block_timeout_ms:flags.1?int     first_block_timeout_multiplier:flags.2?double     first_block_timeout_cap_ms:flags.3?int     candidate_resolve_timeout_ms:flags.4?int     candidate_resolve_timeout_multiplier:flags.5?double     candidate_resolve_timeout_cap_ms:flags.6?int     candidate_resolve_cooldown_ms:flags.7?int     standstill_timeout_ms:flags.8?int     standstill_max_egress_bytes_per_s:flags.9?int     max_leader_window_desync:flags.10?int     bad_signature_ban_duration_ms:flags.11?int     candidate_resolve_rate_limit:flags.12?int     min_block_interval_ms:flags.13?int     no_empty_blocks_on_error_timeout_ms:flags.14?int     certificate_gossip_neighbors:flags.15?int     standstill_min_egress_bytes_per_s:flags.16?int     = consensus.NoncriticalParams;",
+   "id": 1585719129,
+   "explicit": false
+  },
+  "consensus.noncriticalParamsOverride": {
+   "source": "consensus.noncriticalParamsOverride     workchain:int     shard:long     from_seqno:int     to_seqno:int     override:consensus.NoncriticalParams     = consensus.NoncriticalParamsOverride;",
+   "id": 1992657352,
+   "explicit": false
+  },
+  "consensus.noncriticalParamsOverrideList": {
+   "source": "consensus.noncriticalParamsOverrideList     overrides:(vector consensus.noncriticalParamsOverride)     = consensus.NoncriticalParamsOverrideList;",
+   "id": 1019023547,
+   "explicit": false
+  },
+  "consensus.simplex.requestCandidate": {
+   "source": "consensus.simplex.requestCandidate id:consensus.CandidateId want_candidate:Bool want_notar:Bool = consensus.simplex.CandidateAndCert;",
+   "id": 1413462636,
+   "explicit": false
+  },
+  "consensus.pleaseCollatePrepare": {
+   "source": "consensus.pleaseCollatePrepare window_start_slot:int = tonNode.Success;",
+   "id": 2216348555,
+   "explicit": false
+  },
+  "consensus.pleaseCollate": {
+   "source": "consensus.pleaseCollate window_start_slot:int signature:bytes = tonNode.Success;",
+   "id": 1751899178,
+   "explicit": false
+  },
+  "engine.validator.setConsensusNoncriticalParamsOverrides": {
+   "source": "engine.validator.setConsensusNoncriticalParamsOverrides overrides:consensus.noncriticalParamsOverrideList = engine.validator.Success;",
+   "id": 3620720395,
+   "explicit": false
+  },
+  "engine.validator.getConsensusNoncriticalParamsOverrides": {
+   "source": "engine.validator.getConsensusNoncriticalParamsOverrides = consensus.NoncriticalParamsOverrideList;",
+   "id": 1931295732,
+   "explicit": false
+  }
+ }
+}

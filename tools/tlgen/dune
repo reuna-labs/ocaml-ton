@@ -1,0 +1,3 @@
+(executable
+ (name tlgen)
+ (libraries ton_tl))

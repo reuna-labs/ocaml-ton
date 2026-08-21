@@ -18,7 +18,7 @@ real mainnet data; everything above it is in progress.
 | `ton-address` | raw and user-friendly addresses | working |
 | `ton-tlb` | dictionaries, coins, messages, accounts, VM stack | working |
 | `ton-crypto` | Ed25519, mnemonics, Ed25519→X25519 | working |
-| `ton-tl` / `ton-tl-schema` | TL wire runtime and generated liteserver schema | planned |
+| `ton-tl` / `ton-tl-schema` | TL wire runtime and generated liteserver schema | working |
 | `ton-adnl` | ADNL over TCP, as a pure state machine | planned |
 | `ton-lite-client` | liteserver client, IO-free | planned |
 | `ton-wallet` | wallet v3R2 / v4R2 / v5R1 | working |
@@ -84,6 +84,12 @@ the two are running one spec rather than two hand transcriptions of it.
 `tools/gen-vectors/` regenerates the expectations (needs Node); the output is
 committed so the suite never depends on it.
 
+The TL bindings are generated rather than written, and the generated sources
+are committed. `dune runtest` diffs them against a fresh run of the compiler,
+so a stale file fails the build and `dune promote` fixes it. Every one of the
+747 constructor identifiers in the two vendored schemas is cross-checked
+against an independent derivation of the same rule.
+
 ## Layout
 
 ```
@@ -94,6 +100,10 @@ lib/tlb/        hashmaps, coins, message addresses, state init, messages,
                 account state, TVM stack values
 lib/crypto/     hashing, Ed25519, X25519 agreement, TON mnemonics
 lib/wallet/     wallet contracts and signed transfers
+lib/tl/         the TL wire format (unrelated to TL-B)
+lib/tl_schema/  generated liteserver and ADNL bindings, committed
+schema/         vendored .tl schemas, commit-pinned in PROVENANCE
+tools/tlgen/    dev tool: the TL schema compiler
 tools/bocinfo/  dev tool: describe a Bag of Cells and check it round-trips
 tools/gen-vectors/  dev tool: regenerate cross-implementation expectations
 test/           unit and property tests, plus the committed vectors

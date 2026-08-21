@@ -1,0 +1,4 @@
+(library
+ (name ton_tl)
+ (public_name ton-tl)
+ (libraries web3-codec))

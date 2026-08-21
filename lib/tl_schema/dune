@@ -1,0 +1,38 @@
+(library
+ (name ton_tl_schema)
+ (public_name ton-tl-schema)
+ (modules lite adnl)
+ (libraries ton-tl))
+
+; The generated sources are committed so that building this library never
+; needs the compiler in tools/tlgen. These rules regenerate them into a
+; scratch copy and make `dune runtest` fail if the committed file has drifted;
+; `dune promote` then updates it.
+
+(rule
+ (targets lite.ml.gen)
+ (deps
+  %{workspace_root}/schema/lite_api.tl
+  %{workspace_root}/tools/tlgen/tlgen.exe)
+ (action
+  (run %{workspace_root}/tools/tlgen/tlgen.exe --schema
+    %{workspace_root}/schema/lite_api.tl -o %{targets})))
+
+(rule
+ (targets adnl.ml.gen)
+ (deps
+  %{workspace_root}/schema/ton_api.tl
+  %{workspace_root}/tools/tlgen/tlgen.exe)
+ (action
+  (run %{workspace_root}/tools/tlgen/tlgen.exe --schema
+    %{workspace_root}/schema/ton_api.tl --only pub.,tcp. -o %{targets})))
+
+(rule
+ (alias runtest)
+ (action
+  (diff lite.ml lite.ml.gen)))
+
+(rule
+ (alias runtest)
+ (action
+  (diff adnl.ml adnl.ml.gen)))

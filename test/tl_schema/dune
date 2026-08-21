@@ -1,0 +1,3 @@
+(test
+ (name test_schema)
+ (libraries ton_tl ton_tl_schema alcotest))
