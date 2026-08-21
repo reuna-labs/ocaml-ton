@@ -1,0 +1,4 @@
+(library
+ (name ton_wallet)
+ (public_name ton-wallet)
+ (libraries ton-cell ton-tlb ton-address ton-crypto base64 zarith))

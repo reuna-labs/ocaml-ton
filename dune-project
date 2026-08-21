@@ -57,3 +57,18 @@
   (alcotest :with-test)
   (qcheck-core :with-test)
   (qcheck-alcotest :with-test)))
+
+(package
+ (name ton-wallet)
+ (synopsis "TON wallet contracts v3R2, v4R2 and v5R1")
+ (description
+  "Address derivation and signed transfer construction for the standard TON\nwallet contracts. Entirely offline: nothing here needs a network or a clock.")
+ (depends
+  (ocaml (>= 4.14))
+  ton-cell
+  ton-tlb
+  ton-address
+  ton-crypto
+  (base64 (>= 3.5.0))
+  (zarith (>= 1.12))
+  (alcotest :with-test)))

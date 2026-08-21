@@ -1,0 +1,6 @@
+(test
+ (name test_wallet)
+ (deps
+  (source_tree ../vectors))
+ (libraries ton_cell ton_tlb ton_address ton_crypto ton_wallet zarith base64
+   yojson alcotest))
