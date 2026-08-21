@@ -1,0 +1,12 @@
+(library
+ (name ton_crypto)
+ (public_name ton-crypto)
+ (libraries digestif mirage-crypto-ec))
+
+(rule
+ (targets wordlist.ml)
+ (deps english.txt gen/gen_wordlist.exe)
+ (action
+  (with-stdout-to
+   wordlist.ml
+   (run %{dep:gen/gen_wordlist.exe} %{dep:english.txt}))))

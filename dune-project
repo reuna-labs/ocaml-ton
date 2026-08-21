@@ -44,3 +44,16 @@
   (alcotest :with-test)
   (qcheck-core :with-test)
   (qcheck-alcotest :with-test)))
+
+(package
+ (name ton-crypto)
+ (synopsis "TON cryptography: Ed25519 keys and mnemonics")
+ (description
+  "Key handling for TON: Ed25519 signing over mirage-crypto, and the TON\nmnemonic scheme (BIP-39 wordlist with PBKDF2-HMAC-SHA-512, but no BIP-39\nchecksum).")
+ (depends
+  (ocaml (>= 4.14))
+  (digestif (>= 1.1.4))
+  (mirage-crypto-ec (>= 2.1.0))
+  (alcotest :with-test)
+  (qcheck-core :with-test)
+  (qcheck-alcotest :with-test)))

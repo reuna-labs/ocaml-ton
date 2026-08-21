@@ -1,4 +1,4 @@
 (library
  (name ton_cell)
  (public_name ton-cell)
- (libraries digestif.ocaml zarith web3-codec))
+ (libraries digestif zarith web3-codec))

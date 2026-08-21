@@ -1,0 +1,292 @@
+{
+ "pbkdf2": [
+  {
+   "password": "password",
+   "salt": "salt",
+   "iterations": 1,
+   "len": 64,
+   "dk": "867f70cf1ade02cff3752599a3a53dc4af34c7a669815ae5d513554e1c8cf252c02d470a285a0501bad999bfe943c08f050235d7d68b1da55e63f73b60a57fce"
+  },
+  {
+   "password": "password",
+   "salt": "salt",
+   "iterations": 2,
+   "len": 64,
+   "dk": "e1d9c16aa681708a45f5c7c4e215ceb66e011a2e9f0040713f18aefdb866d53cf76cab2868a39b9f7840edce4fef5a82be67335c77a6068e04112754f27ccf4e"
+  },
+  {
+   "password": "password",
+   "salt": "salt",
+   "iterations": 4096,
+   "len": 64,
+   "dk": "d197b1b33db0143e018b12f3d1d1479e6cdebdcc97c5c0f87f6902e072f457b5143f30602641b3d55cd335988cb36b84376060ecd532e039b742a239434af2d5"
+  },
+  {
+   "password": "",
+   "salt": "",
+   "iterations": 1,
+   "len": 64,
+   "dk": "6d2ecbbbfb2e6dcd7056faf9af6aa06eae594391db983279a6bf27e0eb2286143ab0c996f33ca4b667e945829ea693340f2831797324e5f31df18ed171d18c97"
+  },
+  {
+   "password": "pass\u0000word",
+   "salt": "sa\u0000lt",
+   "iterations": 4096,
+   "len": 16,
+   "dk": "9d9e9c4cd21fe4be24d5b8244c759665"
+  },
+  {
+   "password": "password",
+   "salt": "salt",
+   "iterations": 1,
+   "len": 100,
+   "dk": "867f70cf1ade02cff3752599a3a53dc4af34c7a669815ae5d513554e1c8cf252c02d470a285a0501bad999bfe943c08f050235d7d68b1da55e63f73b60a57fce7b532e206c2967d4c7d2ffa460539fc4d4e5eec70125d74c6c7cf86d25284f297907fcea"
+  },
+  {
+   "password": "password",
+   "salt": "salt",
+   "iterations": 1,
+   "len": 200,
+   "dk": "867f70cf1ade02cff3752599a3a53dc4af34c7a669815ae5d513554e1c8cf252c02d470a285a0501bad999bfe943c08f050235d7d68b1da55e63f73b60a57fce7b532e206c2967d4c7d2ffa460539fc4d4e5eec70125d74c6c7cf86d25284f297907fcea1ad214effdbea23e1312084eabb180ab72edbac45ea2a53f5f5b9fe1ec722ddabc96fa0d0bad974b1a0f706d9a7f08ec7f7968048469466e29ccb4628e314a11fd50f4ccec7970c13e940c0ddc97004a2cd0dcf1a41a26380c2dac966aa077a8bad210ba"
+  },
+  {
+   "password": "p",
+   "salt": "s",
+   "iterations": 390,
+   "len": 64,
+   "dk": "d11cd56bf3e39741c20a6f1d2d7318ec30b180ca2532d44b5a016d1c1e3cd0386b41111ecba6b26e4843d3f465eb627431cd78d01ac7e02673b475f663912d07"
+  }
+ ],
+ "hmac": [
+  {
+   "key": "0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b",
+   "data": "4869205468657265",
+   "mac": "87aa7cdea5ef619d4ff0b4241a1d6cb02379f4e2ce4ec2787ad0b30545e17cdedaa833b7d6b8a702038b274eaea3f4e4be9d914eeb61f1702e696c203a126854"
+  },
+  {
+   "key": "4a656665",
+   "data": "7768617420646f2079612077616e7420666f72206e6f7468696e673f",
+   "mac": "164b7a7bfcf819e2e395fbe73b56e0a387bd64222e831fd610270cd7ea2505549758bf75c05a994a6d034f65f8f0e6fdcaeab1a34d4a6b4b636e070a38bce737"
+  },
+  {
+   "key": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "data": "54657374205573696e67204c6172676572205468616e20426c6f636b2d53697a65204b6579202d2048617368204b6579204669727374",
+   "mac": "80b24263c7c1a3ebb71493c1dd7be8b49b46d1f41b4aeec1121b013783f8f3526b56d037e05f2598bd0fd2215d6a1e5295e64f73f63f0aec8b915a985d786598"
+  },
+  {
+   "key": "",
+   "data": "",
+   "mac": "b936cee86c9f87aa5d3c6f2e84cb5a4239a5fe50480a6ec66b70ab5b1f4ac6730c6c515421b327ec1d69402e53dfb49ad7381eb067b338fd7b0cb22247225d47"
+  }
+ ],
+ "mnemonics": [
+  {
+   "words": [
+    "fun",
+    "whip",
+    "couch",
+    "nature",
+    "clap",
+    "oyster",
+    "pupil",
+    "invest",
+    "raw",
+    "seat",
+    "muscle",
+    "mansion",
+    "grape",
+    "lava",
+    "immune",
+    "conduct",
+    "soft",
+    "maze",
+    "meadow",
+    "pause",
+    "round",
+    "because",
+    "work",
+    "use"
+   ],
+   "password": null,
+   "entropy": "bd5b5154489bc99bf6a43e0e9d5658b9cc508dbe68f4b5dfe578b30e129d0c695394fe23f44d6cfdec9e76085fd3cdb85133f251fb0ee24e1dc8b583febd4a11",
+   "seed": "9385f6a4e1d5c070b5c915577e8398dc9a6597fc212db12595b42e7cf704e4a0868d6cd36015fe0679d7ac19facb7e2edcd26feeee0f93a5d7deaea27090a71e",
+   "hdSeed": "5674f02eab16afae6403cae38c716022236edf250e2fc194a235c64523b54aa4434820596ffe8d7a117784d7e44540c2470dbc1a265877f2946e7cc275e173cb",
+   "publicKey": "9793a5deb32e638003689622219692bd44c4e1307ccd910e039b8e41e1a6ba0a",
+   "secretKey": "9385f6a4e1d5c070b5c915577e8398dc9a6597fc212db12595b42e7cf704e4a09793a5deb32e638003689622219692bd44c4e1307ccd910e039b8e41e1a6ba0a",
+   "valid": true
+  },
+  {
+   "words": [
+    "dose",
+    "monkey",
+    "raven",
+    "human",
+    "chest",
+    "between",
+    "tattoo",
+    "dismiss",
+    "column",
+    "arm",
+    "cram",
+    "truck",
+    "piano",
+    "virtual",
+    "all",
+    "below",
+    "avoid",
+    "slight",
+    "pretty",
+    "sight",
+    "surface",
+    "dilemma",
+    "real",
+    "pet"
+   ],
+   "password": null,
+   "entropy": "9179fb70a65b6591a521e62a69044010f07d53767f10cfaaf832c26ba3c2b5ac0c1f224eb652dcff0ffdc22f5246883674425139ddecc85109ef37b560a5d6e3",
+   "seed": "2a712f8c305383cd840afc463c9ab07ad6514a5866822040f642f52b6256d4dedc23ea012fa5ad511209a947c90c7a93dac77e6dbd660ae9fa681abf7c8f5ada",
+   "hdSeed": "5087c2651f27f3e54f85571271f29bea56da71b31027c8fd0e58d32a9a59f9d27b74c606c81db1f3090ca39f95d35e3615614cce38d07b9f22ae2a992cbaf5f0",
+   "publicKey": "9f62d00495b1a83f736a202196387d2012643d5160597dd81ae0337902500ba8",
+   "secretKey": "2a712f8c305383cd840afc463c9ab07ad6514a5866822040f642f52b6256d4de9f62d00495b1a83f736a202196387d2012643d5160597dd81ae0337902500ba8",
+   "valid": true
+  },
+  {
+   "words": [
+    "join",
+    "also",
+    "cross",
+    "pink",
+    "bind",
+    "cupboard",
+    "leopard",
+    "dad",
+    "grow",
+    "wrestle",
+    "primary",
+    "sweet",
+    "ugly",
+    "critic",
+    "near",
+    "rose",
+    "pudding",
+    "gossip",
+    "churn",
+    "fresh",
+    "canal",
+    "script",
+    "country",
+    "wool"
+   ],
+   "password": null,
+   "entropy": "dae278cee66d1c5285c784d7562d999adb827d30d6a50e8ca5b9ed740e6c06a08989adce82c4954bca43f3b4b4aba1902959a531aab039396f38719e906a8db6",
+   "seed": "3c8e55c63afbd517b0bd9b6d8807f61084376dc3003f2a724ec2611466dd99fe91630e1246af04e757a964a6328e54191a2e764337cf78e6a143400631cf3760",
+   "hdSeed": "c461a1b5294e451cdd8a6fc0bc68dacfb0967367e7722a3502080702d903cbc6516ec325c97d95a79c44427aeafb5d3f9ae8f2620564a436d5465496a330afd7",
+   "publicKey": "0efc01208f2de00f06df30ff6a39272595d1629b9880ed4eb201f6eb9117b0c8",
+   "secretKey": "3c8e55c63afbd517b0bd9b6d8807f61084376dc3003f2a724ec2611466dd99fe0efc01208f2de00f06df30ff6a39272595d1629b9880ed4eb201f6eb9117b0c8",
+   "valid": true
+  },
+  {
+   "words": [
+    "fun",
+    "whip",
+    "couch",
+    "nature",
+    "clap",
+    "oyster",
+    "pupil",
+    "invest",
+    "raw",
+    "seat",
+    "muscle",
+    "mansion",
+    "grape",
+    "lava",
+    "immune",
+    "conduct",
+    "soft",
+    "maze",
+    "meadow",
+    "pause",
+    "round",
+    "because",
+    "work",
+    "use"
+   ],
+   "password": "correct horse battery staple",
+   "entropy": "9027b993e94b5386792e46ac6a592dee39726a7ef08000c423ce0a1238e3cfcd65cf51fc506ceee3c1d381366f9bb9d9b708f4fb2f690412226deea32252da40",
+   "seed": "44ab75d23568a91044b599ba775e10b5f88e270b8f6a4e61b2a9f1584a12232632a2d2c1a3ed9acef0353c927b92b0d4b4214b737ef7d63c227693fb7f4f7231",
+   "hdSeed": "65a64c5f1fd75116cb5da38cfffbba9b25ced78e9edbf32ebf96d0821fdbbd21eb9f7c99e9791703083199e28352b0d7a332841a631ae01b4edc4795ba457591",
+   "publicKey": "b200d6665d2eb8c50f8cae45682b979cb03df1f82ef6d5b36cfa7577e3730c42",
+   "secretKey": "44ab75d23568a91044b599ba775e10b5f88e270b8f6a4e61b2a9f1584a122326b200d6665d2eb8c50f8cae45682b979cb03df1f82ef6d5b36cfa7577e3730c42",
+   "valid": false
+  }
+ ],
+ "invalid": [
+  {
+   "words": [
+    "abandon",
+    "abandon",
+    "abandon",
+    "abandon",
+    "abandon",
+    "abandon",
+    "abandon",
+    "abandon",
+    "abandon",
+    "abandon",
+    "abandon",
+    "abandon",
+    "abandon",
+    "abandon",
+    "abandon",
+    "abandon",
+    "abandon",
+    "abandon",
+    "abandon",
+    "abandon",
+    "abandon",
+    "abandon",
+    "abandon",
+    "abandon"
+   ],
+   "reason": "all words valid, seed is not a basic seed",
+   "valid": false
+  },
+  {
+   "words": [
+    "notaword",
+    "whip",
+    "couch",
+    "nature",
+    "clap",
+    "oyster",
+    "pupil",
+    "invest",
+    "raw",
+    "seat",
+    "muscle",
+    "mansion",
+    "grape",
+    "lava",
+    "immune",
+    "conduct",
+    "soft",
+    "maze",
+    "meadow",
+    "pause",
+    "round",
+    "because",
+    "work",
+    "use"
+   ],
+   "reason": "word not in the list",
+   "valid": false
+  }
+ ],
+ "wordlist": {
+  "count": 2048,
+  "sha256": "2f5eed53a4727b4bf8880d8f3f199efc90e58503646d9ff8eff3a2ed3b24dbda",
+  "first": "abandon",
+  "last": "zoo"
+ }
+}

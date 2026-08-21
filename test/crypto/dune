@@ -1,0 +1,5 @@
+(test
+ (name test_crypto)
+ (deps
+  (source_tree ../vectors))
+ (libraries ton_crypto yojson alcotest))
