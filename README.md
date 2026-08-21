@@ -17,7 +17,7 @@ real mainnet data; everything above it is in progress.
 | `ton-cell` | Bits, cells, builder/slice, representation hash, exotic cells, BoC | working |
 | `ton-address` | raw and user-friendly addresses | working |
 | `ton-tlb` | dictionaries, coins, messages, accounts, VM stack | working |
-| `ton-crypto` | Ed25519, mnemonics | working |
+| `ton-crypto` | Ed25519, mnemonics, Ed25519→X25519 | working |
 | `ton-tl` / `ton-tl-schema` | TL wire runtime and generated liteserver schema | planned |
 | `ton-adnl` | ADNL over TCP, as a pure state machine | planned |
 | `ton-lite-client` | liteserver client, IO-free | planned |
@@ -44,7 +44,10 @@ defaults to level 3, the opposite of ours.
 
 ## Building
 
-Requires a switch with the reuna `mirage-crypto` fork and `web3-codec` pinned:
+Requires a switch with the reuna `mirage-crypto` fork and `web3-codec` pinned.
+`ton-crypto` needs `Ed25519.Primitive.to_x25519_pub`, added to that fork for
+this project; an unpatched mirage-crypto will not build it.
+
 
 ```sh
 opam switch create ocaml-ton ocaml-base-compiler.5.2.1
@@ -89,7 +92,7 @@ lib/cell/       bits, level masks, cell types, exotic cells, hashing, BoC,
 lib/address/    raw and user-friendly addresses
 lib/tlb/        hashmaps, coins, message addresses, state init, messages,
                 account state, TVM stack values
-lib/crypto/     hashing, Ed25519, TON mnemonics
+lib/crypto/     hashing, Ed25519, X25519 agreement, TON mnemonics
 lib/wallet/     wallet contracts and signed transfers
 tools/bocinfo/  dev tool: describe a Bag of Cells and check it round-trips
 tools/gen-vectors/  dev tool: regenerate cross-implementation expectations

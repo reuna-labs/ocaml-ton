@@ -163,6 +163,69 @@ let test_normalisation () =
   Alcotest.(check (list string)) "parse from a string" words
     (Mnemonic.of_string (String.concat "  " words))
 
+(* --- Ed25519 -> X25519 ----------------------------------------------------- *)
+
+let x_vectors =
+  lazy
+    (match Yojson.Safe.from_string (read_file "../vectors/x25519-expected.json") with
+    | `Assoc l -> l
+    | _ -> Alcotest.fail "x25519-expected.json: expected an object")
+
+let x_field n = match List.assoc_opt n (Lazy.force x_vectors) with
+  | Some v -> v
+  | None -> Alcotest.failf "missing field %S" n
+
+(* The map is checked against a reference computed with plain big-integer
+   arithmetic, so nothing is shared with the implementation under test. *)
+let test_x25519_map () =
+  List.iteri
+    (fun i spec ->
+      let spec = to_obj spec in
+      let seed = unhex (to_str (field "seed" spec)) in
+      let kp = Result.get_ok (Ed25519.of_seed seed) in
+      let at f = Printf.sprintf "x25519 case %d: %s" i f in
+      Alcotest.(check string) (at "ed25519 public key") (to_str (field "edPub" spec)) (hex (Ed25519.public kp));
+      Alcotest.(check string) (at "x25519 scalar") (to_str (field "xScalar" spec))
+        (hex (X25519.scalar_of_ed25519_seed seed));
+      match X25519.of_ed25519_pub (Ed25519.public kp) with
+      | Ok u -> Alcotest.(check string) (at "montgomery u") (to_str (field "xPub" spec)) (hex u)
+      | Error e -> Alcotest.failf "%s: %s" (at "map") e)
+    (to_list (x_field "cases"))
+
+(* The property that actually matters: two peers holding Ed25519 signing keys
+   must derive the same secret, and it must be the one the reference derives.
+   This is exactly what the ADNL handshake depends on. *)
+let test_x25519_agreement () =
+  List.iteri
+    (fun i spec ->
+      let spec = to_obj spec in
+      let a = unhex (to_str (field "seedA" spec)) and b = unhex (to_str (field "seedB" spec)) in
+      let pub s = Ed25519.public (Result.get_ok (Ed25519.of_seed s)) in
+      let u s = Result.get_ok (X25519.of_ed25519_pub (pub s)) in
+      let secret mine theirs =
+        Result.get_ok
+          (X25519.key_exchange ~scalar:(X25519.scalar_of_ed25519_seed mine) ~peer:(u theirs))
+      in
+      let sa = secret a b and sb = secret b a in
+      Alcotest.(check string) (Printf.sprintf "agreement %d: both directions" i) (hex sa) (hex sb);
+      Alcotest.(check string) (Printf.sprintf "agreement %d: matches reference" i)
+        (to_str (field "shared" spec)) (hex sa))
+    (to_list (x_field "agreements"))
+
+let test_x25519_rejections () =
+  (* y = 1 is the identity and has no Montgomery image. *)
+  (match X25519.of_ed25519_pub (unhex (to_str (x_field "identity"))) with
+  | Ok _ -> Alcotest.fail "accepted the identity"
+  | Error e -> Alcotest.(check string) "identity" "Ed25519 public key has no Curve25519 image (y = 1)" e);
+  (match X25519.of_ed25519_pub "short" with
+  | Ok _ -> Alcotest.fail "accepted a short key"
+  | Error e -> Alcotest.(check string) "short key" "Ed25519 public key must be 32 bytes" e);
+  (* An all-zero peer point is low order; the exchange must refuse rather than
+     hand back an all-zero secret. *)
+  match X25519.key_exchange ~scalar:(String.make 32 '\x01') ~peer:(String.make 32 '\x00') with
+  | Ok _ -> Alcotest.fail "accepted a low-order peer point"
+  | Error _ -> ()
+
 let () =
   let mnemonics = to_list (section "mnemonics") in
   let invalid = to_list (section "invalid") in
@@ -175,6 +238,10 @@ let () =
       ( "ed25519",
         [ Alcotest.test_case "RFC 8032 vector 1" `Quick test_rfc8032;
           Alcotest.test_case "rejections" `Quick test_ed25519_rejects ] );
+      ( "ed25519 to x25519",
+        [ Alcotest.test_case "birational map" `Quick test_x25519_map;
+          Alcotest.test_case "key agreement" `Quick test_x25519_agreement;
+          Alcotest.test_case "rejections" `Quick test_x25519_rejections ] );
       ( "mnemonics",
         List.mapi (fun i s -> Alcotest.test_case (Printf.sprintf "case %d" i) `Quick (mnemonic_case i s)) mnemonics
         @ List.mapi (fun i s -> Alcotest.test_case (Printf.sprintf "invalid %d" i) `Quick (invalid_case i s)) invalid
