@@ -22,6 +22,8 @@ real mainnet data; everything above it is in progress.
 | `ton-adnl` | ADNL over TCP, as a pure state machine | working |
 | `ton-lite-client` | liteserver client, IO-free | working |
 | `ton-lite-client-lwt` | Unix transport | working |
+| `ton-lite-client-mirage` | MirageOS transport, over any `Mirage_flow.S` | working |
+| `ton-light-client` | the unikernel's work, as a library | working |
 | `ton-wallet` | wallet v3R2 / v4R2 / v5R1 | working |
 | `ton-proof` | Merkle proof verification for account state | working |
 
@@ -144,7 +146,10 @@ lib/tl_schema/  generated liteserver and ADNL bindings, committed
 lib/adnl/       ADNL handshake and framing, no IO
 lib/lite_client/  typed liteserver queries and sessions, no IO
 lib/proof/      Merkle proof verification
-lib/io/lwt/     the only package that opens a socket
+lib/io/lwt/     Unix transport
+lib/io/mirage/  MirageOS transport, over any flow
+lib/light_client/  what the unikernel does, as an ordinary library
+unikernel/      the MirageOS entry point and mirage config
 schema/         vendored .tl schemas, commit-pinned in PROVENANCE
 tools/tlgen/    dev tool: the TL schema compiler
 tools/record_transcript/  dev tool: record a live session for offline replay

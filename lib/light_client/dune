@@ -1,0 +1,8 @@
+; The unikernel's actual work, as an ordinary library so that it is
+; type-checked by the normal build rather than only when a cross toolchain is
+; present. unikernel/ holds nothing but the MirageOS entry point.
+(library
+ (name ton_light_client)
+ (public_name ton-light-client)
+ (libraries ton-cell ton-tlb ton-address ton-proof ton-lite-client
+   ton-lite-client-mirage tcpip mirage-crypto-rng ipaddr logs lwt))

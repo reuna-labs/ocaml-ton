@@ -1,0 +1,3 @@
+; unikernel/ is a MirageOS project in its own right: the mirage tool generates
+; a dune-project and workspace inside it, which would collide with this one.
+(data_only_dirs unikernel)

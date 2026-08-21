@@ -1,0 +1,4 @@
+(library
+ (name ton_lite_client_mirage)
+ (public_name ton-lite-client-mirage)
+ (libraries ton-lite-client ton-adnl mirage-flow cstruct lwt))

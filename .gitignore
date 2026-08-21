@@ -2,3 +2,17 @@ _build/
 *.install
 _opam/
 node_modules/
+
+# mirage build artifacts
+unikernel/_build/
+unikernel/dist/
+unikernel/duniverse/
+unikernel/mirage/
+unikernel/dune
+unikernel/dune-project
+unikernel/dune-workspace
+unikernel/dune.build
+unikernel/dune.config
+unikernel/Makefile
+unikernel/*.opam
+unikernel/*.opam.locked

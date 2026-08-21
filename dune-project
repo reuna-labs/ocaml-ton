@@ -156,3 +156,35 @@
   (digestif (>= 1.1.4))
   (zarith (>= 1.12))
   (alcotest :with-test)))
+
+(package
+ (name ton-lite-client-mirage)
+ (synopsis "MirageOS transport for the TON liteserver client")
+ (description
+  "Drives the liteserver protocol over any Mirage_flow.S -- a TCP connection,\na vsock channel out of a confidential guest, or an in-memory pipe in a test.\nThe caller opens the flow; no protocol code lives here.")
+ (depends
+  (ocaml (>= 4.14))
+  ton-lite-client
+  ton-adnl
+  (mirage-flow (>= 5.0.0))
+  (cstruct (>= 6.0.0))
+  (lwt (>= 5.6.0))))
+
+(package
+ (name ton-light-client)
+ (synopsis "A TON light client as a MirageOS unikernel")
+ (description
+  "Connects to a liteserver, asks for an account and verifies the answer\nagainst the block. Almost all of it is the same pure code the offline test\nsuite runs; only the flow is new.")
+ (depends
+  (ocaml (>= 4.14))
+  ton-cell
+  ton-tlb
+  ton-address
+  ton-proof
+  ton-lite-client
+  ton-lite-client-mirage
+  tcpip
+  (mirage-crypto-rng (>= 2.1.0))
+  ipaddr
+  logs
+  (lwt (>= 5.6.0))))

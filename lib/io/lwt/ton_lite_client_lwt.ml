@@ -81,10 +81,12 @@ let connect ?(timeout = 10.0) ?max_frame ~host ~port ~server_pub () =
       let fd = Lwt_unix.socket Unix.PF_INET Unix.SOCK_STREAM 0 in
       Lwt_unix.setsockopt fd Unix.TCP_NODELAY true;
       Lwt_unix.connect fd addr >>= fun () ->
-      match
-        Ton_adnl.Conn.connect ?max_frame ~server_pub ~ephemeral_seed:(random 32)
-          ~aes_params:(random Ton_adnl.Handshake.params_size) ()
-      with
+      (* Bound separately and in this order on purpose: argument evaluation
+         order is unspecified in OCaml, and a generator's draws should happen
+         in a sequence that can be reasoned about and reproduced. *)
+      let ephemeral_seed = random 32 in
+      let aes_params = random Ton_adnl.Handshake.params_size in
+      match Ton_adnl.Conn.connect ?max_frame ~server_pub ~ephemeral_seed ~aes_params () with
       | Error e -> Lwt_unix.close fd >|= fun () -> Error (Client (C.Adnl e))
       | Ok (conn, packet) ->
           let t =
@@ -125,7 +127,8 @@ let await ~timeout t ~register ~bytes =
 
 let call ?(timeout = 30.0) t q =
   let query_id = random 32 in
-  let session, bytes = C.Session.query t.session ~query_id ~nonce:(random 32) q in
+  let nonce = random 32 in
+  let session, bytes = C.Session.query t.session ~query_id ~nonce q in
   t.session <- session;
   await ~timeout t ~bytes ~register:(fun u -> Hashtbl.replace t.pending query_id u) >|= function
   | Error e -> Error e
@@ -139,7 +142,8 @@ let random_int64 () =
 
 let ping ?(timeout = 30.0) t =
   let random_id = random_int64 () in
-  let session, bytes = C.Session.ping t.session ~random_id ~nonce:(random 32) in
+  let nonce = random 32 in
+  let session, bytes = C.Session.ping t.session ~random_id ~nonce in
   t.session <- session;
   await ~timeout t ~bytes ~register:(fun u -> t.pongs <- t.pongs @ [ u ])
 
