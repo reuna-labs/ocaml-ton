@@ -1,0 +1,140 @@
+{
+ "empty": {
+  "hash": "b0b26bc74921ecfff713a2f2301974f154fe10891d213f850fa17f60b46e53e9",
+  "bits": 24,
+  "refs": 0,
+  "boc": "te6ccgEBAQEABQAABgAAAA=="
+ },
+ "null_only": {
+  "hash": "17ee9e594a2481f3572a66ed17afe7dc7346c8254fd813bdc39e1c715c4d4c2a",
+  "bits": 32,
+  "refs": 1,
+  "boc": "te6ccgEBAgEACQABCAAAAQABAAA="
+ },
+ "small_int": {
+  "hash": "ee3cb733ccdbe98c9d3ec29198083400abff891853f93d931f2a1c719d904292",
+  "bits": 96,
+  "refs": 1,
+  "boc": "te6ccgEBAgEAEQABGAAAAQEAAAAAAAAAKgEAAA=="
+ },
+ "negative_int": {
+  "hash": "6b46a074e90f55ca814dd91d38b0ff31c0f8ace7f42f1d4d10900b42dab0b396",
+  "bits": 96,
+  "refs": 1,
+  "boc": "te6ccgEBAgEAEQABGAAAAQH/////////1gEAAA=="
+ },
+ "int64_max": {
+  "hash": "b92fe6139f431db98c00297ab2f3aacca643b8ab7af585020ad65cd9538d18c0",
+  "bits": 96,
+  "refs": 1,
+  "boc": "te6ccgEBAgEAEQABGAAAAQF//////////wEAAA=="
+ },
+ "int64_min": {
+  "hash": "c35b9b66f54715a613e6c206d1c525b4573983a81d4e595cb30669c61e669a3a",
+  "bits": 96,
+  "refs": 1,
+  "boc": "te6ccgEBAgEAEQABGAAAAQGAAAAAAAAAAAEAAA=="
+ },
+ "just_over_max": {
+  "hash": "b20208fc6d21fb42e0b82fe398b444b431bd8438c4ccdcf45a635c08094bfe45",
+  "bits": 296,
+  "refs": 1,
+  "boc": "te6ccgEBAgEAKgABSgAAAQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAABAAA="
+ },
+ "just_under_min": {
+  "hash": "741308ce9a73efe6e65bc28bb0a77fc7b547b6f44f5161f91820382202c44087",
+  "bits": 296,
+  "refs": 1,
+  "boc": "te6ccgEBAgEAKgABSgAAAQIB////////////////////////////////f/////////8BAAA="
+ },
+ "int257_max": {
+  "hash": "3f20589232ef6dd343ba3934021caeb5c342c0587a84d3072a39c0ea90c068d7",
+  "bits": 296,
+  "refs": 1,
+  "boc": "te6ccgEBAgEAKgABSgAAAQIA//////////////////////////////////////////8BAAA="
+ },
+ "int257_min": {
+  "hash": "ee4778fff0fa8ae799c5aa7930447e75257486827d15bf8020e40bdc870644d9",
+  "bits": 296,
+  "refs": 1,
+  "boc": "te6ccgEBAgEAKgABSgAAAQIBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAA="
+ },
+ "nan": {
+  "hash": "259d394d8b0a1886bd4b6200f9de6f24e010496c4eab449b4f43a557b3f278ca",
+  "bits": 40,
+  "refs": 1,
+  "boc": "te6ccgEBAgEACgABCgAAAQL/AQAA"
+ },
+ "cell": {
+  "hash": "a4552e033e633005ae4ae18a29c94cb5a6cba115d3c30d965fd5a00abfa38835",
+  "bits": 32,
+  "refs": 2,
+  "boc": "te6ccgEBAwEAEAACCAAAAQMBAgAAAAjerb7v"
+ },
+ "builder": {
+  "hash": "3c8f377effec8c99852694e125d64f14d628403e2d961b348dda81cfb5f3cfa9",
+  "bits": 32,
+  "refs": 2,
+  "boc": "te6ccgEBAwEAEAACCAAAAQUBAgAAAAjerb7v"
+ },
+ "slice": {
+  "hash": "e8c440c3638c821716b5e7f7997730b871a9ccb7a72f36d017e366d6b09e54e5",
+  "bits": 58,
+  "refs": 2,
+  "boc": "te6ccgEBAwEAFAACDwAAAQQAAgAgAQIAAAAI3q2+7w=="
+ },
+ "slice_with_refs": {
+  "hash": "b3115eae79829dfb39754526c0818c258c400dc89a7fa580990bad6f435b7ebc",
+  "bits": 58,
+  "refs": 2,
+  "boc": "te6ccgEBBAEAGAACDwAAAQQAAIBgAQIAAAECAQMACN6tvu8="
+ },
+ "mixed": {
+  "hash": "87440cb210db1a1566d8a0320a05bfa01e5ff7707e4541626e328c729aec43f7",
+  "bits": 32,
+  "refs": 2,
+  "boc": "te6ccgEBBQEAIAACCAAAAwMBBAECAAIBEgEAAAAAAAAAAQMAAAAI3q2+7w=="
+ },
+ "deep": {
+  "hash": "1e331af7d12418c570951fd8ef57ba18eb358ccd0cebb8815a75a0fc0d6deda6",
+  "bits": 96,
+  "refs": 1,
+  "boc": "te6ccgEBFQEA9QABGAAAFAEAAAAAAAAAEwEBEgEAAAAAAAAAEgIBEgEAAAAAAAAAEQMBEgEAAAAAAAAAEAQBEgEAAAAAAAAADwUBEgEAAAAAAAAADgYBEgEAAAAAAAAADQcBEgEAAAAAAAAADAgBEgEAAAAAAAAACwkBEgEAAAAAAAAACgoBEgEAAAAAAAAACQsBEgEAAAAAAAAACAwBEgEAAAAAAAAABw0BEgEAAAAAAAAABg4BEgEAAAAAAAAABQ8BEgEAAAAAAAAABBABEgEAAAAAAAAAAxEBEgEAAAAAAAAAAhIBEgEAAAAAAAAAARMBEgEAAAAAAAAAABQAAA=="
+ },
+ "tuple_empty": {
+  "hash": "ac12519c2308a15c60f778d1dc8e97db50f225473853fd3328c151a9344389bc",
+  "bits": 48,
+  "refs": 1,
+  "boc": "te6ccgEBAgEACwABDAAAAQcAAAEAAA=="
+ },
+ "tuple_one": {
+  "hash": "c4da299f98f7f6e2c2133eb03f68967d885f22da907500bf28a1756f0bb59cfa",
+  "bits": 48,
+  "refs": 2,
+  "boc": "te6ccgEBAwEAFwACDAAAAQcAAQECAAAAEgEAAAAAAAAABw=="
+ },
+ "tuple_two": {
+  "hash": "53ac1293a8138c4f2b1d6fd0da0ee1fe073951f71ca6a0c4656b4ee1daeb07cb",
+  "bits": 48,
+  "refs": 3,
+  "boc": "te6ccgEBBAEAIwADDAAAAQcAAgECAwAAABIBAAAAAAAAAAEAEgEAAAAAAAAAAg=="
+ },
+ "tuple_three": {
+  "hash": "74150321a4ad8adfe09b58eb134b84754c338fc06f882a671496f1d4fdf04d74",
+  "bits": 48,
+  "refs": 3,
+  "boc": "te6ccgEBBgEAKgADDAAAAQcAAwECBQAAAgADBAASAQAAAAAAAAABABIBAAAAAAAAAAIAAgA="
+ },
+ "tuple_seven": {
+  "hash": "3aa3b9da46b4c0ebbcb7f20b147f8484d8ee9acfcd5428fea241df355cfa3e41",
+  "bits": 48,
+  "refs": 3,
+  "boc": "te6ccgEBDgEAbgADDAAAAQcABwECDQAAAgADDAIABAsCAAUKAgAGCQIABwgAEgEAAAAAAAAAAAASAQAAAAAAAABkABIBAAAAAAAAAMgAEgEAAAAAAAABLAASAQAAAAAAAAGQABIBAAAAAAAAAfQAEgEAAAAAAAACWA=="
+ },
+ "tuple_nested": {
+  "hash": "ccaeb47cb11975fe74551afc3e140eb16070634017fb5fbc404588e22b611c7b",
+  "bits": 48,
+  "refs": 3,
+  "boc": "te6ccgEBCQEAQwADDAAAAQcAAwECBwAAAgADBAASAQAAAAAAAAABAgYHAAIFBgASAQAAAAAAAAACABIBAAAAAAAAAAMBAgMIAAjerb7v"
+ }
+}

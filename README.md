@@ -16,7 +16,7 @@ real mainnet data; everything above it is in progress.
 | --- | --- | --- |
 | `ton-cell` | Bits, cells, builder/slice, representation hash, exotic cells, BoC | working |
 | `ton-address` | raw and user-friendly addresses | working |
-| `ton-tlb` | dictionaries, coins, messages, accounts, VM stack | planned |
+| `ton-tlb` | dictionaries, coins, messages, accounts, VM stack | working |
 | `ton-crypto` | Ed25519, mnemonics, Ed25519→X25519 | planned |
 | `ton-tl` / `ton-tl-schema` | TL wire runtime and generated liteserver schema | planned |
 | `ton-adnl` | ADNL over TCP, as a pure state machine | planned |
@@ -87,6 +87,8 @@ committed so the suite never depends on it.
 lib/cell/       bits, level masks, cell types, exotic cells, hashing, BoC,
                 builder and slice cursors
 lib/address/    raw and user-friendly addresses
+lib/tlb/        hashmaps, coins, message addresses, state init, messages,
+                account state, TVM stack values
 tools/bocinfo/  dev tool: describe a Bag of Cells and check it round-trips
 tools/gen-vectors/  dev tool: regenerate cross-implementation expectations
 test/           unit and property tests, plus the committed vectors

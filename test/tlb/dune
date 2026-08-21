@@ -1,5 +1,5 @@
 (tests
- (names test_dict test_tlb test_account)
+ (names test_dict test_tlb test_account test_vmstack)
  (deps
   (source_tree ../vectors))
  (libraries ton_cell ton_tlb ton_address zarith digestif.ocaml base64 yojson
