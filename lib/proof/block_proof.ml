@@ -21,6 +21,8 @@ type error =
   | No_validator_set
   | Insufficient_weight of { signed : int64; total : int64 }
   | Dest_mismatch of { want : string; got : string }
+  | Link_does_not_continue of { trusted : string; starts_at : string }
+  | Backward_link
 
 let hex s = String.concat "" (List.init (String.length s) (fun i -> Printf.sprintf "%02x" (Char.code s.[i])))
 
@@ -37,6 +39,10 @@ let pp_error ppf = function
         total
   | Dest_mismatch { want; got } ->
       Format.fprintf ppf "the destination proof is for block %s, not %s" got want
+  | Link_does_not_continue { trusted; starts_at } ->
+      Format.fprintf ppf "the link starts at %s but trust reaches only %s" starts_at trusted
+  | Backward_link ->
+      Format.fprintf ppf "backward links are not followed: proving an older block from a newer one is not implemented"
 
 let ( let* ) = Result.bind
 
@@ -137,3 +143,31 @@ let verify_forward ~from_root_hash ~config_proof ~dest_proof ~dest ~signatures =
         Ok { next = dest; signed_weight = signed; total_weight = total; accepted;
              offered = List.length signatures }
       else Error (Insufficient_weight { signed; total })
+
+type link =
+  | Forward of {
+      source : block;
+      dest : block;
+      config_proof : string;
+      dest_proof : string;
+      signatures : signature list;
+    }
+  | Backward of { source : block; dest : block }
+
+(* Each link has to start exactly where trust currently reaches. Without that
+   check a chain could be handed over out of order, or with a gap in the
+   middle, and every individual link would still verify. *)
+let follow trusted = function
+  | Backward _ -> Error Backward_link
+  | Forward l ->
+      if not (String.equal l.source.root_hash trusted.root_hash) then
+        Error
+          (Link_does_not_continue { trusted = hex trusted.root_hash; starts_at = hex l.source.root_hash })
+      else
+        let* o =
+          verify_forward ~from_root_hash:l.source.root_hash ~config_proof:l.config_proof
+            ~dest_proof:l.dest_proof ~dest:l.dest ~signatures:l.signatures
+        in
+        Ok o.next
+
+let follow_all anchor links = List.fold_left (fun acc l -> let* t = acc in follow t l) (Ok anchor) links

@@ -181,6 +181,56 @@ let test_chain_is_connected () =
     (hex (block_of (field "to" last)).Block_proof.root_hash)
     (hex final)
 
+(* --- walking a chain ----------------------------------------------------------- *)
+
+let link_of step =
+  Block_proof.Forward
+    { source = block_of (field "from" step);
+      dest = block_of (field "to" step);
+      config_proof = b64 (to_str (field "configProof" step));
+      dest_proof = b64 (to_str (field "destProof" step));
+      signatures = signatures_of step }
+
+(* Folding the chain from the anchor is what a client actually does: it does
+   not verify links in isolation, it accumulates trust along them. *)
+let test_follow_all () =
+  let anchor = block_of (field "initBlock" (Lazy.force chain)) in
+  let links = List.map link_of (Lazy.force steps) in
+  match Block_proof.follow_all anchor links with
+  | Error e -> Alcotest.failf "%a" Block_proof.pp_error e
+  | Ok final ->
+      let last = List.nth (Lazy.force steps) (List.length (Lazy.force steps) - 1) in
+      Alcotest.(check string) "reaches the end of the chain"
+        (hex (block_of (field "to" last)).Block_proof.root_hash)
+        (hex final.Block_proof.root_hash)
+
+(* A chain handed over out of order, or with a link missing, would have every
+   individual link verify while establishing nothing. Each link must start
+   exactly where trust currently reaches. *)
+let test_chain_must_be_contiguous () =
+  let anchor = block_of (field "initBlock" (Lazy.force chain)) in
+  let links = List.map link_of (Lazy.force steps) in
+  Alcotest.(check bool) "reversed is refused" false
+    (Result.is_ok (Block_proof.follow_all anchor (List.rev links)));
+  Alcotest.(check bool) "skipping the first is refused" false
+    (Result.is_ok (Block_proof.follow_all anchor (List.tl links)));
+  match Block_proof.follow_all anchor (List.tl links) with
+  | Error (Block_proof.Link_does_not_continue _) -> ()
+  | Error e -> Alcotest.failf "wrong error: %a" Block_proof.pp_error e
+  | Ok _ -> Alcotest.fail "accepted a gap"
+
+(* Backward links are refused outright rather than skipped: waving one
+   through would advance trust without any evidence. *)
+let test_backward_link_refused () =
+  let anchor = block_of (field "initBlock" (Lazy.force chain)) in
+  let back =
+    Block_proof.Backward { source = anchor; dest = block_of (field "to" (List.hd (Lazy.force steps))) }
+  in
+  match Block_proof.follow anchor back with
+  | Error Block_proof.Backward_link -> ()
+  | Error e -> Alcotest.failf "wrong error: %a" Block_proof.pp_error e
+  | Ok _ -> Alcotest.fail "followed a backward link"
+
 (* --- what must be rejected ----------------------------------------------------- *)
 
 let err name r =
@@ -290,7 +340,10 @@ let () =
           Alcotest.test_case "only the main subset signs" `Quick test_main_subset ] );
       ( "following the chain",
         [ Alcotest.test_case "each link" `Quick test_follow_each;
-          Alcotest.test_case "the chain is connected" `Quick test_chain_is_connected ] );
+          Alcotest.test_case "the chain is connected" `Quick test_chain_is_connected;
+          Alcotest.test_case "folding from the anchor" `Quick test_follow_all;
+          Alcotest.test_case "gaps and reordering are refused" `Quick test_chain_must_be_contiguous;
+          Alcotest.test_case "backward links are refused" `Quick test_backward_link_refused ] );
       ( "rejections",
         [ Alcotest.test_case "substituted destination" `Quick test_substituted_destination;
           Alcotest.test_case "wrong source block" `Quick test_wrong_source;

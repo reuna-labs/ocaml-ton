@@ -53,6 +53,9 @@ only then checks the account. Doing the two steps separately is possible but
 invites skipping the first, which would leave a hole exactly the size of
 "which shard block did you mean".
 
+`test/live/derive_head.exe` walks that chain against mainnet, verifying
+validator signatures at every step; pass a round count to bootstrap further.
+
 The masterchain block root itself is derived rather than assumed.
 `Block_proof` walks the chain of key blocks from the `init_block` published in
 TON's global configuration, and follows each link only when validators
@@ -64,6 +67,12 @@ out of band.
 What remains trusted: the anchor. That is unavoidable — a light client has to
 start somewhere — and it is a single published constant rather than anything
 a server says.
+
+Bootstrapping the whole way from that anchor is expensive: key blocks come
+every few thousand blocks, a liteserver returns a bounded number of links per
+call, and each link carries a validator set. Forty million blocks is hundreds
+of round trips. A deployment persists the last block it verified and starts
+from there, which is what the anchor is for in the first place.
 
 **Two different cell hashes, deliberately.** `Cell.hash` (level 0) is the
 *representation hash* that addresses, signatures and Merkle proofs are built

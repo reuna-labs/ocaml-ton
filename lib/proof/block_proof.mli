@@ -46,6 +46,8 @@ type error =
   | No_validator_set
   | Insufficient_weight of { signed : int64; total : int64 }
   | Dest_mismatch of { want : string; got : string }
+  | Link_does_not_continue of { trusted : string; starts_at : string }
+  | Backward_link
 
 val pp_error : Format.formatter -> error -> unit
 
@@ -64,3 +66,27 @@ val verify_forward :
   signatures:signature list -> (outcome, error) result
 (** Follow one forward link. Succeeds only if signatures carrying more than
     two thirds of a set's total weight verify over [dest]. *)
+
+(** {2 Walking a chain} *)
+
+type link =
+  | Forward of {
+      source : block;
+      dest : block;
+      config_proof : string;
+      dest_proof : string;
+      signatures : signature list;
+    }
+  | Backward of { source : block; dest : block }
+      (** A link from a later block to an earlier one. Walking forward from an
+          anchor never needs these, and following one would mean proving an
+          older block from a newer one, which this does not implement — so it
+          is refused rather than waved through. *)
+
+val follow : block -> link -> (block, error) result
+(** Follow one link from a block already trusted. Refuses a link that does not
+    start where the trust does. *)
+
+val follow_all : block -> link list -> (block, error) result
+(** Follow a chain, threading each link's destination into the next. The
+    result is the furthest block the chain establishes. *)
