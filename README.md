@@ -122,6 +122,11 @@ no socket. `tools/record_transcript/` takes a new one.
 `test/live/live.exe` runs a real query against mainnet. It is an executable,
 not a test, so `dune runtest` never touches the network.
 
+`unikernel/` builds as a MirageOS unikernel. `mirage configure` succeeds and
+the unikernel's own code type-checks against the real MirageOS TCP stack in
+the ordinary build; `make depends` does not currently complete in this switch,
+for reasons that have nothing to do with TON — see `unikernel/README.md`.
+
 `tools/gen-vectors/` regenerates the expectations (needs Node); the output is
 committed so the suite never depends on it.
 
