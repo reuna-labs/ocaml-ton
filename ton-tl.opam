@@ -60,4 +60,8 @@ pin-depends: [
     "evm-types.0.2.0~alpha1"
     "git+https://github.com/reuna-labs/ocaml-evm.git#main"
   ]
+  [
+    "digestif.1.4.0"
+    "git+https://github.com/reuna-labs/digestif.git#main"
+  ]
 ]
