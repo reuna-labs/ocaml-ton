@@ -38,3 +38,14 @@ build: [
   ]
 ]
 dev-repo: "git+https://github.com/reuna-labs/ocaml-ton.git"
+
+pin-depends: [
+  # web3-codec is in a separate private repository, and its multiformats
+  # family is on feat/multiformats, not main. web3-codec declares its own
+  # pin-depends for evm-abi, so that one is not repeated here. Regenerating
+  # from dune-project drops this block -- dune cannot express pin-depends.
+  [
+    "web3-codec.dev"
+    "git+https://github.com/reuna-labs/ocaml-web3-codec.git#feat/multiformats"
+  ]
+]
