@@ -41,11 +41,23 @@ dev-repo: "git+https://github.com/reuna-labs/ocaml-ton.git"
 
 pin-depends: [
   # web3-codec is in a separate private repository, and its multiformats
-  # family is on feat/multiformats, not main. web3-codec declares its own
-  # pin-depends for evm-abi, so that one is not repeated here. Regenerating
-  # from dune-project drops this block -- dune cannot express pin-depends.
+  # family is on feat/multiformats, not main.
+  #
+  # evm-abi is repeated here even though nothing in this repository depends on
+  # it directly, and opam lint warns about that. It is necessary: pin-depends
+  # are NOT applied transitively. Pinning web3-codec from git does not pin what
+  # web3-codec's own pin-depends name, so resolution fails with
+  #   ton-cell -> web3-codec -> evm-abi unknown package
+  # until evm-abi is pinned here too. Verified, not assumed.
+  #
+  # Regenerating from dune-project drops this block -- dune cannot express
+  # pin-depends.
   [
     "web3-codec.dev"
     "git+https://github.com/reuna-labs/ocaml-web3-codec.git#feat/multiformats"
+  ]
+  [
+    "evm-abi.0.2.0~alpha1"
+    "git+https://github.com/reuna-labs/ocaml-evm.git#main"
   ]
 ]
