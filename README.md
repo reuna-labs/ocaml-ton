@@ -9,8 +9,9 @@ message bodies, blocks, proofs — is encoded as a **Bag of Cells**, a DAG of
 cells holding up to 1023 *bits* and up to 4 references each. Nothing about TON
 is reachable from OCaml without that layer, and no bit-addressed codec existed.
 
-**Status: early.** The cell and Bag-of-Cells layer works and is tested against
-real mainnet data; everything above it is in progress.
+**Status: public, unaudited alpha.** The complete source stack installs on
+OCaml 4.14.2 and the offline suite covers the layers below. Do not use it to
+control assets of value; live-network evidence and independent review remain.
 
 | Package | What | Status |
 | --- | --- | --- |
@@ -84,20 +85,14 @@ defaults to level 3, the opposite of ours.
 
 ## Building
 
-Requires a switch with the reuna `mirage-crypto` fork and `web3-codec` pinned.
-`ton-crypto` needs `Ed25519.Primitive.to_x25519_pub`, added to that fork for
-this project; an unpatched mirage-crypto will not build it.
-
+The Reuna opam overlay carries the immutable fork and sibling releases, so an
+install does not depend on upstream accepting or publishing them first.
 
 ```sh
 opam switch create ocaml-ton ocaml-base-compiler.5.2.1
 eval $(opam env --switch=ocaml-ton)
-for p in mirage-crypto mirage-crypto-rng mirage-crypto-ec; do
-  opam pin add -k path -yn $p ../../ports/ocaml/mirage-crypto
-done
-opam pin add -k path -yn web3-codec ../ocaml-web3-codec
-opam install -y . --deps-only --with-test
-dune build && dune runtest
+opam repository add reuna https://github.com/reuna-labs/opam-repository.git
+opam install ton-light-client
 ```
 
 ## Testing
