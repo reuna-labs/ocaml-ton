@@ -19,7 +19,7 @@ The packages have to be pinned from the repository root first:
 cd ..
 opam pin add -k path -yn web3-codec ../ocaml-web3-codec
 for p in mirage-crypto mirage-crypto-rng mirage-crypto-ec; do
-  opam pin add -k path -yn $p ../ocaml/mirage-crypto
+  opam pin add -k path -yn $p ../../ports/ocaml/mirage-crypto
 done
 for p in ton-cell ton-address ton-tlb ton-crypto ton-tl ton-tl-schema ton-adnl \
          ton-lite-client ton-lite-client-mirage ton-proof ton-wallet ton-light-client; do

@@ -93,7 +93,7 @@ this project; an unpatched mirage-crypto will not build it.
 opam switch create ocaml-ton ocaml-base-compiler.5.2.1
 eval $(opam env --switch=ocaml-ton)
 for p in mirage-crypto mirage-crypto-rng mirage-crypto-ec; do
-  opam pin add -k path -yn $p ../ocaml/mirage-crypto
+  opam pin add -k path -yn $p ../../ports/ocaml/mirage-crypto
 done
 opam pin add -k path -yn web3-codec ../ocaml-web3-codec
 opam install -y . --deps-only --with-test
