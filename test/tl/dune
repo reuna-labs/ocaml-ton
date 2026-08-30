@@ -1,5 +1,6 @@
 (test
  (name test_tl)
+ (package ton-tl)
  (deps
   (source_tree ../vectors))
  (libraries ton_tl yojson alcotest qcheck-core qcheck-alcotest))

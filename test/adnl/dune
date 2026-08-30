@@ -1,5 +1,6 @@
 (tests
  (names test_ctr test_handshake test_conn)
+ (package ton-adnl)
  (deps
   (source_tree ../vectors))
  (libraries ton_adnl yojson alcotest qcheck-core qcheck-alcotest))

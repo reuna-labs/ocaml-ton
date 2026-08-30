@@ -1,5 +1,6 @@
 (test
  (name test_mirage)
+ (package ton-lite-client-mirage)
  (deps
   (source_tree ../vectors))
  (libraries ton_lite_client ton_lite_client_mirage mirage-flow cstruct fmt lwt

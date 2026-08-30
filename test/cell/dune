@@ -1,5 +1,6 @@
 (tests
  (names test_bits test_cell test_boc test_builder)
+ (package ton-cell)
  (deps
   (source_tree ../vectors))
  (libraries ton_cell zarith digestif base64 yojson alcotest qcheck-core

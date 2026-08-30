@@ -10,6 +10,7 @@
 ; `dune promote` then updates it.
 
 (rule
+ (package ton-tl-schema)
  (targets lite.ml.gen)
  (deps
   %{workspace_root}/schema/lite_api.tl
@@ -19,6 +20,7 @@
     %{workspace_root}/schema/lite_api.tl -o %{targets})))
 
 (rule
+ (package ton-tl-schema)
  (targets adnl.ml.gen)
  (deps
   %{workspace_root}/schema/ton_api.tl
@@ -28,11 +30,13 @@
     %{workspace_root}/schema/ton_api.tl --only pub.,tcp.,ton.blockId -o %{targets})))
 
 (rule
+ (package ton-tl-schema)
  (alias runtest)
  (action
   (diff lite.ml lite.ml.gen)))
 
 (rule
+ (package ton-tl-schema)
  (alias runtest)
  (action
   (diff adnl.ml adnl.ml.gen)))

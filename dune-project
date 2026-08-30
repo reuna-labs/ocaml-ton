@@ -1,4 +1,4 @@
-(lang dune 3.0)
+(lang dune 3.8)
 (name ton)
 (version 0.1.0~alpha1)
 (generate_opam_files true)

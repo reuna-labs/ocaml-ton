@@ -1,5 +1,6 @@
 (tests
  (names test_dict test_tlb test_account test_vmstack)
+ (package ton-tlb)
  (deps
   (source_tree ../vectors))
  (libraries ton_cell ton_tlb ton_address zarith digestif base64 yojson

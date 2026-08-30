@@ -1,5 +1,6 @@
 (test
  (name test_address)
+ (package ton-address)
  (deps
   (source_tree ../vectors))
  (libraries ton_address web3-codec base64 yojson alcotest))

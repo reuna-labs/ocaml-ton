@@ -12,7 +12,7 @@ license: "ISC"
 homepage: "https://github.com/reuna-labs/ocaml-ton"
 bug-reports: "https://github.com/reuna-labs/ocaml-ton/issues"
 depends: [
-  "dune" {>= "3.0"}
+  "dune" {>= "3.8"}
   "ocaml" {>= "4.14"}
   "ton-tl"
   "ton-tl-schema"
