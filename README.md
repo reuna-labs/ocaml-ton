@@ -12,6 +12,7 @@ is reachable from OCaml without that layer, and no bit-addressed codec existed.
 **Status: public, unaudited alpha.** The complete source stack installs on
 OCaml 4.14.2 and the offline suite covers the layers below. Do not use it to
 control assets of value; live-network evidence and independent review remain.
+See [SECURITY.md](SECURITY.md) for private reporting and the review boundary.
 
 | Package | What | Status |
 | --- | --- | --- |
@@ -92,7 +93,8 @@ install does not depend on upstream accepting or publishing them first.
 opam switch create ocaml-ton ocaml-base-compiler.5.2.1
 eval $(opam env --switch=ocaml-ton)
 opam repository add reuna https://github.com/reuna-labs/opam-repository.git
-opam install ton-light-client
+opam update
+opam install ton-light-client.0.1.0~alpha2
 ```
 
 ## Testing
