@@ -30,7 +30,7 @@ Paths are relative to this repository's root.
 ## Design docs
 
 - `../vault/Reuna/SDD/` — component design documents
-- `../vault/Reuna/Platryx HLD.md` — how the components fit together
+- `../vault/Reuna/Reuna HLD.md` — how the components fit together
 
 ## Helper toolkits — `~/gilbahat`
 
