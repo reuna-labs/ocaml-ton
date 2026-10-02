@@ -1,7 +1,7 @@
 (library
  (name ton_crypto)
  (public_name ton-crypto)
- (libraries digestif mirage-crypto-ec))
+ (libraries digestif mirage-crypto-ec mirage-crypto-pbkdf2))
 
 (rule
  (targets wordlist.ml)

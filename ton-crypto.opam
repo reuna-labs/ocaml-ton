@@ -15,6 +15,7 @@ depends: [
   "dune" {>= "3.8"}
   "ocaml" {>= "4.14"}
   "digestif" {>= "1.1.4"}
+  "mirage-crypto-pbkdf2"
   "mirage-crypto-ec" {>= "2.1.0"}
   "alcotest" {with-test}
   "qcheck-core" {with-test}
@@ -36,3 +37,13 @@ build: [
   ]
 ]
 dev-repo: "git+https://github.com/reuna-labs/ocaml-ton.git"
+# Development pins for the coordinated native crypto source.
+# Pins select versions; optional packages are installed only when required.
+pin-depends: [
+  [ "mirage-crypto.2.4.0" "git+https://github.com/reuna-labs/mirage-crypto.git#edeae749daa6f8eafb73446e68e654d00794e898" ]
+  [ "mirage-crypto-rng.2.4.0" "git+https://github.com/reuna-labs/mirage-crypto.git#edeae749daa6f8eafb73446e68e654d00794e898" ]
+  [ "mirage-crypto-secp256k1.2.4.0" "git+https://github.com/reuna-labs/mirage-crypto.git#edeae749daa6f8eafb73446e68e654d00794e898" ]
+  [ "mirage-crypto-ec.2.4.0" "git+https://github.com/reuna-labs/mirage-crypto.git#edeae749daa6f8eafb73446e68e654d00794e898" ]
+  [ "mirage-crypto-pbkdf2.2.4.0" "git+https://github.com/reuna-labs/mirage-crypto.git#edeae749daa6f8eafb73446e68e654d00794e898" ]
+  [ "digestif.1.4.0" "git+https://github.com/reuna-labs/digestif.git#770f9c355bd5fd60ebf63027b66a51920906519f" ]
+]

@@ -54,6 +54,7 @@
  (depends
   (ocaml (>= 4.14))
   (digestif (>= 1.1.4))
+  mirage-crypto-pbkdf2
   (mirage-crypto-ec (>= 2.1.0))
   (alcotest :with-test)
   (qcheck-core :with-test)
