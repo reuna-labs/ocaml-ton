@@ -8,13 +8,18 @@ open Ton_cell
    reader knows which case it is from the parity of the [d2] descriptor, so
    decoding is always parameterised by that bit. This helper is exactly what
    the reader does. *)
-let decode ~padded s = if padded then Bits.of_padded_bytes s else Bits.of_bytes s
+let decode ~padded s =
+  if padded then Bits.of_padded_bytes s else Bits.of_bytes s
 
 (* The completion tag is the single most load-bearing rule in the cell format:
    [to_padded_bytes] is what the representation hash is computed over. *)
 let test_padding_roundtrip () =
   for len = 0 to 1023 do
-    let b = Bits.sub (Bits.of_bytes (String.init 128 (fun i -> Char.chr (i * 7 land 0xff)))) 0 len in
+    let b =
+      Bits.sub
+        (Bits.of_bytes (String.init 128 (fun i -> Char.chr (i * 7 land 0xff))))
+        0 len
+    in
     let s = Bits.to_padded_bytes b in
     Alcotest.(check int)
       (Printf.sprintf "padded length for %d bits" len)
@@ -29,18 +34,28 @@ let test_padding_roundtrip () =
 (* The ambiguity itself, pinned so nobody "fixes" it later: an all-zero padded
    buffer decodes to empty, which is why [d2] parity has to be consulted. *)
 let test_padding_is_not_self_describing () =
-  Alcotest.(check int) "zero byte, read as padded" 0 (Bits.length (Bits.of_padded_bytes "\x00"));
-  Alcotest.(check int) "zero byte, read as aligned" 8 (Bits.length (Bits.of_bytes "\x00"))
+  Alcotest.(check int)
+    "zero byte, read as padded" 0
+    (Bits.length (Bits.of_padded_bytes "\x00"));
+  Alcotest.(check int)
+    "zero byte, read as aligned" 8
+    (Bits.length (Bits.of_bytes "\x00"))
 
 let test_padding_examples () =
   (* A byte-aligned value gets no tag at all. *)
-  Alcotest.(check string) "aligned, no tag" "\xff" (Bits.to_padded_bytes (Bits.of_bytes "\xff"));
+  Alcotest.(check string)
+    "aligned, no tag" "\xff"
+    (Bits.to_padded_bytes (Bits.of_bytes "\xff"));
   (* 4 bits '1010' -> 1010 1000 : data, tag bit, then zeros. *)
   let b = Bits.sub (Bits.of_bytes "\xa0") 0 4 in
   Alcotest.(check string) "4 bits tagged" "\xa8" (Bits.to_padded_bytes b);
-  Alcotest.(check int) "untag 4 bits" 4 (Bits.length (Bits.of_padded_bytes "\xa8"));
+  Alcotest.(check int)
+    "untag 4 bits" 4
+    (Bits.length (Bits.of_padded_bytes "\xa8"));
   (* All-zero input is the empty bit string, not a run of zero bits. *)
-  Alcotest.(check int) "all zero is empty" 0 (Bits.length (Bits.of_padded_bytes "\x00\x00"))
+  Alcotest.(check int)
+    "all zero is empty" 0
+    (Bits.length (Bits.of_padded_bytes "\x00\x00"))
 
 (* --- access -------------------------------------------------------------- *)
 
@@ -49,8 +64,9 @@ let test_get () =
   Alcotest.(check bool) "bit 0 is MSB of byte 0" true (Bits.get b 0);
   Alcotest.(check bool) "bit 1" false (Bits.get b 1);
   Alcotest.(check bool) "bit 15 is LSB of byte 1" true (Bits.get b 15);
-  Alcotest.check_raises "out of range" (Invalid_argument "Bits.get: index out of bounds")
-    (fun () -> ignore (Bits.get b 16))
+  Alcotest.check_raises "out of range"
+    (Invalid_argument "Bits.get: index out of bounds") (fun () ->
+      ignore (Bits.get b 16))
 
 let test_uint () =
   let b = Bits.of_bytes "\x12\x34\x56\x78" in
@@ -72,8 +88,14 @@ let test_int () =
 (* --- structural ---------------------------------------------------------- *)
 
 let test_concat () =
-  let a = Bits.sub (Bits.of_bytes "\xa0") 0 3 (* 101 *) in
-  let b = Bits.sub (Bits.of_bytes "\xc0") 0 2 (* 11  *) in
+  let a =
+    Bits.sub (Bits.of_bytes "\xa0") 0 3
+    (* 101 *)
+  in
+  let b =
+    Bits.sub (Bits.of_bytes "\xc0") 0 2
+    (* 11  *)
+  in
   let c = Bits.concat [ a; b ] in
   Alcotest.(check int) "length" 5 (Bits.length c);
   Alcotest.(check int64) "value 10111" 0b10111L (Bits.get_uint c ~pos:0 ~len:5);
@@ -82,9 +104,12 @@ let test_concat () =
 let test_sub () =
   let b = Bits.of_bytes "\x12\x34" in
   Alcotest.check bits "sub of whole" b (Bits.sub b 0 16);
-  Alcotest.(check int64) "nested sub" 0x3L (Bits.get_uint (Bits.sub (Bits.sub b 4 8) 4 4) ~pos:0 ~len:4);
-  Alcotest.check_raises "past end" (Invalid_argument "Bits.sub: range out of bounds")
-    (fun () -> ignore (Bits.sub b 8 9))
+  Alcotest.(check int64)
+    "nested sub" 0x3L
+    (Bits.get_uint (Bits.sub (Bits.sub b 4 8) 4 4) ~pos:0 ~len:4);
+  Alcotest.check_raises "past end"
+    (Invalid_argument "Bits.sub: range out of bounds") (fun () ->
+      ignore (Bits.sub b 8 9))
 
 (* --- properties ---------------------------------------------------------- *)
 
@@ -95,34 +120,38 @@ let arb_bits =
   Bits.sub (Bits.of_bytes bytes) 0 len
 
 let prop_padding_roundtrip =
-  QCheck2.Test.make ~count:2000 ~name:"decode . to_padded_bytes = id" arb_bits (fun b ->
-      Bits.equal b (decode ~padded:(Bits.length b land 7 <> 0) (Bits.to_padded_bytes b)))
+  QCheck2.Test.make ~count:2000 ~name:"decode . to_padded_bytes = id" arb_bits
+    (fun b ->
+      Bits.equal b
+        (decode ~padded:(Bits.length b land 7 <> 0) (Bits.to_padded_bytes b)))
 
 let prop_concat_length =
   QCheck2.Test.make ~count:1000 ~name:"concat preserves total length"
-    (QCheck2.Gen.pair arb_bits arb_bits)
-    (fun (a, b) -> Bits.length (Bits.append a b) = Bits.length a + Bits.length b)
+    (QCheck2.Gen.pair arb_bits arb_bits) (fun (a, b) ->
+      Bits.length (Bits.append a b) = Bits.length a + Bits.length b)
 
 let prop_concat_get =
   QCheck2.Test.make ~count:1000 ~name:"concat preserves bits"
-    (QCheck2.Gen.pair arb_bits arb_bits)
-    (fun (a, b) ->
+    (QCheck2.Gen.pair arb_bits arb_bits) (fun (a, b) ->
       let c = Bits.append a b in
       let la = Bits.length a in
       let rec go i =
         i >= Bits.length c
-        || (Bits.get c i = (if i < la then Bits.get a i else Bits.get b (i - la)) && go (i + 1))
+        || (Bits.get c i = if i < la then Bits.get a i else Bits.get b (i - la))
+           && go (i + 1)
       in
       go 0)
 
 let prop_sub_identity =
-  QCheck2.Test.make ~count:1000 ~name:"sub 0 (length b) = b" arb_bits
-    (fun b -> Bits.equal b (Bits.sub b 0 (Bits.length b)))
+  QCheck2.Test.make ~count:1000 ~name:"sub 0 (length b) = b" arb_bits (fun b ->
+      Bits.equal b (Bits.sub b 0 (Bits.length b)))
 
 let () =
   Alcotest.run "bits"
-    [ ( "bits",
-        [ Alcotest.test_case "padding roundtrip" `Quick test_padding_roundtrip;
+    [
+      ( "bits",
+        [
+          Alcotest.test_case "padding roundtrip" `Quick test_padding_roundtrip;
           Alcotest.test_case "padding examples" `Quick test_padding_examples;
           Alcotest.test_case "padding is not self-describing" `Quick
             test_padding_is_not_self_describing;
@@ -130,9 +159,15 @@ let () =
           Alcotest.test_case "get_uint" `Quick test_uint;
           Alcotest.test_case "get_int" `Quick test_int;
           Alcotest.test_case "concat" `Quick test_concat;
-          Alcotest.test_case "sub" `Quick test_sub ] );
+          Alcotest.test_case "sub" `Quick test_sub;
+        ] );
       ( "bits properties",
         List.map
           (QCheck_alcotest.to_alcotest ~verbose:false)
-          [ prop_padding_roundtrip; prop_concat_length; prop_concat_get; prop_sub_identity ] )
+          [
+            prop_padding_roundtrip;
+            prop_concat_length;
+            prop_concat_get;
+            prop_sub_identity;
+          ] );
     ]

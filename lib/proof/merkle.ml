@@ -11,14 +11,22 @@ type update = {
   new_root : Cell.t;
 }
 
-type error = Not_a_proof of Cell_type.t | Not_an_update of Cell_type.t | Malformed of string
+type error =
+  | Not_a_proof of Cell_type.t
+  | Not_an_update of Cell_type.t
+  | Malformed of string
 
 let pp_error ppf = function
-  | Not_a_proof t -> Format.fprintf ppf "expected a merkle proof cell, got %a" Cell_type.pp t
-  | Not_an_update t -> Format.fprintf ppf "expected a merkle update cell, got %a" Cell_type.pp t
+  | Not_a_proof t ->
+      Format.fprintf ppf "expected a merkle proof cell, got %a" Cell_type.pp t
+  | Not_an_update t ->
+      Format.fprintf ppf "expected a merkle update cell, got %a" Cell_type.pp t
   | Malformed m -> Format.pp_print_string ppf m
 
-let read c f = match Slice.parse c f with Ok v -> Ok v | Error e -> Error (Malformed (Format.asprintf "%a" Slice.pp_error e))
+let read c f =
+  match Slice.parse c f with
+  | Ok v -> Ok v
+  | Error e -> Error (Malformed (Format.asprintf "%a" Slice.pp_error e))
 
 let proof c =
   match Cell.cell_type c with

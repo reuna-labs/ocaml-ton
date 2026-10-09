@@ -6,7 +6,6 @@
    powers of two. *)
 
 open Ton_cell
-
 module ZMap = Map.Make (Z)
 
 type 'v t = { key_bits : int; entries : 'v ZMap.t; partial : bool }
@@ -23,7 +22,9 @@ let remove k d = { d with entries = ZMap.remove k d.entries }
 let fold f d init = ZMap.fold f d.entries init
 let map f d = { d with entries = ZMap.map f d.entries }
 let to_list d = ZMap.bindings d.entries
-let of_list ~key_bits l = { key_bits; entries = ZMap.of_seq (List.to_seq l); partial = false }
+
+let of_list ~key_bits l =
+  { key_bits; entries = ZMap.of_seq (List.to_seq l); partial = false }
 
 (* Width of the length field in hml_long / hml_same. *)
 let label_len_width n =
@@ -48,7 +49,8 @@ let read_label s ~n ~key =
   if not (Slice.load_bit s) then begin
     (* hml_short *)
     let l = read_unary_length s in
-    if l > n then Slice.fail (Slice.Message "hashmap label longer than the remaining key");
+    if l > n then
+      Slice.fail (Slice.Message "hashmap label longer than the remaining key");
     let k = ref key in
     for _ = 1 to l do
       k := append_bit !k (Slice.load_bit s)
@@ -60,7 +62,8 @@ let read_label s ~n ~key =
     if not (Slice.load_bit s) then begin
       (* hml_long *)
       let l = Int64.to_int (Slice.load_uint s ~bits:w) in
-      if l > n then Slice.fail (Slice.Message "hashmap label longer than the remaining key");
+      if l > n then
+        Slice.fail (Slice.Message "hashmap label longer than the remaining key");
       let k = ref key in
       for _ = 1 to l do
         k := append_bit !k (Slice.load_bit s)
@@ -71,7 +74,8 @@ let read_label s ~n ~key =
       (* hml_same *)
       let b = Slice.load_bit s in
       let l = Int64.to_int (Slice.load_uint s ~bits:w) in
-      if l > n then Slice.fail (Slice.Message "hashmap label longer than the remaining key");
+      if l > n then
+        Slice.fail (Slice.Message "hashmap label longer than the remaining key");
       let k = ref key in
       for _ = 1 to l do
         k := append_bit !k b
@@ -91,7 +95,9 @@ let rec do_parse s ~n ~key ~value ~acc ~partial =
       (* Inside a Merkle proof an entire subtree may be replaced by a pruned
          branch. Skip it, but remember that the result is incomplete. *)
       if Cell.is_exotic cell then partial := true
-      else do_parse (Slice.of_cell cell) ~n:(rest - 1) ~key:(append_bit key bit) ~value ~acc ~partial
+      else
+        do_parse (Slice.of_cell cell) ~n:(rest - 1) ~key:(append_bit key bit)
+          ~value ~acc ~partial
     in
     descend left false;
     descend right true
@@ -123,7 +129,8 @@ exception Pruned
    claims. Conflating them would let a server deny the existence of anything
    it chose not to include. *)
 let lookup_generic cell ~key_bits ~key ~leaf =
-  if Z.sign key < 0 || Z.numbits key > key_bits then invalid_arg "Dict.lookup: key does not fit";
+  if Z.sign key < 0 || Z.numbits key > key_bits then
+    invalid_arg "Dict.lookup: key does not fit";
   (* The [len] bits of the key starting at [from], as an integer, so it can be
      compared with the label the edge just yielded. *)
   let sub_bits from len =
@@ -145,7 +152,9 @@ let lookup_generic cell ~key_bits ~key ~leaf =
         (* The two references stand for the next bit being 0 and 1. *)
         let left = Slice.load_ref s in
         let right = Slice.load_ref s in
-        let next = if Z.testbit key (key_bits - 1 - consumed) then right else left in
+        let next =
+          if Z.testbit key (key_bits - 1 - consumed) then right else left
+        in
         go next ~consumed:(consumed + 1)
       end
   in
@@ -153,7 +162,8 @@ let lookup_generic cell ~key_bits ~key ~leaf =
   | Pruned -> Ok Elided
   | Slice.Parse_error e -> Error e
 
-let lookup cell ~key_bits ~key ~value = lookup_generic cell ~key_bits ~key ~leaf:value
+let lookup cell ~key_bits ~key ~value =
+  lookup_generic cell ~key_bits ~key ~leaf:value
 
 (* An augmented hashmap carries an [extra] alongside every node. At a leaf it
    precedes the value and must be skipped to reach it; at a fork it follows
@@ -172,11 +182,18 @@ let of_cell c ~key_bits ~value =
 
 (* --- writing -------------------------------------------------------------- *)
 
-type error = Empty_hashmap | Key_out_of_range of Z.t | Builder of Builder.error
+type error =
+  | Empty_hashmap
+  | Key_out_of_range of Z.t
+  | Builder of Builder.error
 
 let pp_error ppf = function
-  | Empty_hashmap -> Format.fprintf ppf "an empty dictionary has no Hashmap encoding; use store_maybe"
-  | Key_out_of_range k -> Format.fprintf ppf "key %s does not fit the dictionary's key width" (Z.to_string k)
+  | Empty_hashmap ->
+      Format.fprintf ppf
+        "an empty dictionary has no Hashmap encoding; use store_maybe"
+  | Key_out_of_range k ->
+      Format.fprintf ppf "key %s does not fit the dictionary's key width"
+        (Z.to_string k)
   | Builder e -> Builder.pp_error ppf e
 
 exception Fail of error
@@ -184,8 +201,10 @@ exception Fail of error
 (* Keys become fixed-width bit strings so prefix work is ordinary string
    handling, mirroring the reference implementation. *)
 let key_to_string ~key_bits k =
-  if Z.sign k < 0 || Z.numbits k > key_bits then raise (Fail (Key_out_of_range k));
-  String.init key_bits (fun i -> if Z.testbit k (key_bits - 1 - i) then '1' else '0')
+  if Z.sign k < 0 || Z.numbits k > key_bits then
+    raise (Fail (Key_out_of_range k));
+  String.init key_bits (fun i ->
+      if Z.testbit k (key_bits - 1 - i) then '1' else '0')
 
 type 'v node = Leaf of 'v | Fork of 'v edge * 'v edge
 and 'v edge = { label : string; node : 'v node }
@@ -213,7 +232,9 @@ and build_node entries prefix_len =
   match entries with
   | [ (_, v) ] -> Leaf v
   | _ ->
-      let left, right = List.partition (fun (k, _) -> k.[prefix_len] = '0') entries in
+      let left, right =
+        List.partition (fun (k, _) -> k.[prefix_len] = '0') entries
+      in
       (* Both sides are non-empty: the label consumed every shared bit, so the
          next bit must differ across the group. *)
       Fork (build_edge left (prefix_len + 1), build_edge right (prefix_len + 1))
@@ -224,7 +245,9 @@ let bits_of_label s =
   String.iteri
     (fun i c ->
       if c = '1' then
-        Bytes.set b (i lsr 3) (Char.chr (Char.code (Bytes.get b (i lsr 3)) lor (1 lsl (7 - (i land 7))))))
+        Bytes.set b (i lsr 3)
+          (Char.chr
+             (Char.code (Bytes.get b (i lsr 3)) lor (1 lsl (7 - (i land 7))))))
     s;
   Bits.sub (Bits.of_bytes (Bytes.to_string b)) 0 n
 
@@ -267,7 +290,10 @@ and write_node to_ node key_len ~value =
   | Leaf v -> value to_ v
   | Fork (l, r) ->
       let child e =
-        match Builder.end_cell (write_edge (Builder.create ()) e (key_len - 1) ~value) with
+        match
+          Builder.end_cell
+            (write_edge (Builder.create ()) e (key_len - 1) ~value)
+        with
         | Ok c -> c
         | Error e -> raise (Fail (Builder e))
       in
@@ -279,7 +305,11 @@ let store b ~value d =
   try
     if is_empty d then Error Empty_hashmap
     else
-      let entries = List.map (fun (k, v) -> (key_to_string ~key_bits:d.key_bits k, v)) (to_list d) in
+      let entries =
+        List.map
+          (fun (k, v) -> (key_to_string ~key_bits:d.key_bits k, v))
+          (to_list d)
+      in
       Ok (write_edge b (build_edge entries 0) d.key_bits ~value)
   with Fail e -> Error e
 
@@ -296,4 +326,7 @@ let store_maybe b ~value d =
 let to_cell ~value d =
   match store (Builder.create ()) ~value d with
   | Error e -> Error e
-  | Ok b -> ( match Builder.end_cell b with Ok c -> Ok c | Error e -> Error (Builder e))
+  | Ok b -> (
+      match Builder.end_cell b with
+      | Ok c -> Ok c
+      | Error e -> Error (Builder e))

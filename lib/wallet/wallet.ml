@@ -4,7 +4,10 @@ module A = Ton_tlb.Msg_address
 
 type version = V3R2 | V4R2 | V5R1
 
-let version_to_string = function V3R2 -> "v3r2" | V4R2 -> "v4r2" | V5R1 -> "v5r1"
+let version_to_string = function
+  | V3R2 -> "v3r2"
+  | V4R2 -> "v4r2"
+  | V5R1 -> "v5r1"
 
 let code_boc = function
   | V3R2 -> Wallet_code.v3r2
@@ -62,34 +65,51 @@ let data_cell version ~wallet_id ~public_key =
   let b =
     match version with
     | V3R2 | V4R2 ->
-        let b = Builder.store_uint b 0L ~bits:32 (* seqno *) in
+        let b =
+          Builder.store_uint b 0L ~bits:32
+          (* seqno *)
+        in
         let b = Builder.store_uint b (Int64.of_int32 wallet_id) ~bits:32 in
         Builder.store_bytes b public_key
     | V5R1 ->
-        let b = Builder.store_bit b true (* is_signature_allowed *) in
-        let b = Builder.store_uint b 0L ~bits:32 (* seqno *) in
+        let b =
+          Builder.store_bit b true
+          (* is_signature_allowed *)
+        in
+        let b =
+          Builder.store_uint b 0L ~bits:32
+          (* seqno *)
+        in
         let b = Builder.store_uint b (Int64.of_int32 wallet_id) ~bits:32 in
         Builder.store_bytes b public_key
   in
   (* v4 keeps a plugin dictionary and v5 an extension dictionary; both start
      empty, which is a single zero bit. v3 has neither. *)
-  let b = match version with V3R2 -> b | V4R2 | V5R1 -> Builder.store_bit b false in
+  let b =
+    match version with V3R2 -> b | V4R2 | V5R1 -> Builder.store_bit b false
+  in
   cell_of b
 
-let create ?(workchain = 0) ?(network = Mainnet) ?(subwallet = 0) ?wallet_id version ~public_key =
+let create ?(workchain = 0) ?(network = Mainnet) ?(subwallet = 0) ?wallet_id
+    version ~public_key =
   if String.length public_key <> 32 then
-    Error (Printf.sprintf "public key must be 32 bytes, got %d" (String.length public_key))
+    Error
+      (Printf.sprintf "public key must be 32 bytes, got %d"
+         (String.length public_key))
   else
     let wallet_id =
       match wallet_id with
       | Some id -> id
       | None -> (
           match version with
-          | V3R2 | V4R2 -> Int32.add default_subwallet_id (Int32.of_int workchain)
+          | V3R2 | V4R2 ->
+              Int32.add default_subwallet_id (Int32.of_int workchain)
           | V5R1 -> v5r1_wallet_id ~network ~workchain ~subwallet)
     in
     let* data = data_cell version ~wallet_id ~public_key in
-    let state_init = { M.empty_state_init with code = Some (code version); data = Some data } in
+    let state_init =
+      { M.empty_state_init with code = Some (code version); data = Some data }
+    in
     let* address = M.state_init_address ~workchain state_init in
     Ok { version; workchain; public_key; wallet_id; state_init; address }
 
@@ -103,35 +123,49 @@ let address t = t.address
 (* --- outgoing messages ----------------------------------------------------- *)
 
 let internal ?(bounce = true) ?body ?init ~dest ~value () =
-  { M.info =
+  {
+    M.info =
       M.Internal
-        { ihr_disabled = true; bounce; bounced = false;
+        {
+          ihr_disabled = true;
+          bounce;
+          bounced = false;
           (* Relaxed: the validator fills in the source. *)
           src = A.Addr_none;
           dest = A.of_address dest;
           value = Ton_tlb.Currency.of_coins value;
-          ihr_fee = Z.zero; fwd_fee = Z.zero; created_lt = 0L; created_at = 0l };
+          ihr_fee = Z.zero;
+          fwd_fee = Z.zero;
+          created_lt = 0L;
+          created_at = 0l;
+        };
     init;
-    body = (match body with Some c -> c | None -> Cell.empty) }
+    body = (match body with Some c -> c | None -> Cell.empty);
+  }
 
 let send_mode_default = 3
-
 let message_cell m = Result.map_error (fun e -> e) (M.to_cell m)
 
 (* v3 and v4: wallet_id, deadline, seqno, then (mode, ^message) pairs. v4
    additionally carries an 8-bit opcode, which the documentation wrongly
    describes as 32-bit. *)
-let sign_payload_v3_v4 version ~wallet_id ~valid_until ~seqno ~send_mode messages =
+let sign_payload_v3_v4 version ~wallet_id ~valid_until ~seqno ~send_mode
+    messages =
   let b = Builder.create () in
   let b = Builder.store_uint b (Int64.of_int32 wallet_id) ~bits:32 in
   let b = Builder.store_uint b (Int64.of_int32 valid_until) ~bits:32 in
   let b = Builder.store_uint b (Int64.of_int seqno) ~bits:32 in
-  let b = match version with V4R2 -> Builder.store_uint b 0L ~bits:8 | _ -> b in
+  let b =
+    match version with V4R2 -> Builder.store_uint b 0L ~bits:8 | _ -> b
+  in
   List.fold_left
     (fun acc m ->
       let* acc = acc in
       let* c = message_cell m in
-      Ok (Builder.store_ref (Builder.store_uint acc (Int64.of_int send_mode) ~bits:8) c))
+      Ok
+        (Builder.store_ref
+           (Builder.store_uint acc (Int64.of_int send_mode) ~bits:8)
+           c))
     (Ok b) messages
 
 (* v5r1 out actions are a cons list threaded through references, newest
@@ -166,18 +200,23 @@ let sign_payload_v5 ~wallet_id ~valid_until ~seqno ~send_mode messages =
     let b = Builder.store_ref (Builder.store_bit b true) actions in
     Ok (Builder.store_bit b false)
 
-let create_transfer t ~key ~seqno ~valid_until ?(send_mode = send_mode_default) messages =
+let create_transfer t ~key ~seqno ~valid_until ?(send_mode = send_mode_default)
+    messages =
   let n = List.length messages in
   if n > max_messages t.version then
     Error
-      (Printf.sprintf "%s accepts at most %d messages, got %d" (version_to_string t.version)
+      (Printf.sprintf "%s accepts at most %d messages, got %d"
+         (version_to_string t.version)
          (max_messages t.version) n)
   else
     let* payload =
       match t.version with
       | V3R2 | V4R2 ->
-          sign_payload_v3_v4 t.version ~wallet_id:t.wallet_id ~valid_until ~seqno ~send_mode messages
-      | V5R1 -> sign_payload_v5 ~wallet_id:t.wallet_id ~valid_until ~seqno ~send_mode messages
+          sign_payload_v3_v4 t.version ~wallet_id:t.wallet_id ~valid_until
+            ~seqno ~send_mode messages
+      | V5R1 ->
+          sign_payload_v5 ~wallet_id:t.wallet_id ~valid_until ~seqno ~send_mode
+            messages
     in
     let* payload_cell = cell_of payload in
     let signature = Ton_crypto.Ed25519.sign key (Cell.hash payload_cell) in
@@ -189,12 +228,21 @@ let create_transfer t ~key ~seqno ~valid_until ?(send_mode = send_mode_default) 
         cell_of (List.fold_left Builder.store_ref b (Cell.refs payload_cell))
     | V5R1 ->
         (* Signature last. *)
-        let b = Builder.store_bits (Builder.create ()) (Cell.bits payload_cell) in
+        let b =
+          Builder.store_bits (Builder.create ()) (Cell.bits payload_cell)
+        in
         let b = List.fold_left Builder.store_ref b (Cell.refs payload_cell) in
         cell_of (Builder.store_bytes b signature)
 
 let external_message ?(with_init = false) t ~body =
-  { M.info =
-      M.External_in { src = A.Addr_none; dest = A.of_address t.address; import_fee = Z.zero };
+  {
+    M.info =
+      M.External_in
+        {
+          src = A.Addr_none;
+          dest = A.of_address t.address;
+          import_fee = Z.zero;
+        };
     init = (if with_init then Some t.state_init else None);
-    body }
+    body;
+  }

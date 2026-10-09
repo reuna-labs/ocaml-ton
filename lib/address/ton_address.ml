@@ -20,16 +20,21 @@ let tag_testnet = 0x80
 let pp_error ppf = function
   | Bad_raw s -> Format.fprintf ppf "not a raw address: %S" s
   | Bad_base64 -> Format.fprintf ppf "not valid base64"
-  | Bad_length n -> Format.fprintf ppf "expected %d bytes, got %d" friendly_length n
+  | Bad_length n ->
+      Format.fprintf ppf "expected %d bytes, got %d" friendly_length n
   | Bad_tag n -> Format.fprintf ppf "unknown address tag 0x%02x" n
   | Bad_crc { expected; got } ->
-      Format.fprintf ppf "CRC-16 mismatch: expected %s, computed %s" expected got
+      Format.fprintf ppf "CRC-16 mismatch: expected %s, computed %s" expected
+        got
 
 let hex s =
-  String.concat "" (List.init (String.length s) (fun i -> Printf.sprintf "%02x" (Char.code s.[i])))
+  String.concat ""
+    (List.init (String.length s) (fun i ->
+         Printf.sprintf "%02x" (Char.code s.[i])))
 
 let make ~workchain ~hash =
-  if String.length hash <> hash_length then Error (Bad_length (String.length hash))
+  if String.length hash <> hash_length then
+    Error (Bad_length (String.length hash))
   else Ok { workchain; hash }
 
 (* --- raw ------------------------------------------------------------------ *)
@@ -61,9 +66,11 @@ let of_raw s =
   match String.index_opt s ':' with
   | None -> Error (Bad_raw s)
   | Some i -> (
-      let wc = String.sub s 0 i and rest = String.sub s (i + 1) (String.length s - i - 1) in
+      let wc = String.sub s 0 i
+      and rest = String.sub s (i + 1) (String.length s - i - 1) in
       match (int_of_string_opt wc, unhex rest) with
-      | Some workchain, Some hash when String.length hash = hash_length -> Ok { workchain; hash }
+      | Some workchain, Some hash when String.length hash = hash_length ->
+          Ok { workchain; hash }
       | _ -> Error (Bad_raw s))
 
 let to_raw a = Printf.sprintf "%d:%s" a.workchain (hex a.hash)
@@ -93,27 +100,38 @@ let of_friendly s =
           let tag = Char.code raw.[0] in
           let testnet = tag land tag_testnet <> 0 in
           let base = tag land lnot tag_testnet in
-          if base <> tag_bounceable && base <> tag_non_bounceable then Error (Bad_tag tag)
+          if base <> tag_bounceable && base <> tag_non_bounceable then
+            Error (Bad_tag tag)
           else
             (* The workchain byte is signed, so the masterchain (-1) arrives
                as 0xff. *)
             let b = Char.code raw.[1] in
             let workchain = if b >= 0x80 then b - 0x100 else b in
             Ok
-              { address = { workchain; hash = String.sub raw 2 hash_length };
+              {
+                address = { workchain; hash = String.sub raw 2 hash_length };
                 bounceable = base = tag_bounceable;
-                testnet }
+                testnet;
+              }
 
 let to_friendly ?(bounceable = true) ?(testnet = false) ?(url_safe = true) a =
   let tag =
-    (if bounceable then tag_bounceable else tag_non_bounceable) lor if testnet then tag_testnet else 0
+    (if bounceable then tag_bounceable else tag_non_bounceable)
+    lor if testnet then tag_testnet else 0
   in
   let body =
     String.concat ""
-      [ String.make 1 (Char.chr tag); String.make 1 (Char.chr (a.workchain land 0xff)); a.hash ]
+      [
+        String.make 1 (Char.chr tag);
+        String.make 1 (Char.chr (a.workchain land 0xff));
+        a.hash;
+      ]
   in
   let raw = body ^ Web3_codec.Crc.crc16_xmodem_be body in
-  Base64.encode_string ~alphabet:(if url_safe then Base64.uri_safe_alphabet else Base64.default_alphabet) raw
+  Base64.encode_string
+    ~alphabet:
+      (if url_safe then Base64.uri_safe_alphabet else Base64.default_alphabet)
+    raw
 
 let of_string s =
   if String.contains s ':' then of_raw s
@@ -122,6 +140,8 @@ let of_string s =
 let equal a b = a.workchain = b.workchain && String.equal a.hash b.hash
 
 let compare a b =
-  match Int.compare a.workchain b.workchain with 0 -> String.compare a.hash b.hash | c -> c
+  match Int.compare a.workchain b.workchain with
+  | 0 -> String.compare a.hash b.hash
+  | c -> c
 
 let pp ppf a = Format.pp_print_string ppf (to_raw a)

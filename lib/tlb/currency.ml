@@ -8,7 +8,10 @@ let of_coins coins = { coins; extra = empty_extra }
 
 let load s =
   let coins = Coins.load_coins s in
-  let extra = Dict.load_maybe s ~key_bits:extra_key_bits ~value:(fun s -> Coins.load_var_uint s ~n:extra_value) in
+  let extra =
+    Dict.load_maybe s ~key_bits:extra_key_bits ~value:(fun s ->
+        Coins.load_var_uint s ~n:extra_value)
+  in
   { coins; extra }
 
 let store b t =
@@ -29,4 +32,5 @@ let equal a b =
 
 let pp ppf t =
   Format.fprintf ppf "%s TON" (Coins.to_string t.coins);
-  if not (Dict.is_empty t.extra) then Format.fprintf ppf " + %d extra" (Dict.cardinal t.extra)
+  if not (Dict.is_empty t.extra) then
+    Format.fprintf ppf " + %d extra" (Dict.cardinal t.extra)

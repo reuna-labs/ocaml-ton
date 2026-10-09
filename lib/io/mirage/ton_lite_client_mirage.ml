@@ -58,16 +58,28 @@ module Make (F : Mirage_flow.S) = struct
        a sequence that can be reasoned about and reproduced. *)
     let ephemeral_seed = random 32 in
     let aes_params = random Ton_adnl.Handshake.params_size in
-    match Ton_adnl.Conn.connect ?max_frame ~server_pub ~ephemeral_seed ~aes_params () with
+    match
+      Ton_adnl.Conn.connect ?max_frame ~server_pub ~ephemeral_seed ~aes_params
+        ()
+    with
     | Error e -> Lwt.return (Error (Client (C.Adnl e)))
     | Ok (conn, packet) -> (
-        let t = { flow; session = C.Session.create conn; closed = None; random; max_reads } in
+        let t =
+          {
+            flow;
+            session = C.Session.create conn;
+            closed = None;
+            random;
+            max_reads;
+          }
+        in
         write t packet >>= function
         | Error e -> Lwt.return (Error e)
         | Ok () -> (
             (* The empty frame the server sends back is the handshake's only
                acknowledgement. *)
-            await t ~budget:max_reads ~pick:(fun _ -> Some ()) >|= function
+            await t ~budget:max_reads ~pick:(fun _ -> Some ())
+            >|= function
             | Ok () -> Ok t
             | Error e -> Error e))
 
@@ -83,17 +95,23 @@ module Make (F : Mirage_flow.S) = struct
         | Error e -> Lwt.return (Error e)
         | Ok () -> (
             await t ~budget:t.max_reads ~pick:(function
-              | C.Session.Answer a when String.equal a.query_id query_id -> Some a.body
+              | C.Session.Answer a when String.equal a.query_id query_id ->
+                  Some a.body
               | _ -> None)
             >|= function
             | Error e -> Error e
             | Ok body -> (
-                match C.Query.decode q body with Ok v -> Ok v | Error e -> Error (Client e))))
+                match C.Query.decode q body with
+                | Ok v -> Ok v
+                | Error e -> Error (Client e))))
 
   let random_int64 t =
     let b = t.random 8 in
     let v = ref 0L in
-    String.iter (fun c -> v := Int64.logor (Int64.shift_left !v 8) (Int64.of_int (Char.code c))) b;
+    String.iter
+      (fun c ->
+        v := Int64.logor (Int64.shift_left !v 8) (Int64.of_int (Char.code c)))
+      b;
     !v
 
   let ping t =

@@ -3,14 +3,20 @@ module Crc = struct
      syntax removed. Everything that is not part of the type's identity --
      comments, grouping parentheses, an explicit identifier, the terminating
      semicolon, runs of whitespace -- is stripped first. *)
-  let is_hex = function '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' -> true | _ -> false
+  let is_hex = function
+    | '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' -> true
+    | _ -> false
 
   (* Everything that is not part of the type's identity is removed, in order:
      a trailing comment, an explicit #id on the constructor name, grouping
      parentheses and the terminating semicolon, then runs of whitespace. *)
   let strip_comment s =
     let n = String.length s in
-    let rec go i = if i + 1 >= n then s else if s.[i] = '/' && s.[i + 1] = '/' then String.sub s 0 i else go (i + 1) in
+    let rec go i =
+      if i + 1 >= n then s
+      else if s.[i] = '/' && s.[i + 1] = '/' then String.sub s 0 i
+      else go (i + 1)
+    in
     go 0
 
   let strip_explicit_id s =
@@ -22,8 +28,10 @@ module Crc = struct
           incr j
         done;
         (* Only a run of hex digits ending the constructor name counts. *)
-        if !j > i + 1 && (!j >= n || s.[!j] = ' ' || s.[!j] = '\t' || s.[!j] = '=') then
-          String.sub s 0 i ^ String.sub s !j (n - !j)
+        if
+          !j > i + 1
+          && (!j >= n || s.[!j] = ' ' || s.[!j] = '\t' || s.[!j] = '=')
+        then String.sub s 0 i ^ String.sub s !j (n - !j)
         else s
     | _ -> s
 
@@ -34,7 +42,8 @@ module Crc = struct
       (fun c ->
         match c with
         | '(' | ')' | ';' -> ()
-        | ' ' | '\t' | '\n' | '\r' -> if Buffer.length b > 0 then pending_space := true
+        | ' ' | '\t' | '\n' | '\r' ->
+            if Buffer.length b > 0 then pending_space := true
         | c ->
             if !pending_space then Buffer.add_char b ' ';
             pending_space := false;
@@ -44,7 +53,8 @@ module Crc = struct
 
   let normalize line = squeeze (strip_explicit_id (strip_comment line))
 
-  let constructor_id line = Int32.of_int (Web3_codec.Crc.crc32 (normalize line) land 0xffffffff)
+  let constructor_id line =
+    Int32.of_int (Web3_codec.Crc.crc32 (normalize line) land 0xffffffff)
 
   (* A few constructors pin their identifier in the schema. Where that
      happens the written value is authoritative and differs from what the
@@ -58,8 +68,10 @@ module Crc = struct
         while !j < n && is_hex line.[!j] do
           incr j
         done;
-        if !j - (i + 1) = 8 && (!j >= n || line.[!j] = ' ' || line.[!j] = '\t' || line.[!j] = '=') then
-          Some (Int32.of_string ("0x" ^ String.sub line (i + 1) 8))
+        if
+          !j - (i + 1) = 8
+          && (!j >= n || line.[!j] = ' ' || line.[!j] = '\t' || line.[!j] = '=')
+        then Some (Int32.of_string ("0x" ^ String.sub line (i + 1) 8))
         else None
     | _ -> None
 
@@ -82,12 +94,14 @@ module Reader = struct
 
   let pp_error ppf = function
     | Truncated { field; want; have } ->
-        Format.fprintf ppf "truncated reading %s: want %d bytes, have %d" field want have
+        Format.fprintf ppf "truncated reading %s: want %d bytes, have %d" field
+          want have
     | Bad_constructor { expected; got } ->
         Format.fprintf ppf "expected constructor %08lx, got %08lx" expected got
     | Bad_length_prefix n -> Format.fprintf ppf "invalid length prefix %d" n
     | Bad_padding -> Format.fprintf ppf "non-zero padding"
-    | Bad_bool id -> Format.fprintf ppf "expected a boolean constructor, got %08lx" id
+    | Bad_bool id ->
+        Format.fprintf ppf "expected a boolean constructor, got %08lx" id
     | Message m -> Format.pp_print_string ppf m
 
   let fail e = raise (Error e)
@@ -95,16 +109,21 @@ module Reader = struct
   let parse s f = try Ok (f (make s)) with Error e -> Error e
   let remaining r = String.length r.s - r.pos
   let at_end r = remaining r = 0
-  let finish r = if not (at_end r) then fail (Message (Printf.sprintf "%d trailing bytes" (remaining r)))
+
+  let finish r =
+    if not (at_end r) then
+      fail (Message (Printf.sprintf "%d trailing bytes" (remaining r)))
 
   let take r field n =
-    if n < 0 || n > remaining r then fail (Truncated { field; want = n; have = remaining r });
+    if n < 0 || n > remaining r then
+      fail (Truncated { field; want = n; have = remaining r });
     let v = String.sub r.s r.pos n in
     r.pos <- r.pos + n;
     v
 
   let u8 r field =
-    if remaining r < 1 then fail (Truncated { field; want = 1; have = remaining r });
+    if remaining r < 1 then
+      fail (Truncated { field; want = 1; have = remaining r });
     let v = Char.code r.s.[r.pos] in
     r.pos <- r.pos + 1;
     v
@@ -147,7 +166,10 @@ module Reader = struct
 
   let string = bytes
   let constructor r = int r
-  let expect r id = let got = constructor r in if got <> id then fail (Bad_constructor { expected = id; got })
+
+  let expect r id =
+    let got = constructor r in
+    if got <> id then fail (Bad_constructor { expected = id; got })
 
   (* Booleans are boxed: the value is entirely in the constructor. *)
   let bool_true = 0x997275b5l
@@ -161,7 +183,8 @@ module Reader = struct
 
   let vector r f =
     let n = Int32.to_int (nat r) in
-    if n < 0 || n > remaining r then fail (Message (Printf.sprintf "implausible vector length %d" n));
+    if n < 0 || n > remaining r then
+      fail (Message (Printf.sprintf "implausible vector length %d" n));
     List.init n (fun _ -> f r)
 end
 
@@ -178,7 +201,10 @@ module Writer = struct
 
   let le b v n =
     for i = 0 to n - 1 do
-      Buffer.add_char b (Char.unsafe_chr (Int64.to_int (Int64.logand (Int64.shift_right_logical v (8 * i)) 0xffL)))
+      Buffer.add_char b
+        (Char.unsafe_chr
+           (Int64.to_int
+              (Int64.logand (Int64.shift_right_logical v (8 * i)) 0xffL)))
     done
 
   let int b v = le b (Int64.logand (Int64.of_int32 v) 0xffffffffL) 4
@@ -188,7 +214,9 @@ module Writer = struct
 
   let fixed name n b s =
     if String.length s <> n then
-      invalid_arg (Printf.sprintf "Tl.Writer.%s: expected %d bytes, got %d" name n (String.length s));
+      invalid_arg
+        (Printf.sprintf "Tl.Writer.%s: expected %d bytes, got %d" name n
+           (String.length s));
     Buffer.add_string b s
 
   let int128 = fixed "int128" 16

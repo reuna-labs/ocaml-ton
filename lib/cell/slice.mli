@@ -3,8 +3,8 @@
     A slice is a cursor over a cell's bits and references. TL-B is a
     bit-oriented format with heavy use of prefix tags, so parsing is naturally
     written as a sequence of reads with no error plumbing between them; the
-    [load_*] functions therefore raise {!Parse_error} and {!parse} converts
-    that back into a result at the boundary.
+    [load_*] functions therefore raise {!Parse_error} and {!parse} converts that
+    back into a result at the boundary.
 
     {[
       Slice.parse cell (fun s ->
@@ -33,6 +33,7 @@ val parse : Cell.t -> (t -> 'a) -> ('a, error) result
 (** Run a parser over a cell, catching {!Parse_error}. *)
 
 val of_cell : Cell.t -> t
+
 val copy : t -> t
 (** An independent cursor at the same position, for lookahead. *)
 
@@ -45,6 +46,7 @@ val remaining_bits : t -> int
 val remaining_refs : t -> int
 val is_empty : t -> bool
 val cell : t -> Cell.t
+
 val to_bits : t -> Bits.t
 (** The bits not yet consumed. Does not advance the cursor. *)
 
@@ -71,8 +73,8 @@ val load_uint_z : t -> bits:int -> Z.t
 (** For the wide integers TL-B uses, up to 257 bits. *)
 
 val load_int_z : t -> bits:int -> Z.t
-
 val load_ref : t -> Cell.t
+
 val load_maybe_ref : t -> Cell.t option
 (** TL-B's [Maybe ^X]: a presence bit followed by a reference. *)
 

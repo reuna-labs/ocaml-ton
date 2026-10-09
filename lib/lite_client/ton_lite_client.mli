@@ -31,55 +31,81 @@ module Query : sig
   (** Decode an answer, turning a [liteServer.error] into {!Server}. *)
 
   val account_id : Ton_address.t -> Lite.lite_server_account_id
-
   val get_masterchain_info : Lite.lite_server_masterchain_info t
   val get_time : Lite.lite_server_current_time t
   val get_version : Lite.lite_server_version t
   val get_block : Lite.ton_node_block_id_ext -> Lite.lite_server_block_data t
-  val get_block_header : Lite.ton_node_block_id_ext -> mode:int32 -> Lite.lite_server_block_header t
+
+  val get_block_header :
+    Lite.ton_node_block_id_ext -> mode:int32 -> Lite.lite_server_block_header t
 
   val get_account_state :
-    block:Lite.ton_node_block_id_ext -> Ton_address.t -> Lite.lite_server_account_state t
+    block:Lite.ton_node_block_id_ext ->
+    Ton_address.t ->
+    Lite.lite_server_account_state t
 
   val run_smc_method :
-    block:Lite.ton_node_block_id_ext -> Ton_address.t -> method_id:int64 -> params:string ->
-    mode:int32 -> Lite.lite_server_run_method_result t
-  (** [params] and the result are Bags of Cells holding a TVM stack. The
-      method runs on the server, which is why no local TVM is needed; the
-      corollary is that its result cannot be verified without one. *)
+    block:Lite.ton_node_block_id_ext ->
+    Ton_address.t ->
+    method_id:int64 ->
+    params:string ->
+    mode:int32 ->
+    Lite.lite_server_run_method_result t
+  (** [params] and the result are Bags of Cells holding a TVM stack. The method
+      runs on the server, which is why no local TVM is needed; the corollary is
+      that its result cannot be verified without one. *)
 
   val send_message : string -> Lite.lite_server_send_msg_status t
   (** The argument is a serialized external message. *)
 
   val get_transactions :
-    count:int32 -> account:Ton_address.t -> lt:int64 -> hash:string -> Lite.lite_server_transaction_list t
+    count:int32 ->
+    account:Ton_address.t ->
+    lt:int64 ->
+    hash:string ->
+    Lite.lite_server_transaction_list t
 
   val lookup_block :
-    Lite.ton_node_block_id -> mode:int32 -> ?lt:int64 -> ?utime:int32 -> unit ->
+    Lite.ton_node_block_id ->
+    mode:int32 ->
+    ?lt:int64 ->
+    ?utime:int32 ->
+    unit ->
     Lite.lite_server_block_header t
 
   val get_config_params :
-    block:Lite.ton_node_block_id_ext -> mode:int32 -> int32 list -> Lite.lite_server_config_info t
+    block:Lite.ton_node_block_id_ext ->
+    mode:int32 ->
+    int32 list ->
+    Lite.lite_server_config_info t
 
-  val get_all_shards_info : Lite.ton_node_block_id_ext -> Lite.lite_server_all_shards_info t
+  val get_all_shards_info :
+    Lite.ton_node_block_id_ext -> Lite.lite_server_all_shards_info t
 
   val get_block_proof :
-    known:Lite.ton_node_block_id_ext -> ?target:Lite.ton_node_block_id_ext -> unit ->
+    known:Lite.ton_node_block_id_ext ->
+    ?target:Lite.ton_node_block_id_ext ->
+    unit ->
     Lite.lite_server_partial_block_proof t
   (** A chain of links from a block already trusted towards a later one. The
       answer is partial: [complete] says whether the target was reached, and
       otherwise the walk continues from where it stopped. *)
 
   val get_config_all :
-    block:Lite.ton_node_block_id_ext -> mode:int32 -> Lite.lite_server_config_info t
+    block:Lite.ton_node_block_id_ext ->
+    mode:int32 ->
+    Lite.lite_server_config_info t
+
   val get_one_transaction :
-    block:Lite.ton_node_block_id_ext -> account:Ton_address.t -> lt:int64 ->
+    block:Lite.ton_node_block_id_ext ->
+    account:Ton_address.t ->
+    lt:int64 ->
     Lite.lite_server_transaction_info t
 end
 
 val method_id : string -> int64
-(** The identifier a get-method is called by: CRC-16/XMODEM of its name with
-    bit 16 set. *)
+(** The identifier a get-method is called by: CRC-16/XMODEM of its name with bit
+    16 set. *)
 
 (** {2 Sessions} *)
 
@@ -88,12 +114,12 @@ module Session : sig
 
   type event =
     | Answer of { query_id : string; body : string }
-        (** [body] still needs {!Query.decode}; the session does not know
-            which query an identifier belongs to. *)
+        (** [body] still needs {!Query.decode}; the session does not know which
+            query an identifier belongs to. *)
     | Pong of int64
     | Empty
-        (** A frame with no payload. The first one is the server confirming
-            the handshake. *)
+        (** A frame with no payload. The first one is the server confirming the
+            handshake. *)
 
   val create : Ton_adnl.Conn.t -> t
   val conn : t -> Ton_adnl.Conn.t

@@ -1,8 +1,8 @@
 (** TL-B hashmaps.
 
-    A TON dictionary is a binary Patricia trie over fixed-width keys, stored
-    as a cell tree. Each edge carries a label — a shared key prefix — encoded
-    in whichever of three forms is shortest:
+    A TON dictionary is a binary Patricia trie over fixed-width keys, stored as
+    a cell tree. Each edge carries a label — a shared key prefix — encoded in
+    whichever of three forms is shortest:
 
     {v
     hml_short$0  {m:#} {n:#} len:(Unary ~n) s:(n * Bit)
@@ -10,8 +10,8 @@
     hml_same$11  {m:#} v:Bit n:(#<= m)
     v}
 
-    Choosing the shortest label is required, not an optimisation: it is part
-    of the canonical encoding, so two implementations that disagree produce
+    Choosing the shortest label is required, not an optimisation: it is part of
+    the canonical encoding, so two implementations that disagree produce
     different cell hashes for the same map.
 
     Keys are non-negative integers of exactly {!key_bits} bits. *)
@@ -29,15 +29,16 @@ val is_partial : 'v t -> bool
 (** Whether any branch was elided when this dictionary was parsed.
 
     Dictionaries inside a Merkle proof have subtrees replaced by pruned
-    branches. Those are skipped while parsing, which means a key can be
-    missing because it is genuinely absent {i or} because it was pruned away.
-    The reference implementation does not distinguish the two; we track it,
-    because for a light client "not in the map" and "not in the part of the
-    map I was given" are very different claims. *)
+    branches. Those are skipped while parsing, which means a key can be missing
+    because it is genuinely absent {i or} because it was pruned away. The
+    reference implementation does not distinguish the two; we track it, because
+    for a light client "not in the map" and "not in the part of the map I was
+    given" are very different claims. *)
 
 (** {2 Construction and lookup} *)
 
 val of_list : key_bits:int -> (Z.t * 'v) list -> 'v t
+
 val to_list : 'v t -> (Z.t * 'v) list
 (** Ascending by key. *)
 
@@ -58,7 +59,8 @@ val load : Slice.t -> key_bits:int -> value:(Slice.t -> 'v) -> 'v t
 val load_maybe : Slice.t -> key_bits:int -> value:(Slice.t -> 'v) -> 'v t
 (** [HashmapE n X] — a presence bit, then the root in a reference. *)
 
-val of_cell : Cell.t -> key_bits:int -> value:(Slice.t -> 'v) -> ('v t, Slice.error) result
+val of_cell :
+  Cell.t -> key_bits:int -> value:(Slice.t -> 'v) -> ('v t, Slice.error) result
 (** Parse a whole cell as a [Hashmap n X] root. *)
 
 (** {2 Single-key lookup} *)
@@ -66,33 +68,52 @@ val of_cell : Cell.t -> key_bits:int -> value:(Slice.t -> 'v) -> ('v t, Slice.er
 type 'v lookup = Found of 'v | Absent | Elided
 
 val lookup :
-  Cell.t -> key_bits:int -> key:Z.t -> value:(Slice.t -> 'v) -> ('v lookup, Slice.error) result
-(** Follow one key's path through a [Hashmap n X] root without decoding the
-    rest of the map.
+  Cell.t ->
+  key_bits:int ->
+  key:Z.t ->
+  value:(Slice.t -> 'v) ->
+  ('v lookup, Slice.error) result
+(** Follow one key's path through a [Hashmap n X] root without decoding the rest
+    of the map.
 
-    [Elided] means the path ran into a pruned branch. That is a different
-    answer from [Absent], and keeping them apart is what makes it possible to
-    prove a key really is missing: a Merkle proof that simply omits the
-    relevant subtree would otherwise be indistinguishable from one showing
-    genuine absence. *)
+    [Elided] means the path ran into a pruned branch. That is a different answer
+    from [Absent], and keeping them apart is what makes it possible to prove a
+    key really is missing: a Merkle proof that simply omits the relevant subtree
+    would otherwise be indistinguishable from one showing genuine absence. *)
 
 val lookup_aug :
-  Cell.t -> key_bits:int -> key:Z.t -> extra:(Slice.t -> 'e) -> value:(Slice.t -> 'v) ->
+  Cell.t ->
+  key_bits:int ->
+  key:Z.t ->
+  extra:(Slice.t -> 'e) ->
+  value:(Slice.t -> 'v) ->
   ('v lookup, Slice.error) result
 (** As {!lookup}, for a [HashmapAug n X Y] root — the shape used by shard
     accounts and shard hashes, where every node carries an aggregate. *)
 
 (** {2 Writing} *)
 
-type error = Empty_hashmap | Key_out_of_range of Z.t | Builder of Builder.error
+type error =
+  | Empty_hashmap
+  | Key_out_of_range of Z.t
+  | Builder of Builder.error
 
 val pp_error : Format.formatter -> error -> unit
 
-val store : Builder.t -> value:(Builder.t -> 'v -> Builder.t) -> 'v t -> (Builder.t, error) result
-(** [Hashmap n X]. Fails on an empty dictionary, which the type cannot
-    represent — use {!store_maybe}. *)
+val store :
+  Builder.t ->
+  value:(Builder.t -> 'v -> Builder.t) ->
+  'v t ->
+  (Builder.t, error) result
+(** [Hashmap n X]. Fails on an empty dictionary, which the type cannot represent
+    — use {!store_maybe}. *)
 
-val store_maybe : Builder.t -> value:(Builder.t -> 'v -> Builder.t) -> 'v t -> (Builder.t, error) result
+val store_maybe :
+  Builder.t ->
+  value:(Builder.t -> 'v -> Builder.t) ->
+  'v t ->
+  (Builder.t, error) result
 (** [HashmapE n X]. *)
 
-val to_cell : value:(Builder.t -> 'v -> Builder.t) -> 'v t -> (Cell.t, error) result
+val to_cell :
+  value:(Builder.t -> 'v -> Builder.t) -> 'v t -> (Cell.t, error) result

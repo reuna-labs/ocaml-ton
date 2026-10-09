@@ -1,16 +1,16 @@
 (** Building cells.
 
-    A builder accumulates bits and references and is turned into a {!Cell.t}
-    by {!end_cell}. Writes are mutating but return the builder, so they chain:
+    A builder accumulates bits and references and is turned into a {!Cell.t} by
+    {!end_cell}. Writes are mutating but return the builder, so they chain:
 
     {[
       Builder.(create () |> fun b -> store_uint b 0x1234L ~bits:16 |> ...)
     ]}
 
-    Individual writes never fail. If a write would exceed a cell's capacity
-    the builder records the first such overflow and ignores subsequent data;
-    {!end_cell} then reports it. This keeps building code free of error
-    plumbing while still making overflow impossible to ignore. *)
+    Individual writes never fail. If a write would exceed a cell's capacity the
+    builder records the first such overflow and ignores subsequent data;
+    {!end_cell} then reports it. This keeps building code free of error plumbing
+    while still making overflow impossible to ignore. *)
 
 type t
 
@@ -21,7 +21,6 @@ type error =
   | Cell of Cell.error
 
 val pp_error : Format.formatter -> error -> unit
-
 val create : unit -> t
 
 (** {2 State} *)
@@ -50,11 +49,10 @@ val store_uint_z : t -> Z.t -> bits:int -> t
     integers that appear throughout TL-B. Negative values are rejected. *)
 
 val store_int_z : t -> Z.t -> bits:int -> t
-
 val store_ref : t -> Cell.t -> t
+
 val store_maybe_ref : t -> Cell.t option -> t
-(** Writes a presence bit, then the reference if present — TL-B's
-    [Maybe ^X]. *)
+(** Writes a presence bit, then the reference if present — TL-B's [Maybe ^X]. *)
 
 val store_builder : t -> t -> t
 (** Appends another builder's bits and references. *)

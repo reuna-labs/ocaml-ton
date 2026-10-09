@@ -31,13 +31,13 @@ val deserialize_root : string -> (Cell.t, error) result
 val serialize : ?idx:bool -> ?crc32:bool -> Cell.t -> string
 (** Serialize a single-root Bag of Cells.
 
-    [idx] (default [false]) writes the optional cell-offset index, and
-    [crc32] (default [false]) appends a CRC-32C checksum. Neither affects
-    which cells are written or their order, so all four combinations
-    round-trip to the same DAG. *)
+    [idx] (default [false]) writes the optional cell-offset index, and [crc32]
+    (default [false]) appends a CRC-32C checksum. Neither affects which cells
+    are written or their order, so all four combinations round-trip to the same
+    DAG. *)
 
 val topological_sort : Cell.t -> (Cell.t * int list) list
 (** The cells reachable from a root, deduplicated by hash and ordered so that
     every reference points to a later entry. Each entry pairs a cell with the
-    indices of its references. Exposed because the ordering is observable in
-    the serialized bytes. *)
+    indices of its references. Exposed because the ordering is observable in the
+    serialized bytes. *)

@@ -12,11 +12,10 @@
     The shared secret is X25519 between the client's ephemeral key and the
     server's advertised Ed25519 key, both mapped onto the Montgomery curve.
     Because the server can derive the same secret, it can decrypt the session
-    parameters; proving it did is the point of the empty frame it replies
-    with.
+    parameters; proving it did is the point of the empty frame it replies with.
 
-    Both sources of randomness are arguments rather than drawn from a
-    generator, which is what makes a session reproducible. *)
+    Both sources of randomness are arguments rather than drawn from a generator,
+    which is what makes a session reproducible. *)
 
 type error =
   | Bad_server_key of string
@@ -33,6 +32,8 @@ val params_size : int
 (** [160] — two keys, two initial counters, and padding. *)
 
 val build :
-  server_pub:string -> ephemeral_seed:string -> aes_params:string ->
+  server_pub:string ->
+  ephemeral_seed:string ->
+  aes_params:string ->
   (string * Ctr.t * Ctr.t, error) result
 (** Returns the packet to send and the receive and transmit keystreams. *)

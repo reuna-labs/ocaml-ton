@@ -20,13 +20,13 @@
     v}
 
     Two things about this encoding regularly catch implementations out. The
-    stack is a cons list threaded {i backwards} through references — the rest
-    of the stack is the reference and the top is inline — so it is
-    reconstructed from the deepest cell outwards. And integers are encoded by
-    magnitude: anything that fits [int64] uses the one-byte [vm_stk_tinyint]
-    tag, everything else uses the fifteen-bit [vm_stk_int] prefix. A value's
-    tag therefore depends on the value, and re-encoding is only stable because
-    the choice is deterministic. *)
+    stack is a cons list threaded {i backwards} through references — the rest of
+    the stack is the reference and the top is inline — so it is reconstructed
+    from the deepest cell outwards. And integers are encoded by magnitude:
+    anything that fits [int64] uses the one-byte [vm_stk_tinyint] tag,
+    everything else uses the fifteen-bit [vm_stk_int] prefix. A value's tag
+    therefore depends on the value, and re-encoding is only stable because the
+    choice is deterministic. *)
 
 type item =
   | Null
@@ -41,12 +41,12 @@ type t = item list
 (** Top of stack first. *)
 
 val store_item : Ton_cell.Builder.t -> item -> Ton_cell.Builder.t
+
 val load_item : Ton_cell.Slice.t -> item
 (** @raise Ton_cell.Slice.Parse_error on malformed input. *)
 
 val to_cell : t -> (Ton_cell.Cell.t, string) result
 val of_cell : Ton_cell.Cell.t -> (t, Ton_cell.Slice.error) result
-
 val equal : item -> item -> bool
 val pp : Format.formatter -> item -> unit
 val pp_stack : Format.formatter -> t -> unit

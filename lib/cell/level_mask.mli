@@ -9,6 +9,7 @@ type t = private int
 
 val v : int -> t
 val value : t -> int
+
 val level : t -> int
 (** Number of significant bits in the mask: [32 - clz32 mask]. *)
 

@@ -7,8 +7,8 @@
     failure that looks like a protocol bug rather than a cipher bug.
 
     Values are immutable: applying the keystream returns the advanced state.
-    That keeps a whole session reproducible from its inputs, which is what
-    makes offline replay possible. *)
+    That keeps a whole session reproducible from its inputs, which is what makes
+    offline replay possible. *)
 
 type t
 

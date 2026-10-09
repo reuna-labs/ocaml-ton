@@ -1,13 +1,13 @@
 (** TON cells and the representation hash.
 
-    A cell holds up to {!max_bits} bits of data and up to {!max_refs}
-    references to other cells, forming a DAG. Its {e representation hash} is
-    what addresses, signatures and Merkle proofs are all ultimately built on.
+    A cell holds up to {!max_bits} bits of data and up to {!max_refs} references
+    to other cells, forming a DAG. Its {e representation hash} is what
+    addresses, signatures and Merkle proofs are all ultimately built on.
 
     Cells are immutable and can only be built through {!make}, which validates
     the limits and exotic layouts and computes all hashes eagerly. That makes
-    {!hash} and {!depth} O(1) and means a value of this type cannot exist with
-    a hash that disagrees with its contents. *)
+    {!hash} and {!depth} O(1) and means a value of this type cannot exist with a
+    hash that disagrees with its contents. *)
 
 type t
 
@@ -43,8 +43,8 @@ val pp_error : Format.formatter -> error -> unit
 val make : exotic:bool -> Bits.t -> t list -> (t, error) result
 (** [make ~exotic bits refs] builds a cell. When [exotic] is set the leading 8
     bits are read as the type tag and the corresponding layout is validated —
-    including, for Merkle proofs and updates, that the stored hashes and
-    depths actually match the referenced cells. *)
+    including, for Merkle proofs and updates, that the stored hashes and depths
+    actually match the referenced cells. *)
 
 val empty : t
 (** The cell with no data and no references. *)
@@ -61,17 +61,17 @@ val mask : t -> Level_mask.t
 val level : t -> int
 
 val hash : ?level:int -> t -> string
-(** The 32-byte hash at [level], defaulting to [0] — the {e representation
-    hash}, which is what TON addresses, signatures and Merkle proofs are built
-    on.
+(** The 32-byte hash at [level], defaulting to [0] — the
+    {e representation hash}, which is what TON addresses, signatures and Merkle
+    proofs are built on.
 
     {b This is not a cell identity.} A pruned branch reports the hash of the
     subtree it replaces at level 0, so a pruned branch and the real subtree
     share a level-0 hash while being different cells. Use {!identity} to tell
     cells apart; see the note there.
 
-    Beware when cross-checking against ton-core: its [hash()] defaults to
-    level {b 3}, not 0.
+    Beware when cross-checking against ton-core: its [hash()] defaults to level
+    {b 3}, not 0.
 
     @raise Invalid_argument if [level] is outside [0..3]. *)
 
@@ -91,8 +91,8 @@ val identity : t -> string
 (** {2 Comparison} *)
 
 val equal : t -> t -> bool
-(** Equality of {!identity}, so a pruned branch is never equal to the subtree
-    it replaces. *)
+(** Equality of {!identity}, so a pruned branch is never equal to the subtree it
+    replaces. *)
 
 val compare : t -> t -> int
 val pp : Format.formatter -> t -> unit

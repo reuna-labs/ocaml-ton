@@ -1,7 +1,7 @@
 (** Ed25519 keys.
 
-    A TON key pair is derived from a 32-byte seed. Other SDKs, following
-    NaCl, call the 64-byte [seed ‖ public] concatenation the "secret key";
+    A TON key pair is derived from a 32-byte seed. Other SDKs, following NaCl,
+    call the 64-byte [seed ‖ public] concatenation the "secret key";
     {!secret_key} produces that form for cross-checking, but only the seed is
     actually secret material. *)
 
@@ -11,6 +11,7 @@ val of_seed : string -> (t, string) result
 (** @return [Error] unless [seed] is exactly 32 bytes. *)
 
 val seed : t -> string
+
 val public : t -> string
 (** The 32-byte public key. *)
 

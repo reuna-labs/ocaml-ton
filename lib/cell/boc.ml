@@ -18,26 +18,34 @@ type error =
   | Trailing_bytes of int
 
 let hex s =
-  String.concat "" (List.init (String.length s) (fun i -> Printf.sprintf "%02x" (Char.code s.[i])))
+  String.concat ""
+    (List.init (String.length s) (fun i ->
+         Printf.sprintf "%02x" (Char.code s.[i])))
 
 let pp_error ppf = function
   | Bad_magic m -> Format.fprintf ppf "not a bag of cells: magic 0x%08x" m
   | Truncated { field; want; have } ->
-      Format.fprintf ppf "truncated while reading %s: want %d bytes, have %d" field want have
-  | Unsupported_size { field; got } -> Format.fprintf ppf "unsupported %s width %d" field got
-  | Bad_flags f -> Format.fprintf ppf "reserved flag bits must be zero, got %d" f
+      Format.fprintf ppf "truncated while reading %s: want %d bytes, have %d"
+        field want have
+  | Unsupported_size { field; got } ->
+      Format.fprintf ppf "unsupported %s width %d" field got
+  | Bad_flags f ->
+      Format.fprintf ppf "reserved flag bits must be zero, got %d" f
   | Cell_too_large { index; error } ->
       Format.fprintf ppf "cell %d is invalid: %a" index Cell.pp_error error
   | Backward_ref { at; target } ->
-      Format.fprintf ppf "cell %d references cell %d, which is not strictly forward" at target
+      Format.fprintf ppf
+        "cell %d references cell %d, which is not strictly forward" at target
   | Ref_out_of_range { at; target; cells } ->
-      Format.fprintf ppf "cell %d references cell %d but there are only %d cells" at target cells
+      Format.fprintf ppf
+        "cell %d references cell %d but there are only %d cells" at target cells
   | Root_out_of_range { root; cells } ->
       Format.fprintf ppf "root index %d out of range (%d cells)" root cells
   | No_roots -> Format.fprintf ppf "bag of cells declares no roots"
   | Multiple_roots n -> Format.fprintf ppf "expected exactly one root, got %d" n
   | Bad_crc { expected; got } ->
-      Format.fprintf ppf "CRC-32C mismatch: expected %s, computed %s" expected got
+      Format.fprintf ppf "CRC-32C mismatch: expected %s, computed %s" expected
+        got
   | Trailing_bytes n -> Format.fprintf ppf "%d unexpected trailing bytes" n
 
 exception Fail of error
@@ -49,7 +57,8 @@ type reader = { s : string; mutable pos : int }
 let remaining r = String.length r.s - r.pos
 
 let need r field n =
-  if n < 0 || n > remaining r then raise (Fail (Truncated { field; want = n; have = remaining r }))
+  if n < 0 || n > remaining r then
+    raise (Fail (Truncated { field; want = n; have = remaining r }))
 
 let u8 r field =
   need r field 1;
@@ -74,10 +83,11 @@ let take r field n =
   r.pos <- r.pos + n;
   v
 
-let check_width field got max = if got < 1 || got > max then raise (Fail (Unsupported_size { field; got }))
+let check_width field got max =
+  if got < 1 || got > max then raise (Fail (Unsupported_size { field; got }))
 
 type header = {
-  size : int;  (* bytes per cell index *)
+  size : int; (* bytes per cell index *)
   cells : int;
   roots : int list;
   cell_data : string;
@@ -120,7 +130,9 @@ let parse_header src =
   check_width "cell index" size 4;
   check_width "offset" off_bytes 7;
   if has_crc then begin
-    if String.length src < 4 then raise (Fail (Truncated { field = "crc"; want = 4; have = String.length src }));
+    if String.length src < 4 then
+      raise
+        (Fail (Truncated { field = "crc"; want = 4; have = String.length src }));
     verify_crc src
   end;
   let cells = uint r "cells" size in
@@ -134,7 +146,8 @@ let parse_header src =
   (* Every cell costs at least the two descriptor bytes, so this bounds the
      allocation a hostile header can ask for. *)
   if cells < 0 || cells > total / 2 then
-    raise (Fail (Truncated { field = "cell_data"; want = cells * 2; have = total }));
+    raise
+      (Fail (Truncated { field = "cell_data"; want = cells * 2; have = total }));
   if has_idx then ignore (take r "index" (cells * off_bytes));
   let cell_data = take r "cell_data" total in
   let tail = remaining r - if has_crc then 4 else 0 in
@@ -181,7 +194,8 @@ let deserialize src =
         List.map
           (fun t ->
             if t < 0 || t >= h.cells then
-              raise (Fail (Ref_out_of_range { at = i; target = t; cells = h.cells }));
+              raise
+                (Fail (Ref_out_of_range { at = i; target = t; cells = h.cells }));
             if t <= i then raise (Fail (Backward_ref { at = i; target = t }));
             built.(t))
           refs
@@ -194,7 +208,8 @@ let deserialize src =
     Ok
       (List.map
          (fun i ->
-           if i < 0 || i >= h.cells then raise (Fail (Root_out_of_range { root = i; cells = h.cells }));
+           if i < 0 || i >= h.cells then
+             raise (Fail (Root_out_of_range { root = i; cells = h.cells }));
            built.(i))
          h.roots)
   with Fail e -> Error e
@@ -229,7 +244,8 @@ let topological_sort root =
   let index = Hashtbl.create 64 in
   List.iteri (fun i c -> Hashtbl.replace index (Cell.identity c) i) cells;
   List.map
-    (fun c -> (c, List.map (fun r -> Hashtbl.find index (Cell.identity r)) (Cell.refs c)))
+    (fun c ->
+      (c, List.map (fun r -> Hashtbl.find index (Cell.identity r)) (Cell.refs c)))
     cells
 
 (* Width in bits of an unsigned value, with zero taking one bit -- matching
@@ -240,13 +256,19 @@ let bits_for_uint n =
   if n = 0 then 1 else go n 0
 
 let width_bytes n = max 1 ((bits_for_uint n + 7) / 8)
-let put_uint buf v n = for i = n - 1 downto 0 do Buffer.add_char buf (Char.unsafe_chr ((v lsr (8 * i)) land 0xff)) done
+
+let put_uint buf v n =
+  for i = n - 1 downto 0 do
+    Buffer.add_char buf (Char.unsafe_chr ((v lsr (8 * i)) land 0xff))
+  done
 
 let serialize ?(idx = false) ?(crc32 = false) root =
   let cells = topological_sort root in
   let count = List.length cells in
   let size = width_bytes count in
-  let cell_size (c, refs) = 2 + ((Bits.length (Cell.bits c) + 7) / 8) + (List.length refs * size) in
+  let cell_size (c, refs) =
+    2 + ((Bits.length (Cell.bits c) + 7) / 8) + (List.length refs * size)
+  in
   let total, offsets =
     List.fold_left
       (fun (acc, offs) e ->
@@ -259,7 +281,8 @@ let serialize ?(idx = false) ?(crc32 = false) root =
   let buf = Buffer.create (32 + total + if idx then count * off_bytes else 0) in
   put_uint buf 0xb5ee9c72 4;
   Buffer.add_char buf
-    (Char.unsafe_chr (((if idx then 0x80 else 0) lor if crc32 then 0x40 else 0) lor size));
+    (Char.unsafe_chr
+       ((if idx then 0x80 else 0) lor (if crc32 then 0x40 else 0) lor size));
   put_uint buf off_bytes 1;
   put_uint buf count size;
   put_uint buf 1 size (* roots *);
@@ -272,7 +295,9 @@ let serialize ?(idx = false) ?(crc32 = false) root =
       let mask = Level_mask.value (Cell.mask c) in
       let typ = Cell.cell_type c in
       let nrefs = List.length refs in
-      let d1 = nrefs + (if Cell_type.is_exotic typ then 8 else 0) + (mask * 32) in
+      let d1 =
+        nrefs + (if Cell_type.is_exotic typ then 8 else 0) + (mask * 32)
+      in
       let len = Bits.length (Cell.bits c) in
       let d2 = ((len + 7) / 8) + (len / 8) in
       Buffer.add_char buf (Char.unsafe_chr d1);
@@ -280,5 +305,6 @@ let serialize ?(idx = false) ?(crc32 = false) root =
       Buffer.add_string buf (Bits.to_padded_bytes (Cell.bits c));
       List.iter (fun r -> put_uint buf r size) refs)
     cells;
-  if crc32 then Buffer.add_string buf (Web3_codec.Crc.crc32c_le (Buffer.contents buf));
+  if crc32 then
+    Buffer.add_string buf (Web3_codec.Crc.crc32c_le (Buffer.contents buf));
   Buffer.contents buf

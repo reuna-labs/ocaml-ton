@@ -35,17 +35,30 @@ let rec store_item b = function
   | Cell c -> B.store_ref (B.store_uint b 0x03L ~bits:8) c
   | Slice c ->
       let b = B.store_uint b 0x04L ~bits:8 in
-      let b = B.store_uint b 0L ~bits:10 (* st_bits *) in
-      let b = B.store_uint b (Int64.of_int (Bits.length (C.bits c))) ~bits:10 (* end_bits *) in
-      let b = B.store_uint b 0L ~bits:3 (* st_ref *) in
-      let b = B.store_uint b (Int64.of_int (C.ref_count c)) ~bits:3 (* end_ref *) in
+      let b =
+        B.store_uint b 0L ~bits:10
+        (* st_bits *)
+      in
+      let b =
+        B.store_uint b (Int64.of_int (Bits.length (C.bits c))) ~bits:10
+        (* end_bits *)
+      in
+      let b =
+        B.store_uint b 0L ~bits:3
+        (* st_ref *)
+      in
+      let b =
+        B.store_uint b (Int64.of_int (C.ref_count c)) ~bits:3
+        (* end_ref *)
+      in
       B.store_ref b c
   | Builder c -> B.store_ref (B.store_uint b 0x05L ~bits:8) c
-  | Tuple items ->
+  | Tuple items -> (
       (* A balanced-ish spine built by repeatedly folding the previous two
          cells into one. Transliterated from the reference, which is the only
          description of this layout that exists. *)
-      let head = ref None and tail = ref None in
+      let head = ref None
+      and tail = ref None in
       List.iteri
         (fun i it ->
           let swap = !head in
@@ -53,13 +66,17 @@ let rec store_item b = function
           tail := swap;
           if i > 1 then
             head :=
-              Some (cell_of (B.store_ref (B.store_ref (B.create ()) (Option.get !tail)) (Option.get !head)));
+              Some
+                (cell_of
+                   (B.store_ref
+                      (B.store_ref (B.create ()) (Option.get !tail))
+                      (Option.get !head)));
           tail := Some (cell_of (store_item (B.create ()) it)))
         items;
       let b = B.store_uint b 0x07L ~bits:8 in
       let b = B.store_uint b (Int64.of_int (List.length items)) ~bits:16 in
       let b = match !head with Some c -> B.store_ref b c | None -> b in
-      (match !tail with Some c -> B.store_ref b c | None -> b)
+      match !tail with Some c -> B.store_ref b c | None -> b)
 
 let rec load_item cs =
   match Int64.to_int (S.load_uint cs ~bits:8) with
@@ -118,7 +135,9 @@ let rec store_tail b = function
   | [] -> b
   | items ->
       let rest, top =
-        match List.rev items with top :: rev_rest -> (List.rev rev_rest, top) | [] -> assert false
+        match List.rev items with
+        | top :: rev_rest -> (List.rev rev_rest, top)
+        | [] -> assert false
       in
       let b = B.store_ref b (cell_of (store_tail (B.create ()) rest)) in
       store_item b top
@@ -129,7 +148,9 @@ let to_cell stack =
      list is passed top-first exactly as held -- reversing here would produce
      a stack that round-trips against itself but not against anyone else. *)
   try
-    let b = B.store_uint (B.create ()) (Int64.of_int (List.length stack)) ~bits:24 in
+    let b =
+      B.store_uint (B.create ()) (Int64.of_int (List.length stack)) ~bits:24
+    in
     match B.end_cell (store_tail b stack) with
     | Ok c -> Ok c
     | Error e -> Error (Format.asprintf "%a" B.pp_error e)
@@ -160,10 +181,22 @@ let rec pp ppf = function
   | Null -> Format.pp_print_string ppf "null"
   | Int v -> Format.pp_print_string ppf (Z.to_string v)
   | Nan -> Format.pp_print_string ppf "nan"
-  | Cell c -> Format.fprintf ppf "cell(%s)" (String.sub (Ton_cell.Cell.hash c |> fun s -> String.concat "" (List.init 4 (fun i -> Printf.sprintf "%02x" (Char.code s.[i])))) 0 8)
+  | Cell c ->
+      Format.fprintf ppf "cell(%s)"
+        (String.sub
+           ( Ton_cell.Cell.hash c |> fun s ->
+             String.concat ""
+               (List.init 4 (fun i -> Printf.sprintf "%02x" (Char.code s.[i])))
+           )
+           0 8)
   | Slice _ -> Format.pp_print_string ppf "slice"
   | Builder _ -> Format.pp_print_string ppf "builder"
-  | Tuple l -> Format.fprintf ppf "[%a]" (Format.pp_print_list ~pp_sep:(fun f () -> Format.fprintf f ", ") pp) l
+  | Tuple l ->
+      Format.fprintf ppf "[%a]"
+        (Format.pp_print_list ~pp_sep:(fun f () -> Format.fprintf f ", ") pp)
+        l
 
 let pp_stack ppf l =
-  Format.fprintf ppf "@[<hov 2>%a@]" (Format.pp_print_list ~pp_sep:(fun f () -> Format.fprintf f " | ") pp) l
+  Format.fprintf ppf "@[<hov 2>%a@]"
+    (Format.pp_print_list ~pp_sep:(fun f () -> Format.fprintf f " | ") pp)
+    l

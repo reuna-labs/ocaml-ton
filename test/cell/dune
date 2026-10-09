@@ -3,5 +3,12 @@
  (package ton-cell)
  (deps
   (source_tree ../vectors))
- (libraries ton_cell zarith digestif base64 yojson alcotest qcheck-core
-   qcheck-alcotest))
+ (libraries
+  ton_cell
+  zarith
+  digestif
+  base64
+  yojson
+  alcotest
+  qcheck-core
+  qcheck-alcotest))

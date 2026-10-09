@@ -8,7 +8,8 @@ let of_ed25519_pub pub =
     | Error _ -> Error "Ed25519 public key has no Curve25519 image (y = 1)"
 
 let scalar_of_ed25519_seed seed =
-  if String.length seed <> 32 then invalid_arg "X25519.scalar_of_ed25519_seed: seed must be 32 bytes";
+  if String.length seed <> 32 then
+    invalid_arg "X25519.scalar_of_ed25519_seed: seed must be 32 bytes";
   P.to_x25519_priv seed
 
 let key_exchange ~scalar ~peer =

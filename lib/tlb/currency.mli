@@ -5,8 +5,8 @@
     extra_currencies$_ dict:(HashmapE 32 (VarUInteger 32)) = ExtraCurrencyCollection;
     v}
 
-    Every value carried by a message is an amount of TON plus a — nearly
-    always empty — dictionary of extra currencies. *)
+    Every value carried by a message is an amount of TON plus a — nearly always
+    empty — dictionary of extra currencies. *)
 
 open Ton_cell
 

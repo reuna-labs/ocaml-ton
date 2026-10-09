@@ -9,8 +9,8 @@
     anycast_info$_ depth:(#<= 30) { depth >= 1 } rewrite_pfx:(bits depth) = Anycast;
     v}
 
-    Almost everything in practice is [addr_std] without anycast; the other
-    three still have to be parsed, because they appear in real messages. *)
+    Almost everything in practice is [addr_std] without anycast; the other three
+    still have to be parsed, because they appear in real messages. *)
 
 open Ton_cell
 

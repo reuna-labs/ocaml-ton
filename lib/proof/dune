@@ -1,5 +1,12 @@
 (library
  (name ton_proof)
  (public_name ton-proof)
- (libraries ton-cell ton-tlb ton-address ton-crypto ton-tl ton-tl-schema digestif
-   zarith))
+ (libraries
+  ton-cell
+  ton-tlb
+  ton-address
+  ton-crypto
+  ton-tl
+  ton-tl-schema
+  digestif
+  zarith))

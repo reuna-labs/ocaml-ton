@@ -11,7 +11,12 @@ type storage_info = {
 
 type state = Uninit | Active of Message.state_init | Frozen of string
 type storage = { last_trans_lt : int64; balance : Currency.t; state : state }
-type t = { addr : Msg_address.t; storage_info : storage_info; storage : storage }
+
+type t = {
+  addr : Msg_address.t;
+  storage_info : storage_info;
+  storage : storage;
+}
 
 let ( let* ) = Result.bind
 let coins_err e = Format.asprintf "%a" Coins.pp_error e
@@ -29,17 +34,22 @@ let load_storage_extra s =
   match Int64.to_int (Slice.load_uint s ~bits:3) with
   | 0 -> None
   | 1 -> Some (Slice.load_uint_z s ~bits:256)
-  | n -> Slice.fail (Slice.Message (Printf.sprintf "unknown storage extra info header %d" n))
+  | n ->
+      Slice.fail
+        (Slice.Message (Printf.sprintf "unknown storage extra info header %d" n))
 
 let store_storage_extra b = function
   | None -> Builder.store_uint b 0L ~bits:3
   | Some h -> Builder.store_uint_z (Builder.store_uint b 1L ~bits:3) h ~bits:256
 
-let load_maybe_coins s = if Slice.load_bit s then Some (Coins.load_coins s) else None
+let load_maybe_coins s =
+  if Slice.load_bit s then Some (Coins.load_coins s) else None
 
 let store_maybe_coins b = function
   | None -> Ok (Builder.store_bit b false)
-  | Some v -> Result.map_error coins_err (Coins.store_coins (Builder.store_bit b true) v)
+  | Some v ->
+      Result.map_error coins_err
+        (Coins.store_coins (Builder.store_bit b true) v)
 
 let load_storage_info s =
   let used = load_storage_used s in
@@ -61,7 +71,8 @@ let load_state s =
 
 let store_state b = function
   | Active si -> Message.store_state_init (Builder.store_bit b true) si
-  | Frozen h -> Builder.store_bytes (Builder.store_bit (Builder.store_bit b false) true) h
+  | Frozen h ->
+      Builder.store_bytes (Builder.store_bit (Builder.store_bit b false) true) h
   | Uninit -> Builder.store_bit (Builder.store_bit b false) false
 
 let load_storage s =
@@ -91,14 +102,22 @@ let store b = function
       store_storage b a.storage
 
 let of_cell c = Slice.parse c (fun s -> load s)
-
 let address a = Msg_address.to_address a.addr
 let balance a = a.storage.balance.Currency.coins
-let code a = match a.storage.state with Active si -> si.Message.code | _ -> None
-let data a = match a.storage.state with Active si -> si.Message.data | _ -> None
+
+let code a =
+  match a.storage.state with Active si -> si.Message.code | _ -> None
+
+let data a =
+  match a.storage.state with Active si -> si.Message.data | _ -> None
+
 let is_active a = match a.storage.state with Active _ -> true | _ -> false
 
-type shard = { account : t option; last_trans_hash : string; last_trans_lt : int64 }
+type shard = {
+  account : t option;
+  last_trans_hash : string;
+  last_trans_lt : int64;
+}
 
 let load_shard s =
   let account = load (Slice.of_cell (Slice.load_ref s)) in
@@ -108,7 +127,11 @@ let load_shard s =
 
 let store_shard b sh =
   let* inner = store (Builder.create ()) sh.account in
-  let* c = Result.map_error (fun e -> Format.asprintf "%a" Builder.pp_error e) (Builder.end_cell inner) in
+  let* c =
+    Result.map_error
+      (fun e -> Format.asprintf "%a" Builder.pp_error e)
+      (Builder.end_cell inner)
+  in
   let b = Builder.store_ref b c in
   let b = Builder.store_bytes b sh.last_trans_hash in
   Ok (Builder.store_uint b sh.last_trans_lt ~bits:64)

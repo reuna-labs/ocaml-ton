@@ -5,7 +5,8 @@ type error = Negative of Z.t | Too_large of { value : Z.t; max_bytes : int }
 let pp_error ppf = function
   | Negative v -> Format.fprintf ppf "amount %s is negative" (Z.to_string v)
   | Too_large { value; max_bytes } ->
-      Format.fprintf ppf "amount %s does not fit in %d bytes" (Z.to_string value) max_bytes
+      Format.fprintf ppf "amount %s does not fit in %d bytes"
+        (Z.to_string value) max_bytes
 
 (* Width of the [len] field: [#< n] holds values 0..n-1. *)
 let len_width n =
@@ -27,7 +28,6 @@ let store_var_uint b ~n v =
 
 let load_coins s = load_var_uint s ~n:16
 let store_coins b v = store_var_uint b ~n:16 v
-
 let nano_per_ton = Z.of_int 1_000_000_000
 
 let to_string v =
@@ -45,19 +45,29 @@ let to_string v =
 let of_string s =
   let s = String.trim s in
   let negative = String.length s > 0 && s.[0] = '-' in
-  let s = if negative || (String.length s > 0 && s.[0] = '+') then String.sub s 1 (String.length s - 1) else s in
+  let s =
+    if negative || (String.length s > 0 && s.[0] = '+') then
+      String.sub s 1 (String.length s - 1)
+    else s
+  in
   let whole, frac =
     match String.index_opt s '.' with
     | None -> (s, "")
-    | Some i -> (String.sub s 0 i, String.sub s (i + 1) (String.length s - i - 1))
+    | Some i ->
+        (String.sub s 0 i, String.sub s (i + 1) (String.length s - i - 1))
   in
   if whole = "" && frac = "" then Error "empty amount"
   else if String.length frac > 9 then
-    Error (Printf.sprintf "%d decimal places, but a nanoton is 10^-9" (String.length frac))
-  else if not (String.for_all (fun c -> c >= '0' && c <= '9') (whole ^ frac)) then
-    Error (Printf.sprintf "not a decimal amount: %S" s)
+    Error
+      (Printf.sprintf "%d decimal places, but a nanoton is 10^-9"
+         (String.length frac))
+  else if not (String.for_all (fun c -> c >= '0' && c <= '9') (whole ^ frac))
+  then Error (Printf.sprintf "not a decimal amount: %S" s)
   else
     let padded = frac ^ String.make (9 - String.length frac) '0' in
-    let v = Z.add (Z.mul (if whole = "" then Z.zero else Z.of_string whole) nano_per_ton)
-              (if padded = "" then Z.zero else Z.of_string padded) in
+    let v =
+      Z.add
+        (Z.mul (if whole = "" then Z.zero else Z.of_string whole) nano_per_ton)
+        (if padded = "" then Z.zero else Z.of_string padded)
+    in
     Ok (if negative then Z.neg v else v)

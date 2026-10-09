@@ -1,7 +1,7 @@
 (** TON addresses.
 
-    An address is a workchain identifier plus the 32-byte hash of the
-    contract's initial state. It has two textual forms:
+    An address is a workchain identifier plus the 32-byte hash of the contract's
+    initial state. It has two textual forms:
 
     - {b raw}, [<workchain>:<64 hex digits>], which carries nothing else;
     - {b user-friendly}, 36 bytes of [tag ‖ workchain ‖ hash ‖ CRC-16] in
@@ -40,7 +40,8 @@ val of_friendly : string -> (friendly, error) result
 (** Accepts both the standard and URL-safe base64 alphabets, and validates the
     tag byte and CRC-16. *)
 
-val to_friendly : ?bounceable:bool -> ?testnet:bool -> ?url_safe:bool -> t -> string
+val to_friendly :
+  ?bounceable:bool -> ?testnet:bool -> ?url_safe:bool -> t -> string
 (** Defaults: [bounceable] and [url_safe] true, [testnet] false — the form
     wallets and explorers normally show. *)
 
@@ -51,6 +52,7 @@ val of_string : string -> (t, error) result
 
 val equal : t -> t -> bool
 val compare : t -> t -> int
+
 val pp : Format.formatter -> t -> unit
 (** Prints the raw form, which is the one that identifies an address
     unambiguously. *)

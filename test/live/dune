@@ -1,4 +1,13 @@
 (executables
  (names live derive_head)
- (libraries ton_lite_client ton_lite_client_lwt ton_adnl ton_cell ton_tlb
-   ton_proof ton_address mirage-crypto-rng.unix base64 lwt.unix))
+ (libraries
+  ton_lite_client
+  ton_lite_client_lwt
+  ton_adnl
+  ton_cell
+  ton_tlb
+  ton_proof
+  ton_address
+  mirage-crypto-rng.unix
+  base64
+  lwt.unix))

@@ -10,8 +10,8 @@
     {!Ton_cell.Cell.make} refuses to build an exotic cell whose stored hashes
     disagree with the cells it references, so a proof that parses at all is
     internally consistent. What remains is to check that it is a proof of the
-    thing you asked about — which is the part that is easy to skip and fatal
-    to skip. *)
+    thing you asked about — which is the part that is easy to skip and fatal to
+    skip. *)
 
 open Ton_cell
 
@@ -29,7 +29,10 @@ type update = {
   new_root : Cell.t;
 }
 
-type error = Not_a_proof of Cell_type.t | Not_an_update of Cell_type.t | Malformed of string
+type error =
+  | Not_a_proof of Cell_type.t
+  | Not_an_update of Cell_type.t
+  | Malformed of string
 
 val pp_error : Format.formatter -> error -> unit
 val proof : Cell.t -> (proof, error) result

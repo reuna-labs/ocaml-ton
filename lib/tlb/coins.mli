@@ -8,9 +8,9 @@
 
     A [VarUInteger n] is a byte count followed by that many bytes, so small
     amounts cost little space. The length field is [ceil(log2 n)] bits wide —
-    four bits for the [VarUInteger 16] that carries TON amounts. Zero encodes
-    as a length of zero with no value bits at all, and the encoder must use
-    the fewest bytes that fit or the encoding is not canonical. *)
+    four bits for the [VarUInteger 16] that carries TON amounts. Zero encodes as
+    a length of zero with no value bits at all, and the encoder must use the
+    fewest bytes that fit or the encoding is not canonical. *)
 
 open Ton_cell
 

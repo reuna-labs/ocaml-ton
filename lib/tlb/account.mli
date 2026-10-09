@@ -22,10 +22,10 @@
 
     A note on schema drift: [StorageUsed] used to carry a third field,
     [public_cells:(VarUInteger 7)], where [storage_extra] now sits. Account
-    states recorded before the change still parse under this schema, but only
-    by coincidence — a [VarUInteger 7] holding zero is the three bits [000],
-    which is exactly [storage_extra_none]. Any historical state with a
-    non-zero [public_cells] would decode to nonsense. *)
+    states recorded before the change still parse under this schema, but only by
+    coincidence — a [VarUInteger 7] holding zero is the three bits [000], which
+    is exactly [storage_extra_none]. Any historical state with a non-zero
+    [public_cells] would decode to nonsense. *)
 
 open Ton_cell
 
@@ -44,7 +44,12 @@ type state =
   | Frozen of string  (** 32-byte state hash. *)
 
 type storage = { last_trans_lt : int64; balance : Currency.t; state : state }
-type t = { addr : Msg_address.t; storage_info : storage_info; storage : storage }
+
+type t = {
+  addr : Msg_address.t;
+  storage_info : storage_info;
+  storage : storage;
+}
 
 val load : Slice.t -> t option
 (** [None] is [account_none], meaning the account does not exist. *)
@@ -55,6 +60,7 @@ val of_cell : Cell.t -> (t option, Slice.error) result
 (** {2 Convenience} *)
 
 val address : t -> Ton_address.t option
+
 val balance : t -> Z.t
 (** The TON balance in nanotons. *)
 
@@ -66,7 +72,11 @@ val is_active : t -> bool
 
 (** {2 Shard accounts} *)
 
-type shard = { account : t option; last_trans_hash : string; last_trans_lt : int64 }
+type shard = {
+  account : t option;
+  last_trans_hash : string;
+  last_trans_lt : int64;
+}
 
 val load_shard : Slice.t -> shard
 val store_shard : Builder.t -> shard -> (Builder.t, string) result

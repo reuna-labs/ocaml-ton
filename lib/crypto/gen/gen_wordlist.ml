@@ -11,7 +11,10 @@ let () =
      done
    with End_of_file -> close_in ic);
   let words = Array.of_list (List.rev !words) in
-  print_string "(* Generated from english.txt by gen/gen_wordlist.ml. Do not edit. *)\n\n";
+  print_string
+    "(* Generated from english.txt by gen/gen_wordlist.ml. Do not edit. *)\n\n";
   Printf.printf "let count = %d\n\nlet words = [|\n" (Array.length words);
-  Array.iteri (fun i w -> Printf.printf "  %S;%s" w (if i mod 4 = 3 then "\n" else "")) words;
+  Array.iteri
+    (fun i w -> Printf.printf "  %S;%s" w (if i mod 4 = 3 then "\n" else ""))
+    words;
   print_string "\n|]\n"

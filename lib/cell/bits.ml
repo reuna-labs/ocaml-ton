@@ -5,12 +5,11 @@ type t = { data : string; off : int; len : int }
 let empty = { data = ""; off = 0; len = 0 }
 let length t = t.len
 let is_empty t = t.len = 0
-
 let byte s i = Char.code (String.unsafe_get s i)
 
 let unsafe_get t i =
   let p = t.off + i in
-  byte t.data (p lsr 3) lsr (7 - (p land 7)) land 1 = 1
+  (byte t.data (p lsr 3) lsr (7 - (p land 7))) land 1 = 1
 
 let get t i =
   if i < 0 || i >= t.len then invalid_arg "Bits.get: index out of bounds";
@@ -28,8 +27,10 @@ let blit_bits src ~src_pos dst ~dst_pos ~len =
     let p = dst_pos + i in
     let idx = p lsr 3 and bit = 7 - (p land 7) in
     let cur = Char.code (Bytes.unsafe_get dst idx) in
-    let v = if unsafe_get src (src_pos + i) then cur lor (1 lsl bit)
-            else cur land lnot (1 lsl bit) in
+    let v =
+      if unsafe_get src (src_pos + i) then cur lor (1 lsl bit)
+      else cur land lnot (1 lsl bit)
+    in
     Bytes.unsafe_set dst idx (Char.unsafe_chr v)
   done
 
@@ -40,7 +41,9 @@ let concat ts =
     let buf = Bytes.make ((total + 7) / 8) '\000' in
     let _ =
       List.fold_left
-        (fun pos t -> blit_bits t ~src_pos:0 buf ~dst_pos:pos ~len:t.len; pos + t.len)
+        (fun pos t ->
+          blit_bits t ~src_pos:0 buf ~dst_pos:pos ~len:t.len;
+          pos + t.len)
         0 ts
     in
     { data = Bytes.unsafe_to_string buf; off = 0; len = total }
@@ -73,7 +76,8 @@ let of_bytes s = { data = s; off = 0; len = 8 * String.length s }
 
 let to_bytes t =
   if t.len land 7 <> 0 then None
-  else if t.off land 7 = 0 then Some (String.sub t.data (t.off lsr 3) (t.len lsr 3))
+  else if t.off land 7 = 0 then
+    Some (String.sub t.data (t.off lsr 3) (t.len lsr 3))
   else begin
     let buf = Bytes.make (t.len lsr 3) '\000' in
     blit_bits t ~src_pos:0 buf ~dst_pos:0 ~len:t.len;
@@ -96,20 +100,24 @@ let to_padded_bytes t =
 
 let of_padded_bytes s =
   let n = String.length s in
-  let rec last i = if i < 0 then None else if byte s i <> 0 then Some i else last (i - 1) in
+  let rec last i =
+    if i < 0 then None else if byte s i <> 0 then Some i else last (i - 1)
+  in
   match last (n - 1) with
   | None -> empty
   | Some i ->
       (* Lowest set bit of the last non-zero byte is the completion tag. *)
       let b = byte s i in
-      let rec low k = if b lsr k land 1 = 1 then k else low (k + 1) in
+      let rec low k = if (b lsr k) land 1 = 1 then k else low (k + 1) in
       let k = low 0 in
       { data = s; off = 0; len = (i * 8) + (7 - k) }
 
 let equal a b =
   a.len = b.len
   &&
-  let rec go i = i >= a.len || (unsafe_get a i = unsafe_get b i && go (i + 1)) in
+  let rec go i =
+    i >= a.len || (unsafe_get a i = unsafe_get b i && go (i + 1))
+  in
   go 0
 
 let compare a b =

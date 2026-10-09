@@ -15,9 +15,11 @@ type error =
 
 let pp_error ppf = function
   | Bit_overflow { have; want } ->
-      Format.fprintf ppf "cannot store %d bits: only %d of %d remain" want have Cell.max_bits
+      Format.fprintf ppf "cannot store %d bits: only %d of %d remain" want have
+        Cell.max_bits
   | Ref_overflow { have } ->
-      Format.fprintf ppf "cannot store a reference: %d of %d already stored" have Cell.max_refs
+      Format.fprintf ppf "cannot store a reference: %d of %d already stored"
+        have Cell.max_refs
   | Invalid_width n -> Format.fprintf ppf "invalid width %d" n
   | Cell e -> Cell.pp_error ppf e
 
@@ -30,7 +32,13 @@ type t = {
 }
 
 let create () =
-  { data = Bytes.make ((Cell.max_bits + 7) / 8) '\000'; len = 0; refs = []; nrefs = 0; err = None }
+  {
+    data = Bytes.make ((Cell.max_bits + 7) / 8) '\000';
+    len = 0;
+    refs = [];
+    nrefs = 0;
+    err = None;
+  }
 
 let bit_length b = b.len
 let ref_count b = b.nrefs
@@ -119,7 +127,8 @@ let store_builder b other =
   let b = store_bits b (to_bits other) in
   List.fold_left store_ref b (List.rev other.refs)
 
-let store_slice b s = List.fold_left store_ref (store_bits b (Slice.to_bits s)) (Slice.refs s)
+let store_slice b s =
+  List.fold_left store_ref (store_bits b (Slice.to_bits s)) (Slice.refs s)
 
 let end_cell ?(exotic = false) b =
   match b.err with

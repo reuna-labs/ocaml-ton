@@ -1,9 +1,12 @@
 open Ton_cell
 
-type error = Bad_magic of { expected : int32; got : int32 } | Malformed of string
+type error =
+  | Bad_magic of { expected : int32; got : int32 }
+  | Malformed of string
 
 let pp_error ppf = function
-  | Bad_magic { expected; got } -> Format.fprintf ppf "expected magic %08lx, got %08lx" expected got
+  | Bad_magic { expected; got } ->
+      Format.fprintf ppf "expected magic %08lx, got %08lx" expected got
   | Malformed m -> Format.pp_print_string ppf m
 
 let block_magic = 0x11ef55aal
@@ -27,9 +30,17 @@ let block_state_update c =
       ignore (Slice.load_ref s);
       ignore (Slice.load_ref s);
       let su = Slice.load_ref s in
-      Result.map_error (fun e -> Malformed (Format.asprintf "%a" Merkle.pp_error e)) (Merkle.update su))
+      Result.map_error
+        (fun e -> Malformed (Format.asprintf "%a" Merkle.pp_error e))
+        (Merkle.update su))
 
-type shard_info = { global_id : int32; workchain : int32; shard_prefix : int64; seqno : int32; gen_utime : int32 }
+type shard_info = {
+  global_id : int32;
+  workchain : int32;
+  shard_prefix : int64;
+  seqno : int32;
+  gen_utime : int32;
+}
 
 (* Reads the fixed prefix of a shard state. The bits and the references are
    separate streams, so [before_split] sitting between two references is not

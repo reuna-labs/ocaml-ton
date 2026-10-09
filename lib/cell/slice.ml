@@ -15,7 +15,8 @@ exception Parse_error of error
 let pp_error ppf = function
   | Not_enough_bits { want; have } ->
       Format.fprintf ppf "need %d more bits, %d remain" want have
-  | Not_enough_refs { have } -> Format.fprintf ppf "need another reference, %d remain" have
+  | Not_enough_refs { have } ->
+      Format.fprintf ppf "need another reference, %d remain" have
   | Invalid_width n -> Format.fprintf ppf "invalid width %d" n
   | Trailing_bits n -> Format.fprintf ppf "%d bits left unparsed" n
   | Trailing_refs n -> Format.fprintf ppf "%d references left unparsed" n
@@ -23,7 +24,12 @@ let pp_error ppf = function
 
 let fail e = raise (Parse_error e)
 
-type t = { cell : Cell.t; bits : Bits.t; mutable pos : int; mutable ref_pos : int }
+type t = {
+  cell : Cell.t;
+  bits : Bits.t;
+  mutable pos : int;
+  mutable ref_pos : int;
+}
 
 let of_cell c = { cell = c; bits = Cell.bits c; pos = 0; ref_pos = 0 }
 let copy s = { s with pos = s.pos }
@@ -33,13 +39,12 @@ let remaining_refs s = Cell.ref_count s.cell - s.ref_pos
 let is_empty s = remaining_bits s = 0 && remaining_refs s = 0
 let cell s = s.cell
 let to_bits s = Bits.sub s.bits s.pos (remaining_bits s)
-
-let refs s =
-  List.filteri (fun i _ -> i >= s.ref_pos) (Cell.refs s.cell)
+let refs s = List.filteri (fun i _ -> i >= s.ref_pos) (Cell.refs s.cell)
 
 let need s n =
   if n < 0 then fail (Invalid_width n);
-  if n > remaining_bits s then fail (Not_enough_bits { want = n; have = remaining_bits s })
+  if n > remaining_bits s then
+    fail (Not_enough_bits { want = n; have = remaining_bits s })
 
 let load_bit s =
   need s 1;
@@ -63,7 +68,9 @@ let skip s n =
 
 let load_bytes s n =
   let b = load_bits s (8 * n) in
-  match Bits.to_bytes b with Some x -> x | None -> fail (Message "load_bytes: not byte-aligned")
+  match Bits.to_bytes b with
+  | Some x -> x
+  | None -> fail (Message "load_bytes: not byte-aligned")
 
 let load_uint s ~bits =
   if bits < 0 || bits > 64 then fail (Invalid_width bits);
@@ -89,7 +96,9 @@ let load_uint_z s ~bits =
   need s bits;
   let acc = ref Z.zero in
   for i = 0 to bits - 1 do
-    acc := Z.logor (Z.shift_left !acc 1) (if Bits.get s.bits (s.pos + i) then Z.one else Z.zero)
+    acc :=
+      Z.logor (Z.shift_left !acc 1)
+        (if Bits.get s.bits (s.pos + i) then Z.one else Z.zero)
   done;
   s.pos <- s.pos + bits;
   !acc

@@ -42,23 +42,39 @@ type error =
   | Invalid_hash_layout
 
 let pp_error ppf = function
-  | Too_many_bits n -> Format.fprintf ppf "cell has %d bits, maximum is %d" n max_bits
-  | Too_many_refs n -> Format.fprintf ppf "cell has %d refs, maximum is %d" n max_refs
-  | Depth_overflow n -> Format.fprintf ppf "cell depth %d exceeds maximum %d" n max_depth
-  | Exotic_too_short n -> Format.fprintf ppf "exotic cell has %d bits, need at least 8 for the type tag" n
+  | Too_many_bits n ->
+      Format.fprintf ppf "cell has %d bits, maximum is %d" n max_bits
+  | Too_many_refs n ->
+      Format.fprintf ppf "cell has %d refs, maximum is %d" n max_refs
+  | Depth_overflow n ->
+      Format.fprintf ppf "cell depth %d exceeds maximum %d" n max_depth
+  | Exotic_too_short n ->
+      Format.fprintf ppf
+        "exotic cell has %d bits, need at least 8 for the type tag" n
   | Exotic_unknown_type n -> Format.fprintf ppf "unknown exotic cell type %d" n
-  | Pruned_has_refs n -> Format.fprintf ppf "pruned branch must have no refs, got %d" n
-  | Pruned_bad_level n -> Format.fprintf ppf "pruned branch level must be 1..3, got %d" n
+  | Pruned_has_refs n ->
+      Format.fprintf ppf "pruned branch must have no refs, got %d" n
+  | Pruned_bad_level n ->
+      Format.fprintf ppf "pruned branch level must be 1..3, got %d" n
   | Pruned_bad_size { expected; got } ->
-      Format.fprintf ppf "pruned branch must have exactly %d bits, got %d" expected got
-  | Merkle_proof_bad_size n -> Format.fprintf ppf "merkle proof must have exactly 280 bits, got %d" n
-  | Merkle_proof_bad_refs n -> Format.fprintf ppf "merkle proof must have exactly 1 ref, got %d" n
-  | Merkle_update_bad_size n -> Format.fprintf ppf "merkle update must have exactly 552 bits, got %d" n
-  | Merkle_update_bad_refs n -> Format.fprintf ppf "merkle update must have exactly 2 refs, got %d" n
-  | Merkle_hash_mismatch i -> Format.fprintf ppf "merkle cell stored hash %d does not match its ref" i
-  | Merkle_depth_mismatch i -> Format.fprintf ppf "merkle cell stored depth %d does not match its ref" i
-  | Library_bad_size n -> Format.fprintf ppf "library cell must have exactly 264 bits, got %d" n
-  | Invalid_hash_layout -> Format.fprintf ppf "inconsistent level/type while computing cell hashes"
+      Format.fprintf ppf "pruned branch must have exactly %d bits, got %d"
+        expected got
+  | Merkle_proof_bad_size n ->
+      Format.fprintf ppf "merkle proof must have exactly 280 bits, got %d" n
+  | Merkle_proof_bad_refs n ->
+      Format.fprintf ppf "merkle proof must have exactly 1 ref, got %d" n
+  | Merkle_update_bad_size n ->
+      Format.fprintf ppf "merkle update must have exactly 552 bits, got %d" n
+  | Merkle_update_bad_refs n ->
+      Format.fprintf ppf "merkle update must have exactly 2 refs, got %d" n
+  | Merkle_hash_mismatch i ->
+      Format.fprintf ppf "merkle cell stored hash %d does not match its ref" i
+  | Merkle_depth_mismatch i ->
+      Format.fprintf ppf "merkle cell stored depth %d does not match its ref" i
+  | Library_bad_size n ->
+      Format.fprintf ppf "library cell must have exactly 264 bits, got %d" n
+  | Invalid_hash_layout ->
+      Format.fprintf ppf "inconsistent level/type while computing cell hashes"
 
 let ( let* ) = Result.bind
 let sha256 s = Digestif.SHA256.(to_raw_string (digest_string s))
@@ -88,14 +104,18 @@ let bits_descriptor b =
    level 0 but the previous level's hash above that. *)
 let repr ~original_bits ~cur_bits ~refs ~level ~mask ~typ =
   let nrefs = Array.length refs in
-  let buf = Buffer.create (2 + ((Bits.length cur_bits + 7) / 8) + (34 * nrefs)) in
+  let buf =
+    Buffer.create (2 + ((Bits.length cur_bits + 7) / 8) + (34 * nrefs))
+  in
   Buffer.add_char buf (Char.chr (refs_descriptor ~nrefs ~mask ~typ));
   Buffer.add_char buf (Char.chr (bits_descriptor original_bits));
   Buffer.add_string buf (Bits.to_padded_bytes cur_bits);
   (* Merkle proofs and updates reach one level further down into their
      children than ordinary cells do. *)
   let child_level =
-    match typ with Cell_type.Merkle_proof | Cell_type.Merkle_update -> level + 1 | _ -> level
+    match typ with
+    | Cell_type.Merkle_proof | Cell_type.Merkle_update -> level + 1
+    | _ -> level
   in
   (* All depths first, then all hashes -- not interleaved. *)
   Array.iter
@@ -131,17 +151,21 @@ let exotic_pruned bits refs =
         if lvl < 1 || lvl > 3 then Error (Pruned_bad_level lvl)
         else
           let expected =
-            8 + 8 + (Level_mask.hash_count (Level_mask.apply m (lvl - 1)) * (256 + 16))
+            8 + 8
+            + (Level_mask.hash_count (Level_mask.apply m (lvl - 1)) * (256 + 16))
           in
-          if len <> expected then Error (Pruned_bad_size { expected; got = len })
+          if len <> expected then
+            Error (Pruned_bad_size { expected; got = len })
           else Ok (m, 16)
       end
     in
     let lvl = Level_mask.level m in
     let entries =
       Array.init lvl (fun i ->
-          { p_hash = hash256 bits (data_off + (i * 256));
-            p_depth = u16 bits (data_off + (lvl * 256) + (i * 16)) })
+          {
+            p_hash = hash256 bits (data_off + (i * 256));
+            p_depth = u16 bits (data_off + (lvl * 256) + (i * 16));
+          })
     in
     Ok (m, entries)
 
@@ -149,7 +173,8 @@ let exotic_merkle_proof bits refs =
   let len = Bits.length bits and n = Array.length refs in
   if len <> 8 + 256 + 16 then Error (Merkle_proof_bad_size len)
   else if n <> 1 then Error (Merkle_proof_bad_refs n)
-  else if u16 bits 264 <> depth_at refs.(0) 0 then Error (Merkle_depth_mismatch 0)
+  else if u16 bits 264 <> depth_at refs.(0) 0 then
+    Error (Merkle_depth_mismatch 0)
   else if not (String.equal (hash256 bits 8) (hash_at refs.(0) 0)) then
     Error (Merkle_hash_mismatch 0)
   else Ok ()
@@ -161,9 +186,11 @@ let exotic_merkle_update bits refs =
   else
     let rec check i =
       if i > 1 then Ok ()
-      else if u16 bits (520 + (i * 16)) <> depth_at refs.(i) 0 then Error (Merkle_depth_mismatch i)
-      else if not (String.equal (hash256 bits (8 + (i * 256))) (hash_at refs.(i) 0)) then
-        Error (Merkle_hash_mismatch i)
+      else if u16 bits (520 + (i * 16)) <> depth_at refs.(i) 0 then
+        Error (Merkle_depth_mismatch i)
+      else if
+        not (String.equal (hash256 bits (8 + (i * 256))) (hash_at refs.(i) 0))
+      then Error (Merkle_hash_mismatch i)
       else check (i + 1)
     in
     check 0
@@ -180,7 +207,9 @@ let wonder typ bits refs =
   let* m, pruned =
     match typ with
     | Cell_type.Ordinary ->
-        let m = Array.fold_left (fun acc r -> acc lor Level_mask.value r.mask) 0 refs in
+        let m =
+          Array.fold_left (fun acc r -> acc lor Level_mask.value r.mask) 0 refs
+        in
         Ok (Level_mask.v m, None)
     | Cell_type.Pruned_branch ->
         let* m, entries = exotic_pruned bits refs in
@@ -192,7 +221,9 @@ let wonder typ bits refs =
         let* () = exotic_merkle_update bits refs in
         Ok
           ( Level_mask.v
-              ((Level_mask.value refs.(0).mask lor Level_mask.value refs.(1).mask) lsr 1),
+              ((Level_mask.value refs.(0).mask
+               lor Level_mask.value refs.(1).mask)
+              lsr 1),
             None )
     | Cell_type.Library ->
         let* () = exotic_library bits in
@@ -201,7 +232,9 @@ let wonder typ bits refs =
   let total_hash_count = Level_mask.hash_count m in
   (* A pruned branch computes only its own top hash; the lower ones are read
      out of the table stored in its data. *)
-  let hash_count = if typ = Cell_type.Pruned_branch then 1 else total_hash_count in
+  let hash_count =
+    if typ = Cell_type.Pruned_branch then 1 else total_hash_count
+  in
   let hash_i_offset = total_hash_count - hash_count in
   let hashes = Array.make hash_count "" and depths = Array.make hash_count 0 in
   try
@@ -213,7 +246,8 @@ let wonder typ bits refs =
           let dest = !hash_i - hash_i_offset in
           let cur_bits =
             if dest = 0 then begin
-              if not (level_i = 0 || typ = Cell_type.Pruned_branch) then raise (Fail Invalid_hash_layout);
+              if not (level_i = 0 || typ = Cell_type.Pruned_branch) then
+                raise (Fail Invalid_hash_layout);
               bits
             end
             else begin
@@ -292,7 +326,10 @@ let empty =
 let bits t = t.bits
 let refs t = Array.to_list t.refs
 let ref_count t = Array.length t.refs
-let nth_ref t i = if i < 0 || i >= Array.length t.refs then None else Some t.refs.(i)
+
+let nth_ref t i =
+  if i < 0 || i >= Array.length t.refs then None else Some t.refs.(i)
+
 let cell_type t = t.typ
 let is_exotic t = Cell_type.is_exotic t.typ
 let mask t = t.mask
@@ -300,7 +337,8 @@ let level t = Level_mask.level t.mask
 
 let check_level name level =
   if level < 0 || level > 3 then
-    invalid_arg (Printf.sprintf "Cell.%s: level must be 0..3, got %d" name level)
+    invalid_arg
+      (Printf.sprintf "Cell.%s: level must be 0..3, got %d" name level)
 
 let hash ?(level = 0) t =
   check_level "hash" level;
@@ -319,6 +357,11 @@ let equal a b = String.equal a.hashes.(3) b.hashes.(3)
 let compare a b = String.compare a.hashes.(3) b.hashes.(3)
 
 let pp ppf t =
-  let hex s = String.concat "" (List.init (String.length s) (fun i -> Printf.sprintf "%02x" (Char.code s.[i]))) in
-  Format.fprintf ppf "@[<v 2>%a x{%a} (%d bits, %d refs) hash=%s@]" Cell_type.pp t.typ Bits.pp t.bits
-    (Bits.length t.bits) (Array.length t.refs) (hex t.hashes.(0))
+  let hex s =
+    String.concat ""
+      (List.init (String.length s) (fun i ->
+           Printf.sprintf "%02x" (Char.code s.[i])))
+  in
+  Format.fprintf ppf "@[<v 2>%a x{%a} (%d bits, %d refs) hash=%s@]" Cell_type.pp
+    t.typ Bits.pp t.bits (Bits.length t.bits) (Array.length t.refs)
+    (hex t.hashes.(0))

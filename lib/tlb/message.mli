@@ -18,8 +18,8 @@
 
     On master, [split_depth] has been renamed [fixed_prefix_length] and
     [ihr_fee] renamed [extra_flags]; both are wire-compatible, and the older
-    names are kept here because they are what the documentation and other
-    SDKs use. *)
+    names are kept here because they are what the documentation and other SDKs
+    use. *)
 
 open Ton_cell
 
@@ -37,9 +37,10 @@ val empty_state_init : state_init
 val load_state_init : Slice.t -> state_init
 val store_state_init : Builder.t -> state_init -> Builder.t
 
-val state_init_address : workchain:int -> state_init -> (Ton_address.t, string) result
-(** A contract's address is the hash of its initial state, so deploying is
-    just sending to the address its own code and data determine. *)
+val state_init_address :
+  workchain:int -> state_init -> (Ton_address.t, string) result
+(** A contract's address is the hash of its initial state, so deploying is just
+    sending to the address its own code and data determine. *)
 
 type info =
   | Internal of {
@@ -54,7 +55,11 @@ type info =
       created_lt : int64;
       created_at : int32;
     }
-  | External_in of { src : Msg_address.t; dest : Msg_address.t; import_fee : Z.t }
+  | External_in of {
+      src : Msg_address.t;
+      dest : Msg_address.t;
+      import_fee : Z.t;
+    }
   | External_out of {
       src : Msg_address.t;
       dest : Msg_address.t;
@@ -71,9 +76,10 @@ type t = { info : info; init : state_init option; body : Cell.t }
     message's meaning. *)
 
 val load : Slice.t -> t
+
 val store : Builder.t -> t -> (Builder.t, string) result
-(** Stores the body inline when it fits alongside everything else, and behind
-    a reference otherwise — the choice every SDK makes. *)
+(** Stores the body inline when it fits alongside everything else, and behind a
+    reference otherwise — the choice every SDK makes. *)
 
 val to_cell : t -> (Cell.t, string) result
 val of_cell : Cell.t -> (t, Slice.error) result
