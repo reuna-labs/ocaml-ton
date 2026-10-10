@@ -1,0 +1,8 @@
+# reuna-gate configuration; see ~/reuna/infra/gates/README.md.
+
+[ocaml]
+# Not a code finding. Neither reuna-5.5 nor the README's own `ocaml-ton` switch
+# can build the tests, and no switch the gate uses has ocamlformat 0.28.1.
+# Checked by hand on 2026-10-10: `dune build @fmt` is clean with 0.28.1.
+enabled = false
+reason = "reuna-5.5 lacks web3-codec and mirage-crypto-pbkdf2, the ocaml-ton switch lacks mirage-crypto-pbkdf2 (runtest cannot build); reuna-5.5 has ocamlformat 0.29.0, not the pinned 0.28.1"
